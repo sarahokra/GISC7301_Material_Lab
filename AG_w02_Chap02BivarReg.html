@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-02-02">
+
+<title>Week02: Hamilton Chapter 2 - Bivariate Regression Analysis – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w02_Chap02BivarReg.html">Wk02-Hamilton Ch02: Bivariate Regression Analysis</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#regression-and-causality" id="toc-regression-and-causality" class="nav-link active" data-scroll-target="#regression-and-causality"><span class="header-section-number">1</span> Regression and Causality</a>
+  <ul class="collapse">
+  <li><a href="#notational-considerations" id="toc-notational-considerations" class="nav-link" data-scroll-target="#notational-considerations"><span class="header-section-number">1.1</span> Notational Considerations</a></li>
+  <li><a href="#basic-interpretation" id="toc-basic-interpretation" class="nav-link" data-scroll-target="#basic-interpretation"><span class="header-section-number">1.2</span> Basic Interpretation</a></li>
+  </ul></li>
+  <li><a href="#key-assumptions-of-regression-analysis" id="toc-key-assumptions-of-regression-analysis" class="nav-link" data-scroll-target="#key-assumptions-of-regression-analysis"><span class="header-section-number">2</span> Key Assumptions of Regression Analysis</a></li>
+  <li><a href="#ordinary-least-squares-estimation-and-variance-decomposition" id="toc-ordinary-least-squares-estimation-and-variance-decomposition" class="nav-link" data-scroll-target="#ordinary-least-squares-estimation-and-variance-decomposition"><span class="header-section-number">3</span> Ordinary Least Squares Estimation and Variance Decomposition</a>
+  <ul class="collapse">
+  <li><a href="#estimation-of-slope-and-intercept" id="toc-estimation-of-slope-and-intercept" class="nav-link" data-scroll-target="#estimation-of-slope-and-intercept"><span class="header-section-number">3.1</span> Estimation of Slope and Intercept</a></li>
+  <li><a href="#r2-and-adjusted-r_adj2-review-skipped" id="toc-r2-and-adjusted-r_adj2-review-skipped" class="nav-link" data-scroll-target="#r2-and-adjusted-r_adj2-review-skipped"><span class="header-section-number">3.2</span> <span class="math inline">\(R^2\)</span> and Adjusted <span class="math inline">\(R_{adj}^2\)</span> (REVIEW, SKIPPED)</a></li>
+  </ul></li>
+  <li><a href="#statistical-inference-on-the-unknown-regression-parameters" id="toc-statistical-inference-on-the-unknown-regression-parameters" class="nav-link" data-scroll-target="#statistical-inference-on-the-unknown-regression-parameters"><span class="header-section-number">4</span> Statistical Inference on the Unknown Regression Parameters</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">5</span> Confidence Intervals</a></li>
+  <li><a href="#regression-through-the-origin" id="toc-regression-through-the-origin" class="nav-link" data-scroll-target="#regression-through-the-origin"><span class="header-section-number">6</span> Regression through the Origin</a></li>
+  <li><a href="#problems-associated-with-bivariate-regression-analysis" id="toc-problems-associated-with-bivariate-regression-analysis" class="nav-link" data-scroll-target="#problems-associated-with-bivariate-regression-analysis"><span class="header-section-number">7</span> Problems Associated with Bivariate Regression Analysis</a></li>
+  <li><a href="#transformations-of-the-endogenous-and-exogenous-variables-following-hamiltons-naïve-approach" id="toc-transformations-of-the-endogenous-and-exogenous-variables-following-hamiltons-naïve-approach" class="nav-link" data-scroll-target="#transformations-of-the-endogenous-and-exogenous-variables-following-hamiltons-naïve-approach"><span class="header-section-number">8</span> Transformations of the Endogenous and Exogenous Variables (Following Hamilton’s Naïve Approach)</a></li>
+  <li><a href="#statistically-rigorous-transformation-approach" id="toc-statistically-rigorous-transformation-approach" class="nav-link" data-scroll-target="#statistically-rigorous-transformation-approach"><span class="header-section-number">9</span> Statistically Rigorous Transformation Approach</a></li>
+  <li><a href="#elasticity" id="toc-elasticity" class="nav-link" data-scroll-target="#elasticity"><span class="header-section-number">10</span> Elasticity</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w02_Chap02BivarReg.html">Wk02-Hamilton Ch02: Bivariate Regression Analysis</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Week02: Hamilton Chapter 2 - Bivariate Regression Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 2, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="regression-and-causality" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="regression-and-causality"><span class="header-section-number">1</span> Regression and Causality</h2>
+<ul>
+<li><p>Def. causality: The change in a <em>cause induces in a predictable</em> manner a change in an <em>effect</em>.</p></li>
+<li><p>The role of endogenous (effect) and exogenous (cause) variable depends on the context. E.g.: The relationship between income and education can either be:</p>
+<ul>
+<li>[a] the parent’s income determines the child’s education</li>
+<li>[b] A person’s earlier education level determines a person’s later income</li>
+</ul></li>
+<li><p>Time ordering: The cause <span class="math inline">\(X\)</span> <em>precedes</em> the effect <span class="math inline">\(Y\)</span>. This is the closest we get in <em>empirical research</em> to causality.</p>
+<ul>
+<li>Note: in the income-education example the exogenous variable always precedes the endogenous variable.</li>
+</ul></li>
+<li><p>Co-variation: The variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> jointly covary in a random but systematic manner (<em>not causality</em>).</p>
+<ul>
+<li>No statement can be made about the <em>influence</em> that one variable has on the variation of another variable. Thus, there is <em>no cause and effect</em> relationship.</li>
+<li>Both variables seem to just correlate in their variation for <em>what-ever reasons</em>.</li>
+</ul></li>
+<li><p>Spurious relationships: The empirical covariation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> can be induced by their <em>joint relationship</em> to another variable <span class="math inline">\(Z\)</span> (or a set of variables).</p>
+<ul>
+<li><p>The variable <span class="math inline">\(Z\)</span> is called <em>confounder</em>.</p></li>
+<li><p>Bivariate regression analysis cannot control for confounding effects because only the two variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> define the regression model. We will see in Chapter 3 that multiple regression models can control for confounding effects.</p></li>
+</ul></li>
+<li><p>Theory based research (or <strong>confirmatory</strong> research) makes <em>predictive statements</em> about the [a] strength, [b] direction, [c] shape (linear or nonlinear) and [d] conditional distributions <span class="math inline">\(p(Y|X)\)</span> of <span class="math inline">\(Y\)</span>.</p></li>
+<li><p>Regression traces the conditional distributions of <span class="math inline">\(Y\)</span> given a particular value of <span class="math inline">\(X\)</span> by means of the conditional expectation.</p>
+<p>FOX Fig. 6.1 assumes positive linearity and equal conditional distributions. We get the conditional expectations <span class="math inline">\(\mu_{y_i|x_{i1}} \equiv E(y_i | x_{i1}) = \beta_0 + \beta_1 \cdot x_{i1}\)</span></p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-01.png" class="img-fluid figure-img"></p>
+<figcaption>FOX Figure 6.1</figcaption>
+</figure>
+</div>
+<hr>
+<section id="notational-considerations" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="notational-considerations"><span class="header-section-number">1.1</span> Notational Considerations</h3>
+<ul>
+<li><p>For the <span class="math inline">\(i\)</span>-th observation the <em>population model</em> with an underlying data generating process becomes the regression model <span class="math inline">\(y_i = \beta_0 + \beta_1 \cdot x_{i1} + \varepsilon_i\)</span>.</p></li>
+<li><p>None of the population parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> nor the error term <span class="math inline">\(\varepsilon_i\)</span> are directly observable using an empirical sample.</p></li>
+<li><p>The parameter <span class="math inline">\(\beta_0\)</span> is called the <em>intercept</em> and the parameter <span class="math inline">\(\beta_1\)</span> is the <em>slope</em>.</p></li>
+<li><p>The parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are <em>not indexed</em> by the individual observations <span class="math inline">\(i\)</span>. Thus, they are constant across all observations.</p></li>
+<li><p>In the population the error term <span class="math inline">\(\varepsilon_i\)</span>, also called <em>disturbance</em>, is directly associated to the <span class="math inline">\(i\)</span>-th observation.</p></li>
+<li><p>The predicted value of the estimated model is <span class="math inline">\(\hat{y}_i = b_0 + b_1 \cdot x_{i1}\)</span> with the estimated <em>residual</em> <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span>.</p>
+<ul>
+<li>Some people also write <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> for the estimated parameters and <span class="math inline">\(\hat{\varepsilon}_i\)</span> for the residuals.</li>
+<li>Hamilton uses the symbol <span class="math inline">\(K\)</span> for the number of estimated parameters <em>including the currently invisible intercept</em>. Thus, for bivariate regression analysis the number of estimated parameters is <span class="math inline">\(K = 2\)</span>.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="basic-interpretation" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="basic-interpretation"><span class="header-section-number">1.2</span> Basic Interpretation</h3>
+<ul>
+<li><p>A sample of just <em>two data-points</em> determines exactly a line, which is characterized by two parameters. Consequently, we will lose two degrees of freedom when performing bivariate regression analysis.</p></li>
+<li><p>The linear regression model separates</p>
+<ul>
+<li><p>the <em>conditional expectations</em> (conditional on the observation <span class="math inline">\(x_{i1}\)</span>) <span class="math inline">\(\mu_{y_i|x_{i1}} \equiv E(y_i | x_{i1}) = \beta_0 + \beta_1 \cdot x_{i1}\)</span> (<em>systematic component</em>)</p></li>
+<li><p>from the unobserved <em>disturbances</em> <span class="math inline">\(\varepsilon_i\)</span> (<em>random component</em>) that are unique for each observation.</p></li>
+</ul></li>
+<li><p>The disturbances <em>vary around the systematic component</em>. The set of <span class="math inline">\(n\)</span> disturbances has only <span class="math inline">\(n - K\)</span> degrees of freedom.</p></li>
+<li><p>Gaining <em>further understanding</em> of any potentially inherent pattern in the residuals (<em>unexplained part</em>) enhances our <em>knowledge</em>.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> For this reason, extensive <em>residual analysis</em> is part of regression analysis (see Chapter 4).</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="key-assumptions-of-regression-analysis" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="key-assumptions-of-regression-analysis"><span class="header-section-number">2</span> Key Assumptions of Regression Analysis</h2>
+<ul>
+<li><p>Key assumptions:</p>
+<ol type="1">
+<li><p>The <em>relationship</em> between the independent variable and the dependent variable is <em>linear</em> (or can be transformed to linearity).</p></li>
+<li><p>The independent variable <span class="math inline">\(X\)</span> is <em>fixed</em> (that is, it is <em>deterministic variables</em> and not influenced by random effects).</p>
+<p>Note: should it for some reason be influenced by randomness, then we need at least assume that it is uncorrelated with the population disturbances. There is a strong risk of obtaining biased estimates for the regression coefficients. See <em>instrumental variable estimation</em> later.</p></li>
+<li><p>Disturbances at any level of <span class="math inline">\(x_i\)</span> have <em>identical distributions</em>, with zero mean and constant variance.</p></li>
+<li><p>Disturbances are in general assumed to be <em>independent</em> (uncorrelated) among each other.</p></li>
+<li><p>The independence and identical distribution assumption is abbreviated by statement that the disturbances are i.i.d. (independently identically distributed)</p></li>
+<li><p>The additional <em>i.i.d. normality</em> assumption of the disturbances allows statistical significance testing of the estimated regression model in small samples.</p></li>
+</ol></li>
+<li><p>Notes:</p>
+<ul>
+<li><p>Arguing purely statistically, only the disturbances are required to be normal <em>i.i.d.</em> Neither <span class="math inline">\(Y\)</span> nor <span class="math inline">\(X\)</span> need to follow a normal distribution.</p></li>
+<li><p>However: A joint normal distribution of the variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is highly desirable because it guarantees <em>linearity</em> of their relationship and a <em>balanced distribution</em> of all data points in the scatterplot; thus, minimizing any impact of potential outliers and counteracting potential heteroscedasticity.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="ordinary-least-squares-estimation-and-variance-decomposition" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ordinary-least-squares-estimation-and-variance-decomposition"><span class="header-section-number">3</span> Ordinary Least Squares Estimation and Variance Decomposition</h2>
+<ul>
+<li><p>What is the inter-pretation of the intercept and the slope parameters?</p></li>
+<li><p>The method of ordinary least squares fits a straight line through the scatterplot point cloud that minimizes the <em>sum of the squared regression residuals</em>.</p></li>
+<li><p>As long as the model has an intercept the regression line always goes through means of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, i.e., the point <span class="math inline">\((\bar{x}, \bar{y})\)</span> will be on the regression line.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-02.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 13-11, 13-12, 13-13 - Decomposition and variance</figcaption>
+</figure>
+</div>
+<ul>
+<li>Definition of variance terms: Total Sum of Squares (TSS), Residual Sum of Squares (RSS) and Explained Sum of Squares (ESS)</li>
+</ul>
+<p><span class="math display">\[TSS = \sum_{i=1}^{n} (y_i - \bar{y})^2 \text{ with } df = n - 1\]</span></p>
+<p><span class="math display">\[RSS = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \text{ with } df = n - K\]</span></p>
+<p><span class="math display">\[ESS = \sum_{i=1}^{n} (\hat{y}_i - \bar{y})^2 \text{ with } df = K - 1\]</span></p>
+<ul>
+<li><p>The validity of decomposition <span class="math inline">\(TSS = ESS + RSS\)</span> relies on the fact that the product <span class="math inline">\(\sum(y_i - \hat{y}_i) \cdot (\hat{y}_i - \bar{y}) = 0\)</span>, which can be easily shown later using matrix algebra.</p></li>
+<li><p>Key consequence: <span class="math inline">\(Cov(\hat{y}, e) = Cov(b_0 + b_1 \cdot X, e) = b_1 \cdot \underbrace{Cov(X, e)}_{=0} = 0\)</span></p></li>
+<li><p>Therefore, the incorporated independent variables <em>cannot explain any remaining variation</em> in the regression residuals.</p>
+<p>That is, the independent variable has exhausted all relevant information in the regression model.</p></li>
+</ul>
+<hr>
+<section id="estimation-of-slope-and-intercept" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="estimation-of-slope-and-intercept"><span class="header-section-number">3.1</span> Estimation of Slope and Intercept</h3>
+<ul>
+<li>In ordinary least squares regression, we want to <em>minimize the sum of squared residuals</em> RSS with the residuals being defined by <span class="math inline">\(e_i = y_i - \underbrace{(b_0 + b_1 \cdot x_{i1})}_{\hat{y}_i}\)</span> (see HAM p 33), that is,</li>
+</ul>
+<p><span class="math display">\[\min_{b_0, b_1} RSS = \min_{b_0, b_1} \sum (y_i - \underbrace{(b_0 + b_1 \cdot x_{i})}_{=\hat{y}_i})^2\]</span></p>
+<ul>
+<li>Minimizing this function is done by setting its <em>first derivatives</em> equal to <em>zero</em> and solving for the unknown parameters <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> leads to:</li>
+</ul>
+<p><span class="math display">\[\frac{\partial RSS}{\partial b_0} = -\sum y_i + nb_0 + b_1 \sum x_{i1} \equiv 0\]</span></p>
+<p><span class="math display">\[\frac{\partial RSS}{\partial b_1} = -\sum x_i \cdot y_i + b_0 \sum x_{i1} + b_1 \sum x_{i1}^2 \equiv 0\]</span></p>
+<ul>
+<li>The first equation shows that the <em>regression line must go through the means</em> <span class="math inline">\((\bar{x}, \bar{y})\)</span> of the independent and the dependent variables because,</li>
+</ul>
+<p><span class="math display">\[-\sum y_i + nb_0 + b_1 \sum x_{i1} \equiv 0\]</span> <span class="math display">\[\Rightarrow \sum y_i = nb_0 + b_1 \sum x_{i1} \quad | \div n\]</span> <span class="math display">\[\Rightarrow \bar{y} = b_0 + b_1 \cdot \bar{x}\]</span></p>
+<p>Therefore, <span class="math inline">\(b_0 = \bar{y} - b_1 \cdot \bar{x}\)</span> and the <em>sum of the regression residuals is zero</em>, i.e., <span class="math inline">\(\sum e_i = 0\)</span>.</p>
+<ul>
+<li>Inserting the means expression for <span class="math inline">\(b_0\)</span> into <span class="math inline">\(\frac{\partial RSS}{\partial b_1} = 0\)</span> and solving for <span class="math inline">\(b_1\)</span> gives</li>
+</ul>
+<p><span class="math display">\[b_1 = \frac{n \cdot \sum y_i \cdot x_{i1} - \sum x_{i1} \cdot \sum y_i}{n \cdot \sum x_{i1}^2 - (\sum x_{i1})^2}\]</span></p>
+<ul>
+<li>Equivalent expressions for the slope parameter <span class="math inline">\(b_1\)</span> in bivariate regression are</li>
+</ul>
+<p><span class="math display">\[b_1 = \frac{\sum_{i=1}^{n} (y_i - \bar{y}) \cdot (x_i - \bar{x})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}\]</span></p>
+<p><span class="math display">\[= \frac{s_{YX}}{s_X^2} = r \cdot \frac{s_Y}{s_X}\]</span></p>
+<p>or <span class="math inline">\(b_1 = \frac{Cov[Y,X]}{Var[X]}\)</span> (see Hamiliton p 294).</p>
+<p>Question: What would the slope be if we regress <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. Answer: <span class="math inline">\(b_{X|Y} = r \cdot \frac{s_X}{s_Y}\)</span> or equivalently <span class="math inline">\(\frac{Cov[Y,X]}{Var[Y]}\)</span>.</p>
+<hr>
+</section>
+<section id="r2-and-adjusted-r_adj2-review-skipped" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="r2-and-adjusted-r_adj2-review-skipped"><span class="header-section-number">3.2</span> <span class="math inline">\(R^2\)</span> and Adjusted <span class="math inline">\(R_{adj}^2\)</span> (REVIEW, SKIPPED)</h3>
+<ul>
+<li>The goodness of fit measure (proportion of explained variance relative to the total variance) is defined by</li>
+</ul>
+<p><span class="math display">\[R^2 \equiv \frac{ESS}{TSS} = 1 - \frac{RSS}{TSS}\]</span></p>
+<ul>
+<li>The adjusted goodness of fit takes the degrees of freedom into account because. Note, the more variables are enter into the regression equation, the better the fit of the model will be or at least stay the same (recall the perfect fit of the regression through two points)</li>
+</ul>
+<p><span class="math display">\[R_{adj}^2 \equiv 1 - \frac{RSS/(n - K)}{TSS/(n - 1)}\]</span></p>
+<p>When <span class="math inline">\(n\)</span> is large relative to <span class="math inline">\(K\)</span> then the difference between the adjusted and the ordinary <span class="math inline">\(R^2\)</span> is negligible.</p>
+<hr>
+</section>
+</section>
+<section id="statistical-inference-on-the-unknown-regression-parameters" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="statistical-inference-on-the-unknown-regression-parameters"><span class="header-section-number">4</span> Statistical Inference on the Unknown Regression Parameters</h2>
+<ul>
+<li><p>Question: Why are estimated regression parameters <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> <em>random variables</em> that have their own distribution?</p>
+<p>Answer: Repeated samples from a population will yield different sets of observations.</p>
+<p>Thus, the estimated regression parameters will differ from sample to sample and therefore will have a distribution.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-05.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 12-9 - Sampling for a regression model</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Assuming <em>i.i.d.</em> disturbances <span class="math inline">\(\varepsilon_i\)</span>, then the estimated regression parameters <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> will be <em>asymptotically normal distributed</em> with <span class="math inline">\(b_0 \sim \mathcal{N}(\beta_0, \sigma_{b_0}^2)\)</span> and <span class="math inline">\(b_1 \sim \mathcal{N}(\beta_1, \sigma_{b_1}^2)\)</span> due to the central limit theorem. Thus, if other assumptions are satisfied, the estimated parameters are <strong>unbiased</strong> with <span class="math inline">\(E(b_0) = \beta_0\)</span> and <span class="math inline">\(E(b_1) = \beta_1\)</span>.</p></li>
+<li><p>The square roots of the estimated parameter variances <span class="math inline">\(\hat{\sigma}_{b_0}^2\)</span> and <span class="math inline">\(\hat{\sigma}_{b_1}^2\)</span> are called <em>standard errors</em> of the estimated regression coefficients.</p></li>
+<li><p>Several equations make use of the <em>residual standard deviation</em> <span class="math inline">\(s_e = \sqrt{\frac{RSS}{n - K}}\)</span>. It is also called the <em>Root Mean Square Error</em>.</p></li>
+<li><p>One can show that the standard errors of the regression parameters are</p></li>
+</ul>
+<p><span class="math display">\[\sqrt{Var(b_1)} = SE_{b_1} = \frac{s_e}{\sqrt{TSS_X}} \text{ and } \sqrt{Var(b_0)} = SE_{b_0} = s_e \cdot \sqrt{\frac{1}{n} + \frac{\bar{X}^2}{TSS_X}} \text{ with } TSS_X = \sum_{i=1}^{n} (X_i - \bar{X})^2\]</span></p>
+<ul>
+<li>Both standard errors depend on the spread <span class="math inline">\(TSS_X\)</span> of the independent variable <span class="math inline">\(X\)</span>. Notice that with increasing spread <span class="math inline">\(TSS_X\)</span> the a regression vary less and thus becomes more precise (i.e., they have smaller standard errors).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-07.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 14-5 - <span class="math inline">\(S_b\)</span> as a function of the variability in X</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Low uncertainty and unbiasedness of any estimates are desirable properties.</p></li>
+<li><p>Since we work with estimates of standard errors, the distribution of the test statistic <span class="math inline">\(t = \frac{b_1 - \beta_1}{SE_{b_1}}\)</span> follows a <em>t-distribution</em> with <span class="math inline">\(df = n - K\)</span> rather than a standard normal distribution. This t-statistic resembles a z-transformed variable around a <em>hypothetical</em> population value <span class="math inline">\(\beta_1\)</span>.</p></li>
+<li><p>If the exogenous variable <span class="math inline">\(X\)</span> does not explain any variation in the endogenous variable <span class="math inline">\(Y\)</span> then the slope estimate <span class="math inline">\(b_1\)</span> does not differ significantly from zero.</p>
+<ul>
+<li><p>Therefore, the null hypothesis in this case becomes <span class="math inline">\(H_0: \beta_1 = 0\)</span> and the alternative hypothesis <span class="math inline">\(H_1: \beta_1 \neq 0\)</span></p></li>
+<li><p>Consequently, the test statistic reduces to <span class="math inline">\(t_{obs} = (b_1 - 0) / SE_{b_1} = b_1 / SE_{b_1}\)</span></p></li>
+</ul></li>
+<li><p>There are scenarios where a <em>different base-line level</em>, such as <span class="math inline">\(H_0: \beta_1 = 1\)</span> against <span class="math inline">\(H_1: \beta_1 \neq 1\)</span>, becomes relevant. See the later discussion of <em>elasticity</em>.</p></li>
+<li><p>An alternative test statistic is based on the F-statistics. More about this in the multiple regression chapter.</p></li>
+<li><p>If a theory suggests that the regression parameter is expected to be positive (or negative, respectively), then a <em>one-sided test</em> becomes appropriate, that is</p>
+<ul>
+<li><span class="math inline">\(H_0: \beta_1 \leq 0\)</span> against <span class="math inline">\(H_1: \beta_1 &gt; 0\)</span> for a positivity assumption, or</li>
+<li><span class="math inline">\(H_0: \beta_1 \geq 0\)</span> against <span class="math inline">\(H_1: \beta_1 &lt; 0\)</span> for a negativity assumption.</li>
+<li>In those cases, <em>as long as</em> the sign of estimated regression coefficient points towards the direction of the alternative hypothesis, compared to the reported prob-value by the software (it is based a two-sided test scenario) the true prob-value is only <em>half as large</em> because just a one-tailed probability is used.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="confidence-intervals" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">5</span> Confidence Intervals</h2>
+<ul>
+<li>A <span class="math inline">\(1 - \alpha\)</span> <em>confidence interval</em>, e.g., 95% interval, around the hypothetical <em>population parameter</em> <span class="math inline">\(\beta_1\)</span> is given by</li>
+</ul>
+<p><span class="math display">\[\Pr(t_{\alpha/2, df}^{-} &lt; \frac{b_1 - \beta_1}{SE_{b_1}} &lt; t_{1-\alpha/2, df}^{+}) = 1 - \alpha\]</span></p>
+<p><span class="math display">\[\Rightarrow \Pr(\underbrace{b_1 - SE_{b_1} \cdot t_{1-\alpha/2, df}}_{+} &lt; \beta_1 &lt; \underbrace{b_1 - SE_{b_1} \cdot t_{\alpha/2, df}}_{-}) = 1 - \alpha\]</span></p>
+<p>If we assume <span class="math inline">\(H_0: \beta_1 = 0\)</span> is true then the <em>confidence interval covers the value zero</em>, that is,</p>
+<p><span class="math display">\[0 \in [b_1 - SE_{b_1} \cdot t_{1-\alpha/2, df}, b_1 + SE_{b_1} \cdot t_{1-\alpha/2, df}]\]</span></p>
+<p>Thus the zero hypothesis cannot be rejected at the significance level <span class="math inline">\(\alpha\)</span>, because the estimate regression parameter <span class="math inline">\(b_1\)</span> is <em>not statistically different</em> from zero.</p>
+<ul>
+<li><p>There are two <em>confidence intervals</em> associated with the <em>predictions</em> of the dependent variable <span class="math inline">\(\hat{Y}_i\)</span>: [a] one for the <em>estimated regression line</em> and [b] another for an <em>individual point prediction</em> <span class="math inline">\(\hat{Y}_i\)</span></p>
+<ul>
+<li><p>For the regression line (book calls it <em>mean expected value</em>) we need to account simultaneously for the <em>sampling variation</em> in the intercept <span class="math inline">\(b_0\)</span> and slope <span class="math inline">\(b_1\)</span>.</p>
+<p>In this case the variation of the predicted line <span class="math inline">\(\hat{Y}_{i,line}\)</span> around the true population line at a given value <span class="math inline">\(X_i\)</span> has the standard error of</p>
+<p><span class="math display">\[SE_{\hat{Y}_{i,line}} = s_e \sqrt{\frac{1}{n} + \frac{(X_i - \bar{X})^2}{TSS_X}}\]</span></p></li>
+<li><p>[b] For an <em>individual point prediction</em> of <span class="math inline">\(Y_{i,point}\)</span> (book calls it an <em>individual case’s Y value</em>) we need to account <em>not only</em> for the sampling variation of the estimated regression parameters but also for the variation of the individual observation at a given value <span class="math inline">\(X_i\)</span>, that is, the <em>potential disturbance</em> <span class="math inline">\(\varepsilon_i\)</span>.</p>
+<p>Therefore, the standard error increases by one unit of the residual standard deviation:</p>
+<p><span class="math display">\[SE_{\hat{Y}_{i,point}} = s_e \sqrt{1 + \frac{1}{n} + \frac{(X_i - \bar{X})^2}{TSS_X}}\]</span></p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-08.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2.7 - Confidence and prediction intervals around regression line</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>The term <span class="math inline">\((X_i - \bar{X})^2\)</span> in both equations signifies that the prediction standard errors <em>will increase</em> the further we move away from the mean <span class="math inline">\(\bar{X}\)</span>.</p></li>
+<li><p>Furthermore, the larger the sample size <span class="math inline">\(n\)</span> gets the narrower the confidence intervals will become, because <span class="math inline">\(TSS_X\)</span> in the denominator is increasing while <span class="math inline">\(1/n\)</span> is shrinking.</p></li>
+</ul>
+<hr>
+</section>
+<section id="regression-through-the-origin" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="regression-through-the-origin"><span class="header-section-number">6</span> Regression through the Origin</h2>
+<ul>
+<li><p>Regression through the origin should only be considered if there are <em>strong theoretical reasons</em> to assume that the intercept <span class="math inline">\(\beta_0 = 0\)</span>.</p></li>
+<li><p>A test outcome, that indicates that the intercept is zero, <em>does not justify</em> dropping the intercept.</p></li>
+<li><p>In R we can suppress the intercept with the statement <code>model.lm &lt;- lm(y~-1+x)</code>, where the negative term <code>-1</code> denotes to drop the intercept</p></li>
+<li><p>Most of the standard test statistics of regression analysis <em>become invalid</em> if we suppress the intercept. For instance:</p>
+<ul>
+<li><p><em>Without an intercept</em> the sum of the regression residuals will not necessarily remain zero, that is, <span class="math inline">\(0 \neq \sum_{i=1}^{n} e_i\)</span></p></li>
+<li><p>The goodness of fit measure <span class="math inline">\(R^2\)</span> is no longer defined because it is based on variations around the mean.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="problems-associated-with-bivariate-regression-analysis" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="problems-associated-with-bivariate-regression-analysis"><span class="header-section-number">7</span> Problems Associated with Bivariate Regression Analysis</h2>
+<ul>
+<li><p><em>Omitted additional relevant variable</em>. The estimate regression parameters become <em>biased</em> (on average, over many samples from the population, not identical to the population parameter).</p></li>
+<li><p><em>Non-linear relationship</em>. Mis-specified model. Perhaps the residuals indicate autocorrelation.</p></li>
+<li><p>Non-constant disturbance variance (<em>heteroscedasticity</em>). The variance of the regression residuals changes systematically with either [a] an independent variable or [b] some other external factors currently not considered in the regression model.</p></li>
+<li><p><em>Autocorrelation</em>. The disturbances are no longer independent.</p></li>
+<li><p><em>Non-normal disturbances</em>. Test statistics, that are based on the normal assumptions, become unreliable in small samples.</p></li>
+<li><p><em>Influential cases</em>. Regression analysis is not resistant to outliers.</p>
+<p>Large, squared residuals <span class="math inline">\(\hat{e}_i^2 = (y_i - \hat{y}_i)^2\)</span> have a strong impact on the ordinary least squares estimation (a squared large distance becomes even larger).</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-14.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2.10 - “All clear” e-versus-<span class="math inline">\(\hat{Y}\)</span> plot (artificial data)</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Some of these problems can be identified by an inspection of the regression residuals.</p>
+<p>Recall: the residuals <span class="math inline">\(e_i\)</span> are <em>uncorrelated</em> with the predicted values <span class="math inline">\(\hat{Y}_i = b_0 + b_1 \cdot X_i\)</span>. The same holds for the exogenous variable <span class="math inline">\(X_i\)</span>.</p></li>
+<li><p>Therefore, a scatterplot of the residuals against either the <em>predicted value</em> or an <em>independent variable</em>, which already is included in the model, <em>should not show a systematic pattern</em>.</p></li>
+<li><p>Some violations are indicated in the plots on the right.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-15.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2.11 - Examples of trouble seen in e-versus-<span class="math inline">\(\hat{Y}\)</span> plots (artificial data)</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="transformations-of-the-endogenous-and-exogenous-variables-following-hamiltons-naïve-approach" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="transformations-of-the-endogenous-and-exogenous-variables-following-hamiltons-naïve-approach"><span class="header-section-number">8</span> Transformations of the Endogenous and Exogenous Variables (Following Hamilton’s Naïve Approach)</h2>
+<ul>
+<li><p>A scatterplot of <span class="math inline">\(Y \sim X\)</span> or the analysis of the regression residuals may indicate that a transformation of the dependent and/or the independent variables are required.</p>
+<ul>
+<li>to fix influential cases by pulling them into the population</li>
+<li>to fix a curvilinear relationship and making the relationship linear</li>
+<li>to bring the distribution of the regression residuals closer to a symmetric distribution and/or desirable the normal distribution.</li>
+<li>to stabilize the variability of the regression residuals by a transformation of the dependent variable.</li>
+</ul></li>
+<li><p>This requires experimentation. Both variables could be simultaneously transformed, that is, <span class="math inline">\(Y_i^* = f(Y_i)\)</span> and <span class="math inline">\(X_i^* = g(X_i)\)</span> and the regression residuals must be evaluated until a set of transformations is found, for which the underlying regression assumptions are not violated.</p></li>
+<li><p>The functions for the dependent and independent variable <span class="math inline">\(f(\cdot)\)</span> and <span class="math inline">\(g(\cdot)\)</span>, respectively, can be different, e.g., have different <span class="math inline">\(\lambda\)</span>-parameters.</p></li>
+<li><p>In the transformed model predictions can be made <span class="math inline">\(\hat{Y}_i^* = b_0 + b_1 \cdot X_i^*\)</span></p></li>
+<li><p>The inverse function is applied on the predicted values <span class="math inline">\(\hat{Y}_i = f^{-1}(\hat{Y}_i^*)\)</span> and the curvilinear relationship between <span class="math inline">\(\hat{Y}_i\)</span> and <span class="math inline">\(X_i\)</span> can be graphed in the original measurement units.</p></li>
+<li><p>For the Box-Cox transformation <span class="math inline">\(Z^* = \frac{Z^\lambda - 1}{\lambda}\)</span> its inverse transformation is <span class="math inline">\(Z = (Z^* \cdot \lambda + 1)^{1/\lambda}\)</span>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-16.png" class="img-fluid figure-img"></p>
+<figcaption>Figures 2.4, 2.15, 2.17 - Scatterplot with regression line, Transformed water use versus transformed household income, Curvilinear relation of water use to income</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="statistically-rigorous-transformation-approach" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="statistically-rigorous-transformation-approach"><span class="header-section-number">9</span> Statistically Rigorous Transformation Approach</h2>
+<ul>
+<li><p>The naïve approach exhibits two problems:</p>
+<ol type="1">
+<li><p>The objective is not that the dependent variable is symmetrically or normally distributed, but rather that the <em>regression residuals</em> are <em>symmetrically or normal distributed</em>.</p></li>
+<li><p>The predicted values after the inverse transformation back into the original measurement units become <em>conditional medians</em> rather than conditional expectations <span class="math inline">\(\mu_{y_i|x_{i1}} \equiv E(y_i | x_{i1})\)</span></p></li>
+</ol></li>
+<li><p>To overcome these problems the best approach is</p>
+<ol type="1">
+<li><p>Transform all independent variable to become approximately symmetry. This enhances the linearity of the model <span class="math inline">\(\Rightarrow X^* = g(X)\)</span>.</p></li>
+<li><p>Find a transformation <span class="math inline">\(f(\cdot)\)</span> for the dependent variable <span class="math inline">\(Y\)</span> so that the regression residuals become approximately normal distributed <span class="math inline">\(\Rightarrow e^* = f(Y) - b_0^* + b_1^* \cdot X^*\)</span> with <span class="math inline">\(e \sim N(0, \sigma^2)\)</span>.</p></li>
+<li><p>Predict <span class="math inline">\(\widehat{f(Y)} = b_0^* + b_1^* \cdot X^*\)</span> in the transformed system. Note: all model assumptions should be satisfied in the transformed system.</p></li>
+<li><p>Map <span class="math inline">\(\widehat{f(Y)}\)</span> back into the original measurement units either by the <em>inverse</em> transformation</p>
+<ul>
+<li><ol type="a">
+<li><span class="math inline">\(f^{-1}(\widehat{f(Y)})\)</span> for the predicted median <span class="math inline">\(\hat{Y}_{median}\)</span>, or</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li><span class="math inline">\(f_{corrected}^{-1}(\widehat{f(Y)})\)</span> for the predicted expected value <span class="math inline">\(\mu_{y_i|x_{i1}} \equiv E(y_i | x_{i1})\)</span></li>
+</ol></li>
+</ul></li>
+<li><p>The script <strong>BOXCOXBIVARIATEREGRESSION.R</strong> outlines the procedure.</p></li>
+</ol></li>
+<li><p>The same logic can be applied in multiple regression models with more than one independent variable.</p></li>
+</ul>
+<hr>
+</section>
+<section id="elasticity" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="elasticity"><span class="header-section-number">10</span> Elasticity</h2>
+<ul>
+<li>To estimate a non-linear exponential model</li>
+</ul>
+<p><span class="math display">\[y = \exp(b_0) \cdot x^{b_1} \cdot \exp(\varepsilon)\]</span></p>
+<p>by linear regression the model can be transformed into the log-log form. This gives the transformed model of the form in the variables <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[\ln(y) = b_0 + b_1 \cdot \ln(x) + \varepsilon\]</span></p>
+<ul>
+<li>In this model the estimated regression coefficient <span class="math inline">\(b_1\)</span> is interpreted as a <em>relative rate of change</em> (i.e., percentage change) at a given value <span class="math inline">\(y_0\)</span> and <span class="math inline">\(x_0\)</span></li>
+</ul>
+<p><span class="math display">\[b_1 = \frac{\%\Delta y}{\%\Delta x} = \frac{\frac{\Delta y}{y_0}}{\frac{\Delta x}{x_0}} = \frac{\frac{y_0 - y}{y_0}}{\frac{x_0 - x}{x_0}}\]</span></p>
+<p>Which may be evaluated at any feasible value <span class="math inline">\(x_0\)</span> and in particular for <span class="math inline">\(\bar{x}\)</span>. The estimate <span class="math inline">\(b_1\)</span> in the log-log model is called in economics the “<strong>elasticity</strong>”.</p>
+<ul>
+<li><p>To learn more about the economic concept of elasticity start with http://en.wikipedia.org/wiki/Elasticity_(economics)</p></li>
+<li><p>The value <span class="math inline">\(b_1 = 1\)</span> is the neutral value where any relative change of <span class="math inline">\(x\)</span> is equal to a relative change in <span class="math inline">\(y\)</span>.</p>
+<p>Therefore, the meaningful null hypothesis becomes <span class="math inline">\(H_0: \beta_1 = 1\)</span> against <span class="math inline">\(H_1: \beta_1 \neq 1\)</span>.</p></li>
+<li><p>Interpretation:</p>
+<ul>
+<li><p>For <span class="math inline">\(b_1 &gt; 1\)</span> one observes increasing rates of return, that is, <span class="math inline">\(y\)</span> changes relatively faster than <span class="math inline">\(x\)</span>.</p></li>
+<li><p>Whereas for <span class="math inline">\(0 &lt; b_1 &lt; 1\)</span> one observes decreasing rates of return.</p></li>
+</ul></li>
+<li><p>See for example graphs of the exponential model <span class="math inline">\(crime = \exp(b_0) \cdot enroll^{b_1}\)</span>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-20.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4.5 - Graph of crime = enroll^β₁ for β₁&lt;1, β₁=1, and β₁&gt;1</figcaption>
+</figure>
+</div>
+<ul>
+<li>The interpretation of models with mixtures of log-transformed variables is given in the table below:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w02_Chap02BivarReg/figure-19.png" class="img-fluid figure-img"></p>
+<figcaption>Summary of Functional Forms Involving Logarithms</figcaption>
+</figure>
+</div>
+<p>Example 2.11, in the log-log model, <span class="math inline">\(\beta_1\)</span> is the <strong>elasticity</strong> of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span>. Table 2.3 warrants careful study, as we will refer to it often in the remainder of the text.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

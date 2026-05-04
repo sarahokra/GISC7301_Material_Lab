@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-02-09">
+
+<title>Hamilton Chapter 3A: Multiple Regression Analysis – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w03_HamChapt03A.html">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#interpretation-of-the-multiple-regression-model" id="toc-interpretation-of-the-multiple-regression-model" class="nav-link active" data-scroll-target="#interpretation-of-the-multiple-regression-model"><span class="header-section-number">1</span> Interpretation of the Multiple Regression Model</a></li>
+  <li><a href="#model-with-two-independent-variables" id="toc-model-with-two-independent-variables" class="nav-link" data-scroll-target="#model-with-two-independent-variables"><span class="header-section-number">2</span> Model with Two Independent Variables</a></li>
+  <li><a href="#partial-regression-coefficients" id="toc-partial-regression-coefficients" class="nav-link" data-scroll-target="#partial-regression-coefficients"><span class="header-section-number">3</span> Partial Regression Coefficients</a></li>
+  <li><a href="#partial-effects-and-leverage-plot" id="toc-partial-effects-and-leverage-plot" class="nav-link" data-scroll-target="#partial-effects-and-leverage-plot"><span class="header-section-number">4</span> Partial Effects and Leverage Plot</a></li>
+  <li><a href="#selection-criteria-for-the-independent-variables" id="toc-selection-criteria-for-the-independent-variables" class="nav-link" data-scroll-target="#selection-criteria-for-the-independent-variables"><span class="header-section-number">5</span> Selection Criteria for the Independent Variables</a></li>
+  <li><a href="#discussion-seven-variables-example-ham-p-74" id="toc-discussion-seven-variables-example-ham-p-74" class="nav-link" data-scroll-target="#discussion-seven-variables-example-ham-p-74"><span class="header-section-number">6</span> Discussion Seven Variables Example (HAM p 74)</a></li>
+  <li><a href="#standardized-regression-coefficients-beta-coefficients" id="toc-standardized-regression-coefficients-beta-coefficients" class="nav-link" data-scroll-target="#standardized-regression-coefficients-beta-coefficients"><span class="header-section-number">7</span> Standardized Regression Coefficients (Beta Coefficients)</a></li>
+  <li><a href="#global-f-test" id="toc-global-f-test" class="nav-link" data-scroll-target="#global-f-test"><span class="header-section-number">8</span> Global F-Test</a></li>
+  <li><a href="#partial-f-test" id="toc-partial-f-test" class="nav-link" data-scroll-target="#partial-f-test"><span class="header-section-number">9</span> Partial F-Test</a></li>
+  <li><a href="#excursion-rs-anova-functions" id="toc-excursion-rs-anova-functions" class="nav-link" data-scroll-target="#excursion-rs-anova-functions"><span class="header-section-number">10</span> Excursion: R’s ANOVA-Functions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w03_HamChapt03A.html">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Hamilton Chapter 3A: Multiple Regression Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 9, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="interpretation-of-the-multiple-regression-model" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="interpretation-of-the-multiple-regression-model"><span class="header-section-number">1</span> Interpretation of the Multiple Regression Model</h2>
+<ul>
+<li><p>A dependent variable in the population may <em>not only</em> be influenced by one independent variable but by a whole set of independent variables.</p></li>
+<li><p>These independent variables may <em>not only</em> be correlated with the dependent variable but also <em>among each other</em>.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> This leads to the question how we can measure the individual effects (or contributions) of single variables by controlling for the variables redundancies?</p></li>
+<li><p><strong>Ballentine Venn Diagram</strong></p>
+<p><em>Shared explained variance and correlation among independent variables</em></p></li>
+<li><p>Additional variables reduce the stochastic error in the dependent variable (equivalent to RSS).</p></li>
+<li><p>Anecdote: The Ballentine diagram was invented by a group of statisticians at a conference pub drinking Ballantine Beer: <a href="https://en.wikipedia.org/wiki/P._Ballantine_and_Sons_Brewing_Company" class="uri">https://en.wikipedia.org/wiki/P._Ballantine_and_Sons_Brewing_Company</a></p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-01.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1.1 - Ballentine Venn Diagram</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="model-with-two-independent-variables" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="model-with-two-independent-variables"><span class="header-section-number">2</span> Model with Two Independent Variables</h2>
+<ul>
+<li><p>Discussion of plot with two independent variables:</p>
+<ul>
+<li><p>In multiple linear regression the independent variables with the dependent variable span up a linear “<em>hyper</em>”-plane.</p></li>
+<li><p>The <em>slope</em> of the surface along the axes <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> is given by the parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>.</p></li>
+<li><p>That is, the slope <span class="math inline">\(b_1\)</span> measures the variation of <span class="math inline">\(y\)</span> with respect <span class="math inline">\(x_1\)</span> at any <em>fixed level</em> of <span class="math inline">\(x_2\)</span> (i.e., <span class="math inline">\(x_{i2} = c\)</span> held constant at any particular value <span class="math inline">\(c\)</span>).</p></li>
+<li><p>Analogue interpretation for slope <span class="math inline">\(b_2\)</span>.</p></li>
+<li><p>The regression parameters are also called <em>partial regression coefficients</em> because of the underlying assumption that if the remaining independent variables are held constant at any given levels, i.e., the <em>relationship (slope) does not change</em> from one level of the other independent variables to another level. That is, in multiple linear regression effects of the other independent variables is controlled for.</p></li>
+<li><p>The intercept is given again by <span class="math inline">\(b_0\)</span> (here <span class="math inline">\(x_{i1} = 0\)</span> and <span class="math inline">\(x_{i2} = 0\)</span>)</p>
+<p>That is, <span class="math inline">\(E(Y_i | X_{i1} = 0, X_{i2} = 0) = \beta_0\)</span> (see Ham p 66).</p></li>
+<li><p>In the given example, are <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> correlated?</p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-02.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2.1 - Conditional Effects: Repeated Data</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="partial-regression-coefficients" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="partial-regression-coefficients"><span class="header-section-number">3</span> Partial Regression Coefficients</h2>
+<ul>
+<li><p><strong>Experimental Studies A:</strong> A researcher can control for the correlations among the independent variables by selecting the level of each independent variable in the study.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> The desired zero correlation level is achieved by assigning the observations to different treatment level combinations. <span class="math inline">\(\Rightarrow\)</span> scatterplot of independent variable lacks a pattern.</p></li>
+<li><p><strong>Experimental Studies B:</strong> By randomly assigning the observations (i.e., random sampling) to different treatment groups. Due to this random assignment any confounding variable would evenly distribute among the different treatment groups and therefore become independent of the group assignment.</p></li>
+<li><p><strong>Observational Studies:</strong> We can only control for the spurious/confounding effects of other variables with a statistical approach. <em>Fortunately, OLS does this for us!</em></p></li>
+<li><p>In multiple regression analysis the individual parameters express the relationship between the dependent and one independent variable <em>while statistically holding the effects all other variables constant</em>.</p></li>
+<li><p>The set of estimated parameters <span class="math inline">\(\{b_0, b_1, \ldots, b_{K-1}\}\)</span> of the included variables may change as new variables are added to the model because of the correlations of a new variable with the already included independent variables.</p>
+<p>Only if the new independent variables is uncorrelated with the already included variables, no change will occur.</p></li>
+<li><p>See example in Hamilton: <em>WaterUse81 = f(Income)</em> <strong>versus</strong> <em>WaterUse81 = f(Income, WaterUse80)</em>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-03.png" class="img-fluid figure-img"></p>
+<figcaption>Table 2.2 - Regression of 1981 water use on household income</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-04.png" class="img-fluid figure-img"></p>
+<figcaption>Table 3.1 - Regression of postshortage (1981) water use on income and preshortage (1980) water use</figcaption>
+</figure>
+</div>
+<p><strong>Questions:</strong></p>
+<p>[1] <em>Is the estimated coefficient in the bivariate model biased or does it reflect the value of its underlying population?</em> <strong>Answer:</strong> Yes, because after controlling for previous water consumption its coefficient is adjusted.</p>
+<p>[2] <em>What does the previous water consumption measure?</em> <strong>Answer:</strong> Base-line water consumption of a household over time. This captures variables influencing the water consumption which are not explicitly included in the current model.</p>
+<p>[3] <em>Are the regression assumptions still satisfied by using a temporarily lagged dependent variable on the right-hand side of the equation?</em> <strong>Answer:</strong> As long as error are <em>not conterminously correlated</em> everything is okay</p>
+<hr>
+</section>
+<section id="partial-effects-and-leverage-plot" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="partial-effects-and-leverage-plot"><span class="header-section-number">4</span> Partial Effects and Leverage Plot</h2>
+<ul>
+<li><p>Interpretation of regression residuals:</p>
+<ul>
+<li><p>The regression residuals <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span> are free from any linear effect (i.e., correlation) with the model’s set of independent variables.</p></li>
+<li><p>They measure the remaining (i.e., unexplained) variation of the dependent variable <span class="math inline">\(y\)</span> after <em>accounting for</em> the set of included independent variables.</p></li>
+</ul></li>
+<li><p>Therefore, the residuals are uncorrelated, or more generally “orthogonal”, with the independent variables, i.e., <span class="math inline">\(\sum_{i=1}^n x_{ij} \cdot e_i = 0\)</span>.</p>
+<p>Since the constant unity vector <span class="math inline">\(\mathbf{1} = (1,1,\ldots,1)^T\)</span>, which models the intercept, is part of the independent variables, they also sum to zero, that is, <span class="math inline">\(\sum_{i=1}^n 1 \cdot e_i = 0\)</span>.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> This provides a justification for keeping even an insignificant intercept in the model because otherwise the residuals may no longer sum to zero.</p>
+<p>A proof of these properties is easily accomplished with matrix algebra.</p></li>
+<li><p>Work through the water usage example <strong>HAM pp 70-71:</strong></p>
+<ol type="1">
+<li>Removing effect of previous water consumption <span class="math inline">\(X_2\)</span> (water80)</li>
+</ol></li>
+</ul>
+<p><span class="math display">\[\hat{Y}_i = 203.8 + 20.5X_{i1} + 0.59X_{i2}\]</span> <span class="math display">\[\rule{2cm}{0.4pt}\]</span> <span class="math display">\[Y_i = 537.9 + 0.64X_{i2} + e_{i,Y|X_2}\]</span> <span class="math display">\[X_{i1} = 16.26 + 0.0025X_{i2} + e_{i,X_1|X_2}\]</span> <span class="math display">\[\hat{e}_{i,Y|X_2} = 0 + 20.5e_{i,X_1|X_2}\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-05.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3.1 - Partial regression leverage plot: postshortage water use (Y) versus income (X1), adjusting for preshortage water use (X2)</figcaption>
+</figure>
+</div>
+<p><strong>Questions:</strong></p>
+<p>[a] Why is the <span class="math inline">\(b_0\)</span> coefficient zero? <strong>Answer:</strong> the sum of the residuals is zero, thus the means of <span class="math inline">\(e_{X_1|X_2}\)</span> and <span class="math inline">\(e_{Y|X_2}\)</span> lies at the origin (0,0) of the coordinate system.</p>
+<p>[b] What happens to the residuals <span class="math inline">\(e_{X_1|X_2}\)</span> if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are perfectly correlated? What is the impact on the partial regression equation? <strong>Answer:</strong> The regression in the residuals can no longer be calculated because the regressor is constant zero.</p>
+<p>[c] What happens if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are uncorrelated? <strong>Answer:</strong> Then <span class="math inline">\(e_{X_1|X_2}\)</span> is equal to <span class="math inline">\(X_1\)</span> (up to a shift in the mean) and the bivariate and multiple regression coefficients of <span class="math inline">\(X_1\)</span> are identically.</p>
+<ol start="2" type="1">
+<li>Removing the effect of <span class="math inline">\(X_1\)</span> (Income)</li>
+</ol>
+<p><span class="math display">\[Y_i = 1201.1 + 47.5X_{i1} + e_{i,Y|X_1}\]</span> <span class="math display">\[X_{i2} = 1681.4 + 45.5X_{i1} + e_{i,X_2|X_1}\]</span> <span class="math display">\[\hat{e}_{i,Y|X_1} = 0 + 0.59e_{i,X_2|X_1}\]</span></p>
+<ul>
+<li><p>Compared to the <em>sign</em> of the regression coefficient in the <em>bivariate model</em>, it is possible for a multiple model that the sign of a regression parameter <em>changes</em>, that is, the direction of a partial parameter changes and thus the interpretation of its associated independent variable.</p></li>
+<li><p><em>Partial correlation:</em> It is the correlation between Y and <span class="math inline">\(X_1\)</span> after the linear effects of the remaining variables <span class="math inline">\(\{X_2, \ldots, X_{K-1}\}\)</span> has been removed <span class="math inline">\(Corr(e_{Y|X_2,\ldots,X_{K-1}}, e_{X_1|X_2,\ldots,X_{K-1}})\)</span></p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-07.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3.2 - Partial regression leverage plot: postshortage water use (Y) versus preshortage water use (X2), adjusting for income (X1)</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="selection-criteria-for-the-independent-variables" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="selection-criteria-for-the-independent-variables"><span class="header-section-number">5</span> Selection Criteria for the Independent Variables</h2>
+<ul>
+<li><p>A theory should guide us in our decisions, which variables have a <em>meaningful influence</em> on the endogenous variable (they are significant) and in which <em>direction</em> (sign of the partial regression coefficient) this influence pointing.</p>
+<p>However, in many cases theory is not sufficiently well developed, and we may also search for a set of relevant variables (<span class="math inline">\(\Rightarrow\)</span> exploratory regression analysis).</p></li>
+<li><p><strong>Effects of adding variables to the model:</strong></p>
+<ul>
+<li><p><span class="math inline">\(R^2\)</span> always increases (or stays at least the same for absolutely irrelevant variables) but not necessarily <span class="math inline">\(R_{adj}^2\)</span> (Why?)</p></li>
+<li><p>Important variables =&gt; their estimated coefficient is significantly different from zero</p></li>
+<li><p>The significance of spurious variables may shrink.</p></li>
+</ul></li>
+<li><p><strong>General goal:</strong> finding a balance between <em>simplicity</em> (i.e., interpretability) and <em>complexity</em> (i.e., model fit) of the regression model (<em>statistical concept of parsimony</em>).</p>
+<p>Goal: We want to describe the variability in the dependent variable as concise as possible.</p>
+<ul>
+<li><p><span class="math inline">\(R_{adj}^2\)</span> adopts this concept by penalizing adding additional independent variables.</p></li>
+<li><p>Akaike’s information criterion, <span class="math inline">\(AIC = -\log(likelihood) + 2 \cdot (K - 1)\)</span>, also makes use of this concept. Smaller <span class="math inline">\(AIC\)</span> values are preferred:</p>
+<p><span class="math inline">\(-\log(likelihood) \downarrow\)</span> when <span class="math inline">\(K \uparrow\)</span>, that is, each additional estimated parameter increases <span class="math inline">\(AIC\)</span> by 2, therefore the <span class="math inline">\(-\log(likelihood)\)</span> needs to shrink at least by the factor 2.</p></li>
+</ul></li>
+<li><p><strong>Note:</strong> If we include <span class="math inline">\(n - 1\)</span> independent randomly generated variables we would obtain a perfectly fitting model, i.e., <span class="math inline">\(R^2 = 1\)</span>, even though none of these random variables is relevant in explaining the variation in the dependent variable.</p>
+<p>However, such a model is as <em>complex</em> (<span class="math inline">\(n\)</span> estimated parameters based on <span class="math inline">\(n\)</span> observations) as our original data and therefore violates the <em>paradigm of parsimony</em>. It basically models the random error term.</p></li>
+<li><p>Consequences of a mis-specified regression model:</p>
+<ul>
+<li><p><em>Including irrelevant variables:</em> Coefficient statistical close to zero. <span class="math inline">\(R^2\)</span> increases only marginally. Standard errors of all estimated parameters will increase.</p>
+<p>Q: What are the consequences of an increased standard error? <strong>Answer:</strong> an independent variable’s significance diminishes assuming an unchanged parameter value.</p>
+<p>Additional irrelevant variables increase unnecessarily the complexity of the model.</p></li>
+<li><p><em>Omitted relevant variables:</em> If the omitted variables are correlated with other variables in the model, then the parameter estimates of the included variables becomes biased, i.e., <span class="math inline">\(E(b_k) \neq \beta_k\)</span>. Unrealistic simple model.</p>
+<p>However, standard errors of parameters in the misspecified model are usually smaller.</p>
+<p>The model does not explain the variation in the dependent variable as well as it could.</p>
+<p>General aim: Minimize the <em>mean square error</em> of the included parameter estimates.</p></li>
+</ul></li>
+</ul>
+<p><span class="math display">\[MSE = E\left[b_k - \beta_k\right]^2 = Var[b_k] + bias^2\]</span></p>
+<p>with</p>
+<p><span class="math display">\[Var[b_k] = E\left[b_k - E(b_k)\right]^2\]</span> <span class="math display">\[bias^2 = \left[E(b_k) - \beta_k\right]^2\]</span></p>
+<p>Tradeoff between standard error and bias. We may be willing to accept a small bias if the variance of the estimated parameter is decreased substantially.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-08.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2.21 - Bias and variance in estimators</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="discussion-seven-variables-example-ham-p-74" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="discussion-seven-variables-example-ham-p-74"><span class="header-section-number">6</span> Discussion Seven Variables Example (HAM p 74)</h2>
+<ul>
+<li><p>State a hypothesis about each included variable.</p></li>
+<li><p>Compare against model with only <strong>INCOME</strong> and <strong>WATER80</strong>. Which parameters are stable?</p></li>
+<li><p>Status of the <strong>RETIRE</strong> variable. =&gt; binary 0/1 indicator variable with 0=<em>not retired</em> and 1=<em>retired</em></p></li>
+<li><p>Order of partial regression coefficients in terms of t-values</p></li>
+<li><p>What does the change in the number of people measure?</p></li>
+<li><p>Interpretation each coefficient’s sign: water consumption increases if …, and it decreases if…</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-11.png" class="img-fluid figure-img"></p>
+<figcaption>Table 3.2 - Regression of postshortage water use on income, preshortage water use, education, retirement, number of people resident, and increase in people resident</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="standardized-regression-coefficients-beta-coefficients" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="standardized-regression-coefficients-beta-coefficients"><span class="header-section-number">7</span> Standardized Regression Coefficients (Beta Coefficients)</h2>
+<ul>
+<li>The interpretation is now in terms of <em>variations of standard deviations</em> and not in terms of original variable measurement units:</li>
+</ul>
+<p><span class="math display">\[beta_i = \frac{s_{x_i} \cdot b_i}{s_y}\]</span></p>
+<p>That is, if <span class="math inline">\(x_i\)</span> changes by one standard deviation, how many standard deviations does <span class="math inline">\(y\)</span> change?</p>
+<ul>
+<li><p>The intercept is always zero because regression plane goes now through the origin, because the mean of standardized variables is always zero.</p></li>
+<li><p>The larger the absolute value (maximum value is less than <span class="math inline">\(|1|\)</span>) the more influence the independent variable has on the variation of the dependent variable.</p></li>
+<li><p>This allows to compare the importance of individual variable in one fixed model:</p></li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Beta-weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Income</td>
+<td>0.18</td>
+</tr>
+<tr class="even">
+<td>water80</td>
+<td>0.58</td>
+</tr>
+<tr class="odd">
+<td>Educat</td>
+<td>-0.09</td>
+</tr>
+<tr class="even">
+<td>Retire</td>
+<td>0.06</td>
+</tr>
+<tr class="odd">
+<td>peop81</td>
+<td>0.28</td>
+</tr>
+<tr class="even">
+<td>Cpeop</td>
+<td>0.03</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Beta coefficients are not comparable among different samples or studies because the variance of the dependent and independent variables may vary slightly from sample to sample.</p></li>
+<li><p>In contrast to bivariate regression analysis, the <em>beta coefficients are no identical to the correlation coefficient</em> between the dependent and the independent variables.</p></li>
+</ul>
+<hr>
+</section>
+<section id="global-f-test" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="global-f-test"><span class="header-section-number">8</span> Global F-Test</h2>
+<ul>
+<li><p>Null hypothesis testing for <em>all parameters</em> (except intercept) equal to zero.</p></li>
+<li><p><em>Global</em> (or <em>omnibus</em>) F-test:</p></li>
+</ul>
+<p><span class="math display">\[H_0: \beta_1 = \beta_2 = \ldots = \beta_{K-1} = 0 \text{ against}\]</span> <span class="math display">\[H_1: \beta_j \neq 0 \text{ for at least on } j \in \{1,\ldots,K-1\}\]</span></p>
+<ul>
+<li>The test statistic is:</li>
+</ul>
+<p><span class="math display">\[F_{df_1,df_2} = \frac{ESS/(K-1)}{RSS/(n-K)}\]</span></p>
+<p>where <span class="math inline">\(df_1 = K - 1\)</span> and <span class="math inline">\(df_2 = n - K\)</span></p>
+<hr>
+</section>
+<section id="partial-f-test" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="partial-f-test"><span class="header-section-number">9</span> Partial F-Test</h2>
+<ul>
+<li><p><strong>Nested models:</strong> The <em>ordinate</em> model has more independent variables (say <span class="math inline">\(K\)</span>) than the <em>subordinate</em> model, which has <span class="math inline">\(H\)</span> <em>fewer independent</em> variables with <span class="math inline">\(0 &lt; H &lt; K\)</span>.</p></li>
+<li><p>The subordinate model consists of a <em>sub-set</em> of independent variables from the ordinate model.</p></li>
+<li><p>This nesting allows a comparison across models.</p></li>
+<li><p><strong>Warning:</strong> If models are <em>not nested</em> a direct comparison becomes impossible.</p></li>
+<li><p>To test whether these <span class="math inline">\(H\)</span> independent variables add significantly to the model the partial F-test can be used with</p></li>
+</ul>
+<p><span class="math display">\[F_{n-K}^H = \frac{(RSS_{K-H} - RSS_K)/H}{RSS_K/(n-K)}\]</span></p>
+<p>with <span class="math inline">\(RSS_{K-H}\)</span> coming from the <em>restricted</em> model with <span class="math inline">\(H\)</span> less independent variables and <span class="math inline">\(RSS_K\)</span> is the full model.</p>
+<p>Note that <span class="math inline">\(RSS_K \leq RSS_{K-H}\)</span>, because the residual sum of squares decreases (or stays the same) as additional variables are included into the model.</p>
+<ul>
+<li>Compare model without <em>Income</em> and <em>Education</em> against full model by using the tabulated data. I.e: <span class="math inline">\(H_0: \beta_1 = \beta_3 = 0\)</span>. See <strong>HAM p 81</strong>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w03_HamChapt03A/figure-12.png" class="img-fluid figure-img"></p>
+<figcaption>Table 3.3 - Regression of postshortage water use omitting income and education</figcaption>
+</figure>
+</div>
+<p><span class="math display">\[F_{489}^2 = \frac{(RSS\{5\} - RSS\{7\})/2}{RSS\{7\}/(496-7)}\]</span> <span class="math display">\[= \frac{(380,520,363 - 352,761,188)/2}{352,761,188/489}\]</span> <span class="math display">\[= 19.24\]</span></p>
+<ul>
+<li><p>The global F-test as special case of the partial F-test (<strong>HAM eq 3.29</strong>): I.e. <span class="math inline">\(H_0: \beta_1 = \ldots = \beta_{K-1} = 0\)</span>.</p>
+<p>Here <span class="math inline">\(H = K - 1\)</span> and the constant vector remains the only variable in the restricted regression equation.</p></li>
+</ul>
+<p><span class="math display">\[F_{n-K}^{K-1} = \frac{(RSS_1 - RSS_K)/(K-1)}{RSS_K/(n-K)}\]</span> <span class="math display">\[= \frac{(TSS_Y - RSS_K)/(K-1)}{RSS_K/(n-K)}\]</span> <span class="math display">\[= \frac{ESS/(K-1)}{RSS_K/(n-K)}\]</span></p>
+<ul>
+<li><p>The t-test is a special case of the partial F-test with the null hypothesis <span class="math inline">\(H_0: \beta_k = 0\)</span> and the number of excluded parameters being <span class="math inline">\(H = 1\)</span>. Here <span class="math inline">\(t^2 = F\)</span></p></li>
+<li><p>Since the F-statistic is always positive, directional hypotheses cannot be tested.</p></li>
+</ul>
+<hr>
+</section>
+<section id="excursion-rs-anova-functions" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="excursion-rs-anova-functions"><span class="header-section-number">10</span> Excursion: R’s ANOVA-Functions</h2>
+<ul>
+<li><p>The <strong>anova</strong> function can perform partial F-tests for nested models. <span class="math inline">\(\Rightarrow\)</span> <strong>anova(lm.mod1,lm.mod2)</strong>.</p></li>
+<li><p>Applied on a single model, e.g., <strong>lm(y~x1+x2+x3)</strong>, it performs a sequence of nested tests and provides the residual sum of squares of the full model. The sequence of test follows the order of the independent variables in the regression formula are:</p>
+<ol type="i">
+<li><p><strong>lm(y~1)</strong> against <strong>lm(y~x1)</strong>,</p></li>
+<li><p><strong>lm(y~x1)</strong> against <strong>lm(y~x1+x2)</strong>, and</p></li>
+<li><p><strong>lm(y~x1+x2)</strong> against <strong>lm(y~x1+x2+x3)</strong></p></li>
+</ol>
+<p>In general, only the last comparison is meaningful unless one has a clear expectation of the order of the independent variables.</p>
+<p>This is known as <em>SAS type I ANOVA</em>.</p></li>
+<li><p>In contrast, the function <strong>Anova</strong> in the <strong>car</strong> library tests an alternative set of hypotheses. Its sequence of tests is</p>
+<ol type="i">
+<li><p><strong>lm(y~x2+x3)</strong> against <strong>lm(y~x1+x2+x3)</strong>,</p></li>
+<li><p><strong>lm(y~x1+x3)</strong> against <strong>lm(y~x1+x2+x3)</strong>, and</p></li>
+<li><p><strong>lm(y~x1+x2)</strong> against <strong>lm(y~x1+x2+x3)</strong></p></li>
+</ol>
+<p>This is known as <em>SAS type II ANOVA</em>. It is equivalent to the t-test for individual variables.</p></li>
+<li><p>For more details see Fox &amp; Weisberg (2019), pages 260-264.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

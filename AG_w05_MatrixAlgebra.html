@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-03-02">
+
+<title>Week05: Matrix Algebra and Eigensystems – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w05_MatrixAlgebra.html">Wk05-Matrix Algebra and Eigensystems</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#matrix-algebra" id="toc-matrix-algebra" class="nav-link active" data-scroll-target="#matrix-algebra"><span class="header-section-number">1</span> Matrix Algebra</a>
+  <ul class="collapse">
+  <li><a href="#elementary-matrix-operations" id="toc-elementary-matrix-operations" class="nav-link" data-scroll-target="#elementary-matrix-operations"><span class="header-section-number">1.1</span> Elementary matrix operations:</a></li>
+  <li><a href="#kronecker-product-not-relevant-for-gisc7310" id="toc-kronecker-product-not-relevant-for-gisc7310" class="nav-link" data-scroll-target="#kronecker-product-not-relevant-for-gisc7310"><span class="header-section-number">1.2</span> Kronecker Product (not relevant for GISC7310)</a></li>
+  <li><a href="#partitioned-matrices-not-relevant-for-gisc7310" id="toc-partitioned-matrices-not-relevant-for-gisc7310" class="nav-link" data-scroll-target="#partitioned-matrices-not-relevant-for-gisc7310"><span class="header-section-number">1.3</span> Partitioned Matrices (not relevant for GISC7310)</a></li>
+  <li><a href="#special-matrices" id="toc-special-matrices" class="nav-link" data-scroll-target="#special-matrices"><span class="header-section-number">1.4</span> Special Matrices:</a></li>
+  <li><a href="#special-property-matrices-and-matrix-inverse" id="toc-special-property-matrices-and-matrix-inverse" class="nav-link" data-scroll-target="#special-property-matrices-and-matrix-inverse"><span class="header-section-number">1.5</span> Special Property Matrices and Matrix Inverse</a></li>
+  <li><a href="#combining-matrices" id="toc-combining-matrices" class="nav-link" data-scroll-target="#combining-matrices"><span class="header-section-number">1.6</span> Combining Matrices</a></li>
+  <li><a href="#revisit-the-regression-equations" id="toc-revisit-the-regression-equations" class="nav-link" data-scroll-target="#revisit-the-regression-equations"><span class="header-section-number">1.7</span> Revisit the Regression Equations</a></li>
+  <li><a href="#linear-dependence-among-a-full-set-of-dummy-variables" id="toc-linear-dependence-among-a-full-set-of-dummy-variables" class="nav-link" data-scroll-target="#linear-dependence-among-a-full-set-of-dummy-variables"><span class="header-section-number">1.8</span> Linear Dependence among a Full Set of Dummy Variables</a></li>
+  <li><a href="#special-matrix-functions" id="toc-special-matrix-functions" class="nav-link" data-scroll-target="#special-matrix-functions"><span class="header-section-number">1.9</span> Special Matrix Functions</a></li>
+  <li><a href="#the-intersection-between-two-lines-in-matrix-form" id="toc-the-intersection-between-two-lines-in-matrix-form" class="nav-link" data-scroll-target="#the-intersection-between-two-lines-in-matrix-form"><span class="header-section-number">1.10</span> The Intersection between two Lines in Matrix Form</a></li>
+  <li><a href="#eigen-systems-of-matrices" id="toc-eigen-systems-of-matrices" class="nav-link" data-scroll-target="#eigen-systems-of-matrices"><span class="header-section-number">1.11</span> Eigen-systems of Matrices</a></li>
+  <li><a href="#some-derivatives-of-matrix-expressions-not-relevant-for-gisc7310" id="toc-some-derivatives-of-matrix-expressions-not-relevant-for-gisc7310" class="nav-link" data-scroll-target="#some-derivatives-of-matrix-expressions-not-relevant-for-gisc7310"><span class="header-section-number">1.12</span> Some Derivatives of Matrix Expressions (not relevant for GISC7310)</a></li>
+  <li><a href="#the-qr-factorization" id="toc-the-qr-factorization" class="nav-link" data-scroll-target="#the-qr-factorization"><span class="header-section-number">1.13</span> The QR Factorization</a></li>
+  <li><a href="#some-matrix-functions-and-operations-in-r" id="toc-some-matrix-functions-and-operations-in-r" class="nav-link" data-scroll-target="#some-matrix-functions-and-operations-in-r"><span class="header-section-number">1.14</span> Some matrix functions and operations in R:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w05_MatrixAlgebra.html">Wk05-Matrix Algebra and Eigensystems</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Week05: Matrix Algebra and Eigensystems</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 2, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="matrix-algebra" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Matrix Algebra</h1>
+<ul>
+<li><p><strong>Progression in notation:</strong></p>
+<p><strong><em>Scalars</em></strong> <em>(lower case italics)</em>: <span class="math inline">\(\underset{1 \times 1}{a}\)</span> are single numbers</p>
+<p><strong><em>Vectors</em></strong> <em>(lower case bold)</em>: <span class="math inline">\(\underset{n \times 1}{\mathbf{a}} \equiv \begin{pmatrix} a_1 \\ \vdots \\ a_n \end{pmatrix}\)</span> are <em>n scalars</em> arranged in a column (Caution: some older books define a vector as a row of numbers)</p>
+<p><strong><em>Matrices</em></strong> <em>(upper case bold)</em>: <span class="math inline">\(\underset{n \times m}{\mathbf{A}} \equiv \begin{pmatrix} a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1m} \\ a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2m} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nm} \end{pmatrix}\)</span> is combination of <em>m</em> single <em>vectors</em>, that is, <span class="math inline">\(\underset{n \times m}{\mathbf{A}} \equiv [\mathbf{a}_1 \,|\, \mathbf{a}_2 \,|\, \ldots \,|\, \mathbf{a}_m]\)</span>, of length <em>n</em>.</p>
+<p>Notes:</p>
+<ol type="1">
+<li><p>in statistics the rows are usually associated with the observations and the column with the variables</p></li>
+<li><p>the intersection <span class="math inline">\(a_{ij}\)</span> of the <span class="math inline">\(i^{th}\)</span> row with the <span class="math inline">\(j^{th}\)</span> column is called a cell or component.</p></li>
+<li><p>Sometimes the dimension <span class="math inline">\(\#rows \times \#columns\)</span> of a matrix or a vector are written below their symbols by to aid understanding of matrix operations.</p></li>
+<li><p>internally a computer stores a matrix sequentially in an array of memory cells <span class="math inline">\([\,\cdot\,]_k\)</span> such as <span class="math inline">\([a_{11}]_{k=1}, [a_{21}]_{k=2}, \ldots, [a_{n1}]_{k=n}, [a_{12}]_{k=n+1}, \ldots, [a_{nm}]_{k=n \cdot m}\)</span> where the index function <span class="math inline">\(k(i,j) = i + (j-1) \cdot n\)</span> points to the memory cell. By convention, the first index <span class="math inline">\(i\)</span> cycles through the matrix the fastest.</p></li>
+</ol></li>
+</ul>
+<section id="elementary-matrix-operations" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="elementary-matrix-operations"><span class="header-section-number">1.1</span> Elementary matrix operations:</h2>
+<p><strong>Transpose:</strong></p>
+<p>Transposition changes a column vector into a row vector</p>
+<p><span class="math display">\[\underset{n \times 1}{\mathbf{a}^T} \equiv \underset{1 \times n}{\left(a_1, a_2, \ldots, a_n\right)}.\]</span></p>
+<p>Transposition is usually denoted by a prime (<span class="math inline">\('\)</span>) or a capital (<span class="math inline">\(T\)</span>) in the exponent of a matrix or a vector. The capital superscript (<span class="math inline">\(^T\)</span>) is preferred because the prime can be confused with the derivative.</p>
+<p>To save print space while typesetting a vector it is sometimes written in the literature as</p>
+<p><span class="math display">\[\underset{n \times 1}{\mathbf{a}} = \left(a_1, a_2, \ldots, a_n\right)^T\]</span></p>
+<p>A transposed matrix is given by</p>
+<p><span class="math display">\[\underset{m \times n}{\mathbf{A}^T} \equiv \begin{pmatrix} a_{11} &amp; a_{21} &amp; \cdots &amp; a_{n1} \\ a_{12} &amp; a_{22} &amp; \cdots &amp; a_{n2} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{1m} &amp; a_{2m} &amp; \cdots &amp; a_{nm} \end{pmatrix}_{m \times n}.\]</span></p>
+<p>The <em>i</em>-th row becomes the <em>i</em>-th column or the <em>j</em>-th column becomes the <em>j</em>-th row. The <span class="math inline">\(a_{ij}^{\text{th}}\)</span> component becomes the <span class="math inline">\(a_{ji}^{\text{th}}\)</span> component.</p>
+<p>Note: Transposed matrices do not need to be stored in the new format in the memory, just the indexing algorithm of the memory cell pointer function <span class="math inline">\(k\)</span> is revised.</p>
+<p><strong>Matrix Addition and Subtractions:</strong></p>
+<p>Matrix addition/subtraction:</p>
+<p><span class="math display">\[\mathbf{A}_{[3 \times 2]} \pm \mathbf{B}_{[3 \times 2]} = \begin{pmatrix} a_{11} &amp; a_{12} \\ a_{21} &amp; a_{22} \\ a_{31} &amp; a_{32} \end{pmatrix} \pm \begin{pmatrix} b_{11} &amp; b_{12} \\ b_{21} &amp; b_{22} \\ b_{31} &amp; b_{32} \end{pmatrix} = \begin{pmatrix} a_{11} \pm b_{11} &amp; a_{12} \pm b_{12} \\ a_{21} \pm b_{21} &amp; a_{22} \pm b_{22} \\ a_{31} \pm b_{31} &amp; a_{32} \pm b_{32} \end{pmatrix}\]</span></p>
+<p>Note both matrix dimensions must match.</p>
+<p><strong>Vector-Vector Multiplication:</strong></p>
+<p>Let <span class="math inline">\(\underset{n \times 1}{\mathbf{a}}\)</span> and <span class="math inline">\(\underset{n \times 1}{\mathbf{b}}\)</span> be two vectors with matching dimensions</p>
+<p>In order perform vector by vector multiplication the <strong><em>inner dimensions</em></strong> of the left-hand and right-hand vectors must match. The <strong><em>outer dimensions</em></strong> of the left-hand and right-hand vectors give the dimensions of the results.</p>
+<p>Thus</p>
+<p><span class="math display">\[\underset{1 \times n}{\mathbf{a}^T} \cdot \underset{n \times 1}{\mathbf{b}} = \sum_{i=1}^{n} a_i \cdot b_i = \underset{1 \times 1}{c} \quad \text{is a scalar and called \textit{\textbf{inner product}}}\]</span></p>
+<p><span class="math display">\[\underset{n \times 1}{\mathbf{a}} \cdot \underset{1 \times m}{\mathbf{b}^T} = \begin{bmatrix} a_1 \cdot b_1 &amp; a_1 \cdot b_2 &amp; \cdots &amp; a_1 \cdot b_m \\ a_2 \cdot b_1 &amp; a_2 \cdot b_2 &amp; \cdots &amp; a_2 \cdot b_m \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_n \cdot b_1 &amp; a_n \cdot b_2 &amp; \cdots &amp; a_n \cdot b_m \end{bmatrix}_{n \times m} \quad \text{is an } n \times m \text{ matrix called the \textit{\textbf{outer product}}.}\]</span></p>
+<p>Here the dimensions <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> do not need to match.</p>
+<p><span class="math display">\[\underset{1 \times n}{\mathbf{a}^T} \cdot \underset{n \times 1}{\mathbf{a}} = \sum_{i=1}^{n} a_i^2 \quad \text{is always positive (if at least one } a_i \neq 0\text{)}\]</span></p>
+<p>The vector products <span class="math inline">\(\underset{n \times 1}{\mathbf{a}} \cdot \underset{n \times 1}{\mathbf{b}}\)</span> and <span class="math inline">\(\underset{n \times 1}{\mathbf{b}} \cdot \underset{n \times 1}{\mathbf{a}}\)</span> are <strong><em>not defined</em></strong> because of <strong><em>mismatching</em></strong> dimensions.</p>
+<p><strong>Matrix-matrix multiplication:</strong></p>
+<p>Both matrices must have <strong><em>conforming inner dimensions</em></strong>. The resulting matrix inherits the row dimension of the left-hand matrix and the column dimension of the right-hand matrix.</p>
+<p>Thus: <span class="math inline">\(\underset{n \times p}{\mathbf{A}} \cdot \underset{p \times m}{\mathbf{B}} = \underset{n \times m}{\mathbf{C}}\)</span></p>
+<p>Therefore, <span class="math inline">\(\underset{n \times p}{\mathbf{A}} \cdot \underset{q \times m}{\mathbf{B}}\)</span> is <strong><em>not defined</em></strong> because the inner dimensions are not conforming.</p>
+<p>A component <span class="math inline">\(c_{ij}\)</span> of the product matrix <span class="math inline">\(\mathbf{C}\)</span> is given by the <strong><em>inner product</em></strong> of <span class="math inline">\(i^{\text{th}}\)</span> row of <span class="math inline">\(\mathbf{A}\)</span> with the <span class="math inline">\(j^{\text{th}}\)</span> column of <span class="math inline">\(\mathbf{B}\)</span>, i.e.,</p>
+<p><span class="math display">\[c_{ij} = \sum_{k=1}^{p} \underbrace{a_{ik}}_{i^{th}\text{ row element}} \cdot \underbrace{b_{kj}}_{j^{th}\text{ column element}}\]</span></p>
+<p>Alternatively, one can write the matrix product as a <strong><em>sum of outer products</em></strong>:</p>
+<p><span class="math display">\[\underset{n \times m}{\mathbf{C}} = \underset{n \times p}{\mathbf{A}} \cdot \underset{p \times m}{\mathbf{B}} = \sum_{i=1}^{p} \underbrace{\begin{pmatrix} a_{i1} \\ a_{i2} \\ \vdots \\ a_{in} \end{pmatrix}}_{i^{th}\text{ row of }\mathbf{A}} \cdot \underbrace{\left(b_{i1} \quad b_{i2} \quad \cdots \quad b_{im}\right)}_{i^{th}\text{ row of }\mathbf{B}} = \sum_{i=1}^{p} \begin{bmatrix} a_{i1} \cdot b_{i1} &amp; a_{i1} \cdot b_{i2} &amp; \cdots &amp; a_{i1} \cdot b_{im} \\ a_{i2} \cdot b_{i1} &amp; a_{i2} \cdot b_{i2} &amp; \cdots &amp; a_{i2} \cdot b_{im} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{in} \cdot b_{i1} &amp; a_{in} \cdot b_{i2} &amp; \cdots &amp; a_{in} \cdot b_{im} \end{bmatrix}\]</span></p>
+<p>This requires substantially more operations, but it is sometimes useful when matrix products are decomposed into operations on individual observations <em>i</em>.</p>
+<p><img src="images/w05_MatrixAlgebra/slide-06.png" class="img-fluid"></p>
+<p><strong>Examples:</strong></p>
+<p><span class="math display">\[\begin{bmatrix} 1 &amp; 4 &amp; 7 \\ 2 &amp; 5 &amp; 8 \\ 3 &amp; 6 &amp; 9 \end{bmatrix} \times \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 3 &amp; 4 &amp; 5 \\ 5 &amp; 6 &amp; 7 \end{bmatrix}\]</span></p>
+<p>First, multiply <span class="math inline">\(a_{11}\)</span> by <span class="math inline">\(b_{11} = 1\)</span>,</p>
+<p><span class="math display">\[\begin{bmatrix} \boxed{1} &amp; 4 &amp; 7 \\ 2 &amp; 5 &amp; 8 \\ 3 &amp; 6 &amp; 9 \end{bmatrix} \quad \begin{bmatrix} \boxed{1} &amp; 2 &amp; 3 \\ 3 &amp; 4 &amp; 5 \\ 5 &amp; 6 &amp; 7 \end{bmatrix}\]</span></p>
+<p>Then, <span class="math inline">\(a_{12}\)</span> by <span class="math inline">\(b_{21} = 12\)</span>,</p>
+<p><span class="math display">\[\begin{bmatrix} 1 &amp; \boxed{4} &amp; 7 \\ 2 &amp; 5 &amp; 8 \\ 3 &amp; 6 &amp; 9 \end{bmatrix} \quad \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ \boxed{3} &amp; 4 &amp; 5 \\ 5 &amp; 6 &amp; 7 \end{bmatrix}\]</span></p>
+<p>Finally, <span class="math inline">\(a_{13}\)</span> by <span class="math inline">\(b_{31} = 35\)</span>,</p>
+<p><span class="math display">\[\begin{bmatrix} 1 &amp; 4 &amp; \boxed{7} \\ 2 &amp; 5 &amp; 8 \\ 3 &amp; 6 &amp; 9 \end{bmatrix} \quad \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 3 &amp; 4 &amp; 5 \\ \boxed{5} &amp; 6 &amp; 7 \end{bmatrix}\]</span></p>
+<p>The component <span class="math inline">\(c_{11}\)</span> becomes <span class="math inline">\(c_{11} = 1 + 12 + 35 = 48\)</span> and for the component <span class="math inline">\(c_{32}\)</span> the calculations are <span class="math inline">\(c_{32} = 6 + 24 + 54 = 84\)</span>:</p>
+<p><img src="images/w05_MatrixAlgebra/slide-06.png" class="img-fluid"></p>
+<p><img src="images/w05_MatrixAlgebra/slide-07.png" class="img-fluid"></p>
+<p>Other matrix product operations are (see <strong>HAM</strong> pp 334-337):</p>
+<p>Matrix-scalar:</p>
+<p><span class="math display">\[a \cdot \begin{pmatrix} b_{11} &amp; b_{12} \\ b_{21} &amp; b_{22} \end{pmatrix} = \begin{pmatrix} a \cdot b_{11} &amp; a \cdot b_{12} \\ a \cdot b_{21} &amp; a \cdot b_{22} \end{pmatrix}\]</span></p>
+<p>Vector-scalar:</p>
+<p><span class="math display">\[a \cdot \begin{pmatrix} c_1 \\ c_2 \end{pmatrix} = \begin{pmatrix} a \cdot c_1 \\ a \cdot c_2 \end{pmatrix}\]</span></p>
+<p>Matrix-vector:</p>
+<p><span class="math display">\[\mathbf{A}_{[3 \times 2]} \cdot \mathbf{c}_{[2 \times 1]} = \begin{pmatrix} a_{11} &amp; a_{12} \\ a_{21} &amp; a_{22} \\ a_{31} &amp; a_{32} \end{pmatrix} \cdot \begin{pmatrix} c_1 \\ c_2 \end{pmatrix} = \begin{pmatrix} a_{11} \cdot c_1 + a_{12} \cdot c_2 \\ a_{21} \cdot c_1 + a_{22} \cdot c_2 \\ a_{31} \cdot c_1 + a_{32} \cdot c_2 \end{pmatrix}\]</span></p>
+</section>
+<section id="kronecker-product-not-relevant-for-gisc7310" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="kronecker-product-not-relevant-for-gisc7310"><span class="header-section-number">1.2</span> Kronecker Product (not relevant for GISC7310)</h2>
+<p>Kronecker products are frequently used in statistics when repeated observations are available:</p>
+<p>It is defined for the matrices <span class="math inline">\(\underset{n \times p}{\mathbf{A}}\)</span> and <span class="math inline">\(\underset{r \times s}{\mathbf{B}}\)</span> by</p>
+<p><span class="math display">\[\underset{n \cdot r \times p \cdot s}{\mathbf{A} \otimes \mathbf{B}} = \begin{pmatrix} a_{11} \cdot \mathbf{B} &amp; a_{12} \cdot \mathbf{B} &amp; \cdots &amp; a_{1p} \cdot \mathbf{B} \\ a_{21} \cdot \mathbf{B} &amp; a_{22} \cdot \mathbf{B} &amp; \cdots &amp; a_{2p} \cdot \mathbf{B} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{n1} \cdot \mathbf{B} &amp; a_{n2} \cdot \mathbf{B} &amp; \cdots &amp; a_{np} \cdot \mathbf{B} \end{pmatrix}\]</span></p>
+<p>Special rules for specific matrix operations apply to Kronecker products. See for instance the mathematical appendix of John Fox.</p>
+</section>
+<section id="partitioned-matrices-not-relevant-for-gisc7310" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="partitioned-matrices-not-relevant-for-gisc7310"><span class="header-section-number">1.3</span> Partitioned Matrices (not relevant for GISC7310)</h2>
+<p>Frequently a matrix can be structurally broken down into logical sub-matrices. For instance,</p>
+<p><span class="math display">\[\underset{m+n \times p+q}{\mathbf{A}} = \begin{bmatrix} \underset{m \times p}{\mathbf{A}_{11}} &amp; \underset{m \times q}{\mathbf{A}_{12}} \\ \underset{n \times p}{\mathbf{A}_{21}} &amp; \underset{n \times q}{\mathbf{A}_{22}} \end{bmatrix} \quad \text{and} \quad \underset{(p+q) \times (r+s)}{\mathbf{B}} = \begin{bmatrix} \underset{p \times r}{\mathbf{B}_{11}} &amp; \underset{p \times s}{\mathbf{B}_{12}} \\ \underset{q \times r}{\mathbf{B}_{21}} &amp; \underset{q \times s}{\mathbf{B}_{22}} \end{bmatrix}.\]</span></p>
+<p>Then the product of both matrices in terms of their partitions can be expressed by</p>
+<p><span class="math display">\[\underset{(m+n) \times (r+s)}{\mathbf{A} \cdot \mathbf{B}} = \begin{bmatrix} \mathbf{A}_{11} \cdot \mathbf{B}_{11} + \mathbf{A}_{12} \cdot \mathbf{B}_{21} &amp; \mathbf{A}_{11} \cdot \mathbf{B}_{12} + \mathbf{A}_{12} \cdot \mathbf{B}_{22} \\ \mathbf{A}_{21} \cdot \mathbf{B}_{11} + \mathbf{A}_{22} \cdot \mathbf{B}_{21} &amp; \mathbf{A}_{21} \cdot \mathbf{B}_{12} + \mathbf{A}_{22} \cdot \mathbf{B}_{22} \end{bmatrix}\]</span></p>
+<p>Partitioned matrices are frequently used in multivariate statistics when either the variables or the observations can be grouped according to specific criteria.</p>
+</section>
+<section id="special-matrices" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="special-matrices"><span class="header-section-number">1.4</span> Special Matrices:</h2>
+<ul>
+<li><p><strong><em>Square matrix</em></strong> <span class="math inline">\(\underset{n \times n}{\mathbf{A}}\)</span> has identical <span class="math inline">\(n = m\)</span> row and column dimensions,</p>
+<p>Cells on the <strong><em>main diagonals</em></strong> have identical subscripts, i.e., <span class="math inline">\(a_{ii}\)</span>.</p>
+<p>A square <strong><em>diagonal matrix</em></strong> has non-zero element only on its diagonal</p></li>
+</ul>
+<p><span class="math display">\[\underset{n \times n}{\mathbf{A}} = \begin{pmatrix} a_{11} &amp; 0 &amp; \cdots &amp; 0 \\ 0 &amp; a_{22} &amp; \cdots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; \cdots &amp; a_{nn} \end{pmatrix}.\]</span></p>
+<p>The <strong><em>identity matrix</em></strong> has only ones on its diagonal</p>
+<p><span class="math display">\[\mathbf{I} = \begin{pmatrix} 1 &amp; 0 &amp; \cdots &amp; 0 \\ 0 &amp; 1 &amp; \cdots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; \cdots &amp; 1 \end{pmatrix}.\]</span></p>
+<p>It is the <strong><em>neutral</em></strong> matrix of matrix multiplication: <span class="math inline">\(\mathbf{A}_{[n \times m]} \cdot \mathbf{I}_{[m \times m]} = \mathbf{A}_{[n \times m]}\)</span></p>
+<p>Note: diagonal matrices and the identify matrix are <strong><em>sparse matrices</em></strong> since most of their elements are zero. There are <strong><em>efficient storage modes</em></strong> for sparse matrices.</p>
+<ul>
+<li>A <strong><em>symmetric matrix</em></strong> has matching components on its upper and lower triangle, i.e., <span class="math inline">\(a_{ij} = a_{ji}\)</span> or</li>
+</ul>
+<p><span class="math display">\[\underset{n \times n}{\mathbf{A}} = \underset{n \times n}{\mathbf{A}^T}\]</span></p>
+<p>Note: symmetric matrices have only <span class="math inline">\(\frac{n \cdot (n-1)}{2} + n\)</span> distinct components. Usually only the upper or</p>
+<p>lower <strong><em>triangle</em></strong> and the <strong><em>diagonal</em></strong> elements are stored compactly in the computer’s memory. Special pointer functions index the components of compactly stored symmetric matrices.</p>
+<ul>
+<li><p>The <strong><em>cross-product</em></strong> <span class="math inline">\(\mathbf{A}^T \cdot \mathbf{A}\)</span> is always symmetric and has the positive values <span class="math inline">\(\sum_{i=1}^{n} a_{ij}^2\)</span> on its diagonal for all <span class="math inline">\(j \in \{1, 2, \ldots, n\}\)</span>.</p></li>
+<li><p>For symmetric matrices <span class="math inline">\(\mathbf{A}\)</span> the matrix product <span class="math inline">\(\mathbf{B}^T \cdot \mathbf{A} \cdot \mathbf{B}\)</span> is called a <strong><em>quadratic form</em></strong>. It is again symmetric.</p></li>
+</ul>
+</section>
+<section id="special-property-matrices-and-matrix-inverse" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="special-property-matrices-and-matrix-inverse"><span class="header-section-number">1.5</span> Special Property Matrices and Matrix Inverse</h2>
+<ul>
+<li><p>A matrix <span class="math inline">\(\underset{n \times m}{\mathbf{A}} = [\mathbf{a}_1 \,|\, \mathbf{a}_2 \,|\, \ldots \,|\, \mathbf{a}_m]\)</span> has <strong><em>full column rank</em></strong>, if none of its columns <span class="math inline">\(\mathbf{a}_j \; j \in \{1, 2, \ldots, m\}\)</span> can be reproduced by a linear combination of the remaining columns, that is,</p>
+<p><span class="math inline">\(\mathbf{a}_j \neq \gamma_1 \cdot \mathbf{a}_1 + \cdots + \gamma_{j-1} \cdot \mathbf{a}_{j-1} + \gamma_{j+1} \cdot \mathbf{a}_{j+1} + \cdots + \gamma_m \cdot \mathbf{a}_m\)</span> for any combination of weighting coefficients <span class="math inline">\(\gamma_k\)</span> with <span class="math inline">\(k \in \{1, \ldots, j-1, j+1, \ldots, m\}\)</span>.</p></li>
+<li><p>For any square matrix <span class="math inline">\(\mathbf{A}\)</span> with full column rank there exists an <strong><em>inverse matrix</em></strong> <span class="math inline">\(\mathbf{A}^{-1}\)</span>, with <span class="math inline">\(\mathbf{A}^{-1} \cdot \mathbf{A} = \mathbf{A} \cdot \mathbf{A}^{-1} = \mathbf{I}\)</span>.</p>
+<p>The inverse matrix can be used to find the unknown parameters <span class="math inline">\(\mathbf{b}\)</span> of a system of linear equations:</p></li>
+</ul>
+<p><span class="math display">\[\mathbf{A} \cdot \mathbf{b} = \mathbf{c}\]</span></p>
+<p><span class="math display">\[\Rightarrow \underbrace{\mathbf{A}^{-1} \cdot \mathbf{A}}_{=\mathbf{I}} \cdot \mathbf{b} = \mathbf{A}^{-1} \cdot \mathbf{c} \quad \text{multiplying from the left with the inverse matrix } \mathbf{A}^{-1}\]</span></p>
+<p><span class="math display">\[\Rightarrow \mathbf{b} = \mathbf{A}^{-1} \cdot \mathbf{c}\]</span></p>
+<ul>
+<li>If <span class="math inline">\(\underset{n \times m}{\mathbf{A}}\)</span> has full column rank then the inverse of the cross-product <span class="math inline">\(\underset{m \times m}{\left(\mathbf{A}^T \cdot \mathbf{A}\right)^{-1}}\)</span> exists (a necessary condition is that <span class="math inline">\(m &lt; n\)</span>)</li>
+</ul>
+</section>
+<section id="combining-matrices" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="combining-matrices"><span class="header-section-number">1.6</span> Combining Matrices</h2>
+<ul>
+<li><p>Matrix multiplication is <strong><em>not commutative</em></strong> (except for some special matrices, such as symmetric matrices): <span class="math inline">\(\mathbf{A} \cdot \mathbf{B} \neq \mathbf{B} \cdot \mathbf{A}\)</span> (or more specially: <span class="math inline">\(\mathbf{A}^T \mathbf{A} \neq \mathbf{A} \cdot \mathbf{A}^T\)</span> or <span class="math inline">\(\mathbf{a}^T \mathbf{a} \neq \mathbf{a} \cdot \mathbf{a}^T\)</span>)</p></li>
+<li><p>Matrix multiplication and addition are <strong><em>associative</em></strong>:</p></li>
+</ul>
+<p><span class="math display">\[(\mathbf{A} \cdot \mathbf{B}) \cdot \mathbf{C} = \mathbf{A} \cdot (\mathbf{B} \cdot \mathbf{C})\]</span></p>
+<p><span class="math display">\[(\mathbf{A} + \mathbf{B}) + \mathbf{C} = \mathbf{A} + (\mathbf{B} + \mathbf{C})\]</span></p>
+<ul>
+<li>Matrix multiplication is <strong><em>distributive</em></strong>:</li>
+</ul>
+<p><span class="math display">\[\mathbf{A} \cdot (\mathbf{B} + \mathbf{C}) = \mathbf{A} \cdot \mathbf{B} + \mathbf{A} \cdot \mathbf{C}\]</span></p>
+<ul>
+<li>Rules for transposed and inverse matrix multiplications:</li>
+</ul>
+<p><span class="math display">\[(\mathbf{A} \cdot \mathbf{B})^T = \mathbf{B}^T \cdot \mathbf{A}^T \quad \text{and} \quad (\mathbf{A} \cdot \mathbf{B})^{-1} = \mathbf{B}^{-1} \cdot \mathbf{A}^{-1}\]</span></p>
+<p>and extended to more than two matrices</p>
+<p><span class="math display">\[(\mathbf{A} \cdot \mathbf{B} \cdot \mathbf{C})^T = \mathbf{C}^T \cdot \mathbf{B}^T \cdot \mathbf{A}^T \quad \text{and} \quad (\mathbf{A} \cdot \mathbf{B} \cdot \mathbf{C})^{-1} = \mathbf{C}^{-1} \cdot \mathbf{B}^{-1} \cdot \mathbf{A}^{-1}\]</span></p>
+</section>
+<section id="revisit-the-regression-equations" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="revisit-the-regression-equations"><span class="header-section-number">1.7</span> Revisit the Regression Equations</h2>
+<ul>
+<li>A regression problem can be expressed in matrix terms (here bivariate problem)</li>
+</ul>
+<p><span class="math display">\[\mathbf{y} = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix} \quad \mathbf{X} = \begin{pmatrix} 1 &amp; x_{11} \\ 1 &amp; x_{21} \\ \vdots &amp; \vdots \\ 1 &amp; x_{n1} \end{pmatrix} \quad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \end{pmatrix} \quad \text{and} \quad \boldsymbol{\varepsilon} = \begin{pmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_n \end{pmatrix}\]</span></p>
+<ul>
+<li><p>The regression systems are for the population <span class="math inline">\(\mathbf{y} = \mathbf{X} \cdot \boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span> and for the sample <span class="math inline">\(\mathbf{y} = \mathbf{X} \cdot \mathbf{b} + \mathbf{e}\)</span>, where <span class="math inline">\(\mathbf{X}\)</span> contains the constant vector of ones.</p></li>
+<li><p>The partial derivatives of <span class="math inline">\(RSS = \sum_{i=1}^{n} \left(y_i - 1 \cdot b_0 - x_{i1} \cdot b_1 - \cdots - x_{i,K-1} \cdot b_{K-1}\right)^2\)</span>, or in matrix terms <span class="math inline">\(RSS = \underbrace{(\mathbf{y} - \mathbf{X} \cdot \mathbf{b})^T}_{\mathbf{e}^T} \cdot \underbrace{(\mathbf{y} - \mathbf{X} \cdot \mathbf{b})}_{\mathbf{e}}\)</span> for the residual vector <span class="math inline">\(\mathbf{e}\)</span>, lead to the system of <strong><em>normal equations</em></strong>:</p></li>
+</ul>
+<p><span class="math display">\[\frac{\partial RSS}{\partial b_0} = -\sum 1 \cdot y_i + n b_0 + b_1 \sum x_i \equiv 0\]</span></p>
+<p><span class="math display">\[\frac{\partial RSS}{\partial b_1} = -\sum x_i y_i + b_0 \sum x_i + b_1 \sum x_i^2 \equiv 0\]</span></p>
+<p>These <strong><em>normal equations</em></strong> that can be expressed in matrix form by</p>
+<p><span class="math display">\[\begin{pmatrix} \sum 1 \cdot y_i \\ \sum x_i y_i \end{pmatrix} = \begin{pmatrix} \sum 1^2 &amp; \sum x_i \\ \sum x_i &amp; \sum x_i^2 \end{pmatrix} \cdot \begin{pmatrix} b_0 \\ b_1 \end{pmatrix} \quad \text{with} \quad \sum 1^2 = n\]</span></p>
+<p>or compact as <span class="math inline">\(\mathbf{X}^T \cdot \mathbf{y} = \left(\mathbf{X}^T \cdot \mathbf{X}\right) \cdot \mathbf{b}\)</span></p>
+<p>and solved for the unknown regression coefficients <span class="math inline">\(\mathbf{b}\)</span> by <span class="math inline">\(\mathbf{b} = \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1} \cdot \mathbf{X}^T \cdot \mathbf{y}\)</span></p>
+<p>This solution exists only if the matrix of independent variable (including the constant vector) has full column rank (not perfect multicollinearity)</p>
+<ul>
+<li><p>The inverse matrix <span class="math inline">\(\left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1}\)</span> takes simultaneously the combination all independent variables into account and play a crucial role in regression analysis:</p>
+<ol type="a">
+<li><p>The estimated parameters are <span class="math inline">\(\mathbf{b} = \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1} \cdot \mathbf{X}^T \cdot \mathbf{y}\)</span></p></li>
+<li><p>The <strong><em>covariance/correlation matrix</em></strong> of the estimated parameters (see <strong>HAM</strong> eq 3.20 and A3.5)</p></li>
+</ol>
+<p>become <span class="math inline">\(\mathbf{S}_b = s_e^2 \cdot \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1}\)</span> with <span class="math inline">\(Var(b_i) = s_{ii}\)</span> and <span class="math inline">\(corr(b_i, b_j) = \frac{s_{ij}}{\sqrt{s_{ii} \cdot s_{jj}}}\)</span></p>
+<p>Suggestion: Look at the correlation between the intercept and the slope parameter in bivariate regression analysis. It is negative.</p>
+<ol start="3" type="a">
+<li><p>The <strong><em>hat</em></strong> matrix <span class="math inline">\(\mathbf{H} = \mathbf{X} \cdot \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1} \cdot \mathbf{X}^T\)</span> generates the predicted values <span class="math inline">\(\hat{\mathbf{y}} = \mathbf{H} \cdot \mathbf{y}\)</span>.</p></li>
+<li><p>The <strong><em>projection</em></strong> matrix <span class="math inline">\(\mathbf{M} = \mathbf{I} - \mathbf{X} \cdot \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1} \cdot \mathbf{X}^T\)</span> generates the regression residuals <span class="math inline">\(\hat{\mathbf{e}} = \mathbf{M} \cdot \mathbf{y}\)</span></p></li>
+</ol></li>
+<li><p>The regression residuals <span class="math inline">\(\hat{\mathbf{e}}\)</span> and the independent variables <span class="math inline">\(\mathbf{X}\)</span> are <strong><em>uncorrelated</em></strong> because</p></li>
+</ul>
+<p><span class="math display">\[\underset{K \times 1}{\mathbf{0}} = \mathbf{X}^T \cdot \left[ \mathbf{I} - \mathbf{X} \cdot \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1} \cdot \mathbf{X}^T \right] \cdot \mathbf{y} = \mathbf{X}^T \cdot \left[ \mathbf{y} - \mathbf{X} \cdot \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1} \cdot \mathbf{X}^T \cdot \mathbf{y} \right]\]</span></p>
+<p><span class="math display">\[= \mathbf{X}^T \cdot \mathbf{y} - \underbrace{\mathbf{X}^T \cdot \mathbf{X} \cdot \left(\mathbf{X}^T \cdot \mathbf{X}\right)^{-1}}_{=\mathbf{I}} \cdot \mathbf{X}^T \cdot \mathbf{y}\]</span></p>
+<p>This implies that the residuals stand <strong><em>orthogonal</em></strong> (in a right angle) on the space spanned up by the independent variables <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<p>Note: it is sufficient here that the residuals are centered around zero, that is, <span class="math inline">\(\sum_{i=1}^{n} \hat{e}_i = 0\)</span> or <span class="math inline">\(\mathbf{1}^T \cdot \hat{\mathbf{e}} = 0\)</span> where <span class="math inline">\(\mathbf{1} = (1, 1, \ldots, 1)^T\)</span>.</p>
+<ul>
+<li><p>Similarly, the residuals <span class="math inline">\(\hat{\mathbf{e}}\)</span> are <strong><em>uncorrelated</em></strong> with the predicted values <span class="math inline">\(\hat{\mathbf{y}}\)</span> since <span class="math inline">\(\underset{1 \times 1}{0} = \mathbf{y}^T \cdot \underbrace{\mathbf{H}^T \cdot \mathbf{M}}_{=\mathbf{0}} \cdot \mathbf{y}\)</span>.</p></li>
+<li><p>The projection matrix is itempotent: that is, <span class="math inline">\(\mathbf{M} = \mathbf{M} \cdot \mathbf{M}\)</span>.</p></li>
+</ul>
+</section>
+<section id="linear-dependence-among-a-full-set-of-dummy-variables" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="linear-dependence-among-a-full-set-of-dummy-variables"><span class="header-section-number">1.8</span> Linear Dependence among a Full Set of Dummy Variables</h2>
+<ul>
+<li>Assume a categorical variable with two categories. Then we can define two dummy variable, one for each category. The regression matrix with full set of dummy variables and the intercept gives:</li>
+</ul>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp; 1 &amp; 0 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 1 \end{pmatrix} \quad \text{then we can express the intercept by} \quad \begin{pmatrix} 1 \\ 1 \\ 1 \\ 1 \\ 1 \\ 1 \end{pmatrix} = 1 \cdot \begin{pmatrix} 1 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0 \end{pmatrix} + 1 \cdot \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 1 \end{pmatrix}\]</span></p>
+<ul>
+<li><p><strong>Consequence:</strong> a complete set of dummy variables in collinear with the intercept and we cannot estimate the model. In this case the inverse <span class="math inline">\((\mathbf{X}^T \cdot \mathbf{X})^{-1}\)</span> does not exist</p></li>
+<li><p><strong>Solution:</strong> We need to drop one dummy variable because it is redundant with the remaining dummy variables and the intercept.</p></li>
+<li><p>This problem also applies to rates that are based on a complete set of count observations:</p>
+<p>Assume a region <span class="math inline">\(i\)</span> has <span class="math inline">\(n_{i1}\)</span> females and <span class="math inline">\(n_{i2}\)</span> males then its total population is <span class="math inline">\(n_{i1} + n_{i2}\)</span>.</p></li>
+</ul>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp; \dfrac{n_{11}}{n_{11} + n_{12}} &amp; \dfrac{n_{12}}{n_{11} + n_{12}} \\ 1 &amp; \dfrac{n_{21}}{n_{21} + n_{22}} &amp; \dfrac{n_{22}}{n_{21} + n_{22}} \\ 1 &amp; \dfrac{n_{31}}{n_{31} + n_{32}} &amp; \dfrac{n_{32}}{n_{31} + n_{32}} \end{pmatrix}\]</span></p>
+</section>
+<section id="special-matrix-functions" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="special-matrix-functions"><span class="header-section-number">1.9</span> Special Matrix Functions</h2>
+<ul>
+<li><strong>Determinant:</strong> The determinant <span class="math inline">\(|\underset{n \times n}{\mathbf{A}^T \cdot \mathbf{A}}|\)</span> of a cross-product matrix is a measure for its “volume” of a matrix. In case the determinate is zero, then the matrix lacks full rank.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Scatterplot between <em>z</em>-transformed Variables <span class="math inline">\(z_i = (v_i - \bar{v}) / s_v\)</span> with <span class="math inline">\(E(z_i) = 0\)</span> and <span class="math inline">\(Var(z_i) = 1\)</span></th>
+<th style="text-align: center;">Correlation for <em>z</em>-transformed Variables <span class="math inline">\(\left(\sum_{i=1}^{n} z(x_i) \cdot z(x_i)\right) \big/ n\)</span></th>
+<th style="text-align: center;">Determinant of Correlation Matrix <span class="math inline">\(\begin{vmatrix} a &amp; b \\ c &amp; d \end{vmatrix} = a \cdot d - b \cdot c\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(scatter plot for uncorrelated <em>X</em>, <em>Y</em>)</td>
+<td style="text-align: center;"><span class="math inline">\(Corr(X, Y) = 0.0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\begin{vmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{vmatrix} = 1.0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><img src="images/w05_MatrixAlgebra/slide-17.png" class="img-fluid"></p>
+<p><img src="images/w05_MatrixAlgebra/slide-18.png" class="img-fluid"></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Scatterplot</th>
+<th style="text-align: center;">Correlation</th>
+<th style="text-align: center;">Determinant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">(scatter plot for moderately correlated <em>X</em>, <em>Y</em>)</td>
+<td style="text-align: center;"><span class="math inline">\(Corr(X, Y) = 0.7\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\begin{vmatrix} 1 &amp; 0.7 \\ 0.7 &amp; 1 \end{vmatrix} = 0.51\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">(scatter plot for perfectly correlated <em>X</em>, <em>Y</em>)</td>
+<td style="text-align: center;"><span class="math inline">\(Corr(X, Y) = 1.0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\begin{vmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{vmatrix} = 0.0\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Trace:</strong> The trace is the sum of the diagonal elements of a square matrix <span class="math inline">\(\underset{n \times n}{\mathbf{A}}\)</span></li>
+</ul>
+<p><span class="math display">\[trace(\mathbf{A}) = \sum_{i=1}^{n} a_{ii}\]</span></p>
+</section>
+<section id="the-intersection-between-two-lines-in-matrix-form" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="the-intersection-between-two-lines-in-matrix-form"><span class="header-section-number">1.10</span> The Intersection between two Lines in Matrix Form</h2>
+<ul>
+<li><p>Let the two lines be <span class="math inline">\(y = a_1 + b_1 \cdot x\)</span> and <span class="math inline">\(y = a_2 + b_{21} \cdot x\)</span>, respectively. We can rewrite these equations <span class="math inline">\(-b_1 \cdot x + 1 \cdot y = a_1\)</span> and <span class="math inline">\(-b_2 \cdot x + 1 \cdot y = a_2\)</span>.</p></li>
+<li><p>Or in matrix form:</p></li>
+</ul>
+<p><span class="math display">\[\begin{pmatrix} -b_1 &amp; 1 \\ -b_2 &amp; 1 \end{pmatrix} \cdot \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} a_1 \\ a_2 \end{pmatrix}\]</span></p>
+<ul>
+<li>The solution for the intersecting point <span class="math inline">\((x^*, y^*)^T\)</span> using the inverse of is</li>
+</ul>
+<p><span class="math display">\[\begin{pmatrix} -b_1 &amp; 1 \\ -b_2 &amp; 1 \end{pmatrix}^{-1} = \frac{1}{-b_1 + b_2} \cdot \begin{pmatrix} 1 &amp; -1 \\ b_2 &amp; -b_1 \end{pmatrix}\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[\begin{pmatrix} x^* \\ y^* \end{pmatrix} = \frac{1}{-b_1 + b_2} \cdot \begin{pmatrix} 1 &amp; -1 \\ b_2 &amp; -b_1 \end{pmatrix} \cdot \begin{pmatrix} a_1 \\ a_2 \end{pmatrix}\]</span></p>
+<ul>
+<li><p>The solution for the intersecting point <span class="math inline">\((x^*, y^*)^T\)</span> using Cramer’s rule of the ratio of determinants is:</p>
+<ul>
+<li><p><span class="math inline">\(x^* = \left|\begin{pmatrix} a_1 &amp; 1 \\ a_2 &amp; 1 \end{pmatrix}\right| \big/ \left|\begin{pmatrix} -b_1 &amp; 1 \\ -b_2 &amp; 1 \end{pmatrix}\right|\)</span></p></li>
+<li><p><span class="math inline">\(y^* = \left|\begin{pmatrix} -b_1 &amp; a_1 \\ -b_2 &amp; a_2 \end{pmatrix}\right| \big/ \left|\begin{pmatrix} -b_1 &amp; 1 \\ -b_2 &amp; 1 \end{pmatrix}\right|\)</span></p></li>
+</ul></li>
+<li><p>The determinant of <span class="math inline">\(\left|\begin{pmatrix} -b_1 &amp; 1 \\ -b_2 &amp; 1 \end{pmatrix}\right|\)</span> is <span class="math inline">\(-b_1 + b_2\)</span>. If the determinant is zero, then both lines are either parallel for <span class="math inline">\(a_1 \neq a_2\)</span> with no intersection point or for <span class="math inline">\(a_1 = a_2\)</span> with an infinite number of intersecting points because both lines are identical.</p></li>
+</ul>
+</section>
+<section id="eigen-systems-of-matrices" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="eigen-systems-of-matrices"><span class="header-section-number">1.11</span> Eigen-systems of Matrices</h2>
+<ul>
+<li><p><strong>Eigenvalues and Eigenvectors:</strong> The scalar <span class="math inline">\(\lambda_j\)</span> is the <span class="math inline">\(j^{\text{th}}\)</span> <strong><em>eigenvalue</em></strong>, and the vector <span class="math inline">\(\mathbf{e}_j\)</span> is the <span class="math inline">\(j^{\text{th}}\)</span> <strong><em>eigenvector</em></strong> of a square symmetric matrix <span class="math inline">\(\underset{n \times n}{\mathbf{A}}\)</span> with the definiton <span class="math inline">\(\mathbf{A} \cdot \mathbf{e}_j = \lambda_j \cdot \mathbf{e}_j\)</span> with <span class="math inline">\(j \in \{1, 2, \ldots, n\}\)</span></p>
+<p>A <span class="math inline">\(n \times n\)</span> <u>symmetric</u> matrix <span class="math inline">\(\mathbf{A}\)</span> has <span class="math inline">\(n\)</span> eigenvectors and <span class="math inline">\(n\)</span> eigenvalues (some eigenvalues may be zero or duplicates)</p>
+<ul>
+<li><p>For a symmetric matrix <span class="math inline">\(\mathbf{A}\)</span> its eigenvectors satisfy the conditions <span class="math inline">\(\mathbf{e}_j^T \cdot \mathbf{e}_j = 1\)</span> and <span class="math inline">\(\mathbf{e}_j^T \cdot \mathbf{e}_i = 0\)</span> for <span class="math inline">\(i \neq j\)</span>, that is., the eigenvector matrix <span class="math inline">\(\mathbf{E} = [\mathbf{e}_1 | \mathbf{e}_2 | \ldots | \mathbf{e}_n]\)</span> is <strong><em>orthogonal</em></strong> with <span class="math inline">\(\mathbf{E}^T \cdot \mathbf{E} = \mathbf{I}\)</span> or equivalently <span class="math inline">\(\mathbf{E}^{-1} \cdot \mathbf{E} = \mathbf{I}\)</span> and therefore <span class="math inline">\(\mathbf{E}^T = \mathbf{E}^{-1}\)</span></p></li>
+<li><p>The <strong><em>direction</em></strong> of an eigenvector is <strong><em>indetermined</em></strong>: Thus <span class="math inline">\(\mathbf{e}_j\)</span> is equivalent to <span class="math inline">\((\mathbf{e}_j \cdot -1)\)</span>.</p></li>
+<li><p>Many software packages report the eigenvalues <span class="math inline">\(\lambda_j\)</span> and their associated eigenvectors <span class="math inline">\(\mathbf{e}_j\)</span> sorted ascendingly following <span class="math inline">\(\lambda_1 \geq \lambda_2 \geq \cdots \geq \lambda_n\)</span>.</p></li>
+<li><p>Many software packages report the eigenvalues as in a vector <span class="math inline">\(\boldsymbol{\lambda} = (\lambda_1, \lambda_2, \ldots, \lambda_n)^T\)</span>. The <code>diag</code>-function places eigenvalues <span class="math inline">\(\boldsymbol{\lambda}\)</span> on the diagonal of an <span class="math inline">\(n \times n\)</span> matrix <span class="math inline">\(\boldsymbol{\Lambda}\)</span>:</p></li>
+</ul></li>
+</ul>
+<p><span class="math display">\[\boldsymbol{\Lambda} = \text{diag}(\boldsymbol{\lambda}) = \begin{bmatrix} \lambda_1 &amp; \cdots &amp; 0 \\ \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; \cdots &amp; \lambda_n \end{bmatrix}\]</span></p>
+<ul>
+<li><p>The original matrix can be recreated by <span class="math inline">\(\mathbf{A} = \mathbf{E} \cdot \boldsymbol{\Lambda} \cdot \mathbf{E}^T\)</span>.</p></li>
+<li><p>The sum of eigenvalues is equal to the <strong><em>trace</em></strong> of their matrix: <span class="math inline">\(\sum_{i=1}^{n} \lambda_i = trace(\mathbf{A})\)</span></p></li>
+<li><p>The product of the eigenvalues is equal to the <strong><em>determinant</em></strong> of their matrix <span class="math inline">\(\prod_{i=1}^{n} \lambda_i = |\mathbf{A}|\)</span></p></li>
+<li><p>If at least one eigenvalue is equal to zero, that is, <span class="math inline">\(\lambda_j = 0\)</span>, then the matrix <span class="math inline">\(\mathbf{A}\)</span> <strong><em>lacks full rank</em></strong> and its determinant is <span class="math inline">\(|\mathbf{A}| = 0\)</span></p></li>
+<li><p>The number of non-zero eigenvalues is the <strong><em>rank</em></strong> of the matrix. Therefore, if at least one eigenvalues is equal to zero then the inverse does not exist.</p></li>
+<li><p>If <span class="math inline">\(\mathbf{A}\)</span> has full column rank then the cross-product <span class="math inline">\(\mathbf{A}^T \cdot \mathbf{A}\)</span> is called <strong><em>positive definite</em></strong>, and all eigenvalues are positive, i.e., <span class="math inline">\(\lambda_i &gt; 0 \; \forall i\)</span>.</p></li>
+<li><p>For <strong><em>symmetric</em></strong> matrices, all eigenvalues are <strong><em>real numbers</em></strong>.</p></li>
+<li><p>For other matrices, such as <span class="math inline">\(A = \begin{bmatrix} 2 &amp; 4 \\ -6 &amp; 3 \end{bmatrix}\)</span>, the eigenvalues may become <strong><em>imaginary numbers</em></strong>.</p></li>
+<li><p>For <span class="math inline">\(\mathbf{A} = \mathbf{E} \cdot \boldsymbol{\Lambda} \cdot \mathbf{E}^T\)</span> with none of its eigenvalues being zero, i.e., <span class="math inline">\(\lambda_i \neq 0 \; \forall i\)</span>, then its <strong><em>inverse</em></strong> can be written as <span class="math inline">\(\mathbf{A}^{-1} = \mathbf{E} \cdot \boldsymbol{\Lambda}^{-1} \cdot \mathbf{E}^T\)</span>.</p></li>
+<li><p>For <span class="math inline">\(\mathbf{A}\)</span> with <span class="math inline">\(\mathbf{A} = \mathbf{E} \cdot \boldsymbol{\Lambda} \cdot \mathbf{E}^T\)</span> its <span class="math inline">\(k^{\text{th}}\)</span> power becomes <span class="math inline">\(\mathbf{A}^k = \mathbf{E} \cdot \boldsymbol{\Lambda}^k \cdot \mathbf{E}^T\)</span> for <span class="math inline">\(k = 1, 2, \ldots\)</span>.</p></li>
+<li><p>For <u>asymmetric</u> square matrices <span class="math inline">\(\mathbf{A}\)</span> the expressions become <span class="math inline">\(\mathbf{A} = \mathbf{E} \cdot \boldsymbol{\Lambda} \cdot \mathbf{E}^{-1}\)</span> and <span class="math inline">\(\mathbf{A}^k = \mathbf{E} \cdot \boldsymbol{\Lambda}^k \cdot \mathbf{E}^{-1}\)</span>. Note, for asymmetric matrices <span class="math inline">\(\mathbf{E}^T \neq \mathbf{E}^{-1}\)</span>.</p></li>
+<li><p>For an asymmetric square matrix <span class="math inline">\(\mathbf{W}\)</span> with all row-sums being equal to 1, like a row-sum standardized spatial link matrix, the largest eigenvector is <span class="math inline">\(\lambda_1 = 1\)</span> and its eigenvector is <span class="math inline">\(\mathbf{e}_1\)</span> comprises of all constant components.</p></li>
+<li><p>Eigensystems frequently originate by solving problems such as <span class="math inline">\(\mathbf{A} \cdot \mathbf{e} = \lambda \cdot \mathbf{e} \Leftrightarrow (\mathbf{A} - \lambda \cdot \mathbf{I}) \cdot \mathbf{e} = \mathbf{0}\)</span>:</p>
+<p>[a] The trivial solution is that an eigenvector <span class="math inline">\(\mathbf{e} = \mathbf{0}\)</span>.</p>
+<p>[b] A non-trivial solution requires that the determinant <span class="math inline">\(|\mathbf{A} - \lambda \cdot \mathbf{I}| = 0\)</span>.</p>
+<p>The determinant <span class="math inline">\(|\mathbf{A} - \lambda \cdot \mathbf{I}|\)</span> can be written as polynomial function in powers of <span class="math inline">\(\lambda\)</span>, for example,</p></li>
+</ul>
+<p><span class="math display">\[\begin{vmatrix} a - \lambda &amp; b \\ c &amp; d - \lambda \end{vmatrix} = (a - \lambda) \cdot (d - \lambda) - b \cdot c = \lambda^2 - (a + d) \cdot \lambda + (a \cdot d - b \cdot c) = 0\]</span></p>
+<p>The two solutions to this polynomial function are</p>
+<p><span class="math display">\[\lambda_{1,2} = \frac{(a + d) \pm \sqrt{(a + d)^2 - 4 \cdot (a \cdot d - b \cdot c)}}{2}.\]</span></p>
+</section>
+<section id="some-derivatives-of-matrix-expressions-not-relevant-for-gisc7310" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="some-derivatives-of-matrix-expressions-not-relevant-for-gisc7310"><span class="header-section-number">1.12</span> Some Derivatives of Matrix Expressions (not relevant for GISC7310)</h2>
+<ul>
+<li><p>Special rule for traces: <span class="math inline">\(trace(\mathbf{A}^T \cdot \mathbf{B}) = trace(\mathbf{B} \cdot \mathbf{A}^T)\)</span>, that is, the order of multiplication does not matter, which a lead to substantial computational savings.</p></li>
+<li><p>Let <span class="math inline">\(\mathbf{A} \cdot \mathbf{X} = \begin{bmatrix} a_{11} &amp; a_{12} \\ a_{21} &amp; a_{22} \end{bmatrix} \cdot \begin{bmatrix} x_{11} &amp; x_{12} \\ x_{21} &amp; x_{22} \end{bmatrix} = \begin{bmatrix} a_{11} \cdot x_{11} + a_{12} \cdot x_{21} &amp; a_{11} \cdot x_{12} + a_{12} \cdot x_{22} \\ a_{21} \cdot x_{11} + a_{22} \cdot x_{21} &amp; a_{21} \cdot x_{12} + a_{22} \cdot x_{22} \end{bmatrix}\)</span></p>
+<p>Then <span class="math inline">\(trace(\mathbf{A} \cdot \mathbf{X}) = a_{11} \cdot x_{11} + a_{12} \cdot x_{21} + a_{21} \cdot x_{12} + a_{22} \cdot x_{22}\)</span> and derivatives become</p></li>
+</ul>
+<p><span class="math display">\[\frac{\partial \cdot trace(\mathbf{A} \cdot \mathbf{X})}{\partial \cdot \mathbf{X}} = \mathbf{A}^T\]</span></p>
+<ul>
+<li>Moreover, for the quadratic form <span class="math inline">\(\mathbf{X} \cdot \mathbf{A} \cdot \mathbf{X}\)</span> the derivatives are</li>
+</ul>
+<p><span class="math display">\[\frac{\partial \cdot trace(\mathbf{X} \cdot \mathbf{A} \cdot \mathbf{X})}{\partial \cdot \mathbf{X}} = \left(\mathbf{A} + \mathbf{A}^T\right) \cdot \mathbf{X}\]</span></p>
+<ul>
+<li>The residual sum of squares are</li>
+</ul>
+<p><span class="math display">\[RSS = (\mathbf{y} - \mathbf{X} \cdot \mathbf{b})^T \cdot (\mathbf{y} - \mathbf{X} \cdot \mathbf{b}) = trace\left((\mathbf{y} - \mathbf{X} \cdot \mathbf{b}) \cdot (\mathbf{y} - \mathbf{X} \cdot \mathbf{b})^T\right)\]</span></p>
+<p><span class="math display">\[= trace\left(\mathbf{y} \cdot \mathbf{y}^T - \mathbf{y} \cdot \mathbf{b}^T \cdot \mathbf{X}^T - \mathbf{X} \cdot \mathbf{b} \cdot \mathbf{y}^T + \mathbf{X} \cdot \mathbf{b} \cdot \mathbf{b}^T \cdot \mathbf{X}^T\right)\]</span></p>
+<p><span class="math display">\[= trace\left(\mathbf{y} \cdot \mathbf{y}^T\right) - 2 \cdot trace\left(\mathbf{y}^T \cdot \mathbf{X} \cdot \mathbf{b}\right) + trace\left(\mathbf{b}^T \cdot \mathbf{X}^T \cdot \mathbf{X} \cdot \mathbf{b}\right)\]</span></p>
+<ul>
+<li>Then the derivative with respect to the regression coefficient <span class="math inline">\(\mathbf{b}\)</span> becomes</li>
+</ul>
+<p><span class="math display">\[\frac{\partial \cdot RSS}{\partial \cdot \mathbf{b}} = \underbrace{\frac{trace\left(\mathbf{y} \cdot \mathbf{y}^T\right)}{\partial \cdot \mathbf{b}}}_{=0} - \frac{2 \cdot \partial \cdot trace\left(\mathbf{y}^T \cdot \mathbf{X} \cdot \mathbf{b}\right)}{\partial \cdot \mathbf{b}} + \frac{trace\left(\mathbf{b}^T \cdot \mathbf{X}^T \cdot \mathbf{X} \cdot \mathbf{b}\right)}{\partial \cdot \mathbf{b}}\]</span></p>
+<p><span class="math display">\[= -2 \cdot \mathbf{X}^T \cdot \mathbf{y} + \left[\left(\mathbf{X}^T \cdot \mathbf{X}\right) + \left(\mathbf{X}^T \cdot \mathbf{X}\right)^T\right] \cdot \mathbf{b}\]</span></p>
+<p><span class="math display">\[= -2 \cdot \mathbf{X}^T \cdot \mathbf{y} + 2 \cdot \left(\mathbf{X}^T \cdot \mathbf{X}\right) \cdot \mathbf{b}\]</span></p>
+<p>Setting the expression to zero and solving for <span class="math inline">\(\mathbf{b}\)</span> gets the standard ordinary least squares estimator <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T \cdot \mathbf{X})^{-1} \cdot \mathbf{X}^T \cdot \mathbf{y}\)</span>.</p>
+</section>
+<section id="the-qr-factorization" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="the-qr-factorization"><span class="header-section-number">1.13</span> The QR Factorization</h2>
+<ul>
+<li><p>The QR factorization is a numerical robust and computationally efficient method of solving systems of linear equations. It is internally used by the <code>lm( )</code> and may other functions in R.</p></li>
+<li><p>A matrix <span class="math inline">\(\mathbf{X}_{n \times p}\)</span> with full column rank can be factorized into the matrix product</p></li>
+</ul>
+<p><span class="math display">\[\mathbf{X}_{n \times p} = \mathbf{Q}_{n \times p} \cdot \mathbf{R}_{p \times p}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{Q}\)</span> is an orthogonal matrix, i.e., <span class="math inline">\(\mathbf{Q}^T \cdot \mathbf{Q} = \mathbf{I}\)</span>, and <span class="math inline">\(\mathbf{R}\)</span> is an upper triangular matrix.</p>
+<ul>
+<li>A triangular matrix makes solving linear equations substantially easier. For instance, the recursions for are:</li>
+</ul>
+<p><span class="math display">\[\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; 1 &amp; 2 \\ 0 &amp; 0 &amp; 1 \end{bmatrix} \cdot \begin{bmatrix} a \\ b \\ c \end{bmatrix} = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}\]</span></p>
+<p>[1] <span class="math inline">\(c = 3\)</span> (last row), [2] <span class="math inline">\(b + 2 \cdot 3 = 2 \Leftrightarrow b = -4\)</span> (second row), and [3] <span class="math inline">\(a - 2 \cdot 4 + 3 \cdot 3 = 1 \Leftrightarrow a = 0\)</span> (first row).</p>
+<ul>
+<li>The normal equations become:</li>
+</ul>
+<p><span class="math display">\[\mathbf{X}^T \cdot \mathbf{X} \cdot \mathbf{b} = \mathbf{X}^T \cdot \mathbf{y}\]</span></p>
+<p><span class="math display">\[[\mathbf{Q} \cdot \mathbf{R}]^T \cdot [\mathbf{Q} \cdot \mathbf{R}] \cdot \mathbf{b} = [\mathbf{Q} \cdot \mathbf{R}]^T \cdot \mathbf{y}\]</span></p>
+<p><span class="math display">\[\mathbf{R}^T \cdot \underbrace{\mathbf{Q}^T \cdot \mathbf{Q}}_{=\mathbf{I}} \cdot \mathbf{R} \cdot \mathbf{b} = \mathbf{R}^T \cdot \mathbf{Q}^T \cdot \mathbf{y} \quad | \times [\mathbf{R}^T]^{-1}\]</span></p>
+<p><span class="math display">\[\mathbf{R} \cdot \mathbf{b} = \mathbf{Q}^T \cdot \mathbf{y}\]</span></p>
+<p>Thus, the estimated regression coefficients become <span class="math inline">\(\mathbf{b} = \mathbf{R}^{-1} \cdot \mathbf{Q}^T \cdot \mathbf{y}\)</span>.</p>
+<ul>
+<li><p>The predicted values become <span class="math inline">\(\hat{\mathbf{y}} = \mathbf{X} \cdot \mathbf{b} = \mathbf{Q} \cdot \mathbf{R} \cdot \mathbf{R}^{-1} \cdot \mathbf{Q}^T \cdot \mathbf{y} = \mathbf{Q} \cdot \mathbf{Q}^T \cdot \mathbf{y}\)</span>.</p></li>
+<li><p>The <span class="math inline">\(p \times p\)</span> covariance matrix among the estimates <span class="math inline">\(\mathbf{b}\)</span> becomes <span class="math inline">\(\hat{\sigma}^2 \cdot [\mathbf{X}^T \cdot \mathbf{X}]^{-1} = \hat{\sigma}^2 \cdot [\mathbf{R}^T \cdot \mathbf{R}]^{-1}\)</span>.</p></li>
+</ul>
+</section>
+<section id="some-matrix-functions-and-operations-in-r" class="level2" data-number="1.14">
+<h2 data-number="1.14" class="anchored" data-anchor-id="some-matrix-functions-and-operations-in-r"><span class="header-section-number">1.14</span> Some matrix functions and operations in R:</h2>
+<ul>
+<li>Some advanced matrix issues can be found in the R newsletter of June 2004: <a href="http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf" class="uri">http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf</a> and in Fox&amp;Weisberg (2011) section 8.2.</li>
+</ul>
+<p><code>matrix(...)</code> — Defines a matrix. It parameters are the vector <code>v</code> of data values to be placed into <code>nrow</code> rows and <code>ncol</code> columns.</p>
+<p><code>as.matrix(X)</code> — Converts a <code>data.frame</code> into a numeric matrix, as long as all columns are of the same data type.</p>
+<p><code>dimnames</code> — A list with its first set <code>dimnames[[1]]</code> being row names and its second set <code>dimnames[[2]]</code> being column names</p>
+<p><code>apply(X,mar,fct)</code> — Preforms function <code>fct</code> either on all rows <code>mar=1</code> or columns <code>mar=2</code> of the matrix <code>X</code>.</p>
+<p><code>t(X)</code> — Transposes a matrix or vector</p>
+<p><code>%*%</code> — Performs the regular matrix-matrix and matrix-vector multiplications. Note that the inner dimensions must conform. A common typo is using <code>*</code> instead of <code>%*%</code>.</p>
+<p>The <code>*</code> is defined as element-wise multiplication for matrices with matching dimensions.</p>
+<p><code>t(X)%*%X</code> — Gives the cross-product <span class="math inline">\(\mathbf{X}^T \cdot \mathbf{X}\)</span> of a matrix <span class="math inline">\(\mathbf{X}\)</span></p>
+<p><code>cbind(x,y,z)</code> — Combines vectors <code>x</code>, <code>y</code>, and <code>z</code> into a matrix</p>
+<p><code>scale(X)</code> — Calculates a <em>z</em>-transform matrix where each column has the mean 0 and the variance 1 (not exactly because n-1 is used as degrees of freedom to calculate the standard deviation)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v.s1 <span class="ot">&lt;-</span> <span class="fu">scale</span>(v)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v.s1</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           [,<span class="dv">1</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,] <span class="sc">-</span><span class="fl">1.2649111</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,] <span class="sc">-</span><span class="fl">0.6324555</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]  <span class="fl">0.0000000</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>,]  <span class="fl">0.6324555</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>,]  <span class="fl">1.2649111</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"scaled:center"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"scaled:scale"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1.581139</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> v.s2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">5</span><span class="sc">/</span><span class="dv">4</span>)<span class="sc">*</span>v.s1   <span class="co"># rescale</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sum</span>(v.s2<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">5</span>            <span class="co"># This is has a variance of 1</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>diag(X)</code> — Either extracts the diagonal from a matrix <code>X</code> or places the vector <code>X</code> onto the diagonal of a matrix. See <code>?diag</code> for details</p>
+<p><code>solve(X)</code> — Calculates the inverse of a square matrix <code>X</code> as long as it has full column rank.</p>
+<p>Note: Matrices without full column rank cannot be solved and give an error message:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>),<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> A</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>] [,<span class="dv">3</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]    <span class="dv">1</span>    <span class="dv">2</span>    <span class="dv">7</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]    <span class="dv">2</span>    <span class="dv">4</span>    <span class="dv">8</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]    <span class="dv">3</span>    <span class="dv">6</span>    <span class="dv">9</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">solve</span>(A)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">solve.default</span>(A) <span class="sc">:</span> system is computationally singular<span class="sc">:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>reciprocal condition number <span class="ot">=</span> <span class="fl">2.31296e-018</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> A[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">solve</span>(A)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            [,<span class="dv">1</span>]          [,<span class="dv">2</span>]        [,<span class="dv">3</span>]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,] <span class="sc">-</span><span class="fl">0.60714286</span> <span class="sc">-</span><span class="fl">2.857143e-01</span>  <span class="fl">0.72619048</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,] <span class="sc">-</span><span class="fl">0.07142857</span>  <span class="fl">1.428571e-01</span> <span class="sc">-</span><span class="fl">0.07142857</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]  <span class="fl">0.25000000</span> <span class="sc">-</span><span class="fl">3.965082e-18</span> <span class="sc">-</span><span class="fl">0.08333333</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>cor(X)</code> — Calculates the correlation matrix of <code>X</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cA <span class="ot">&lt;-</span> <span class="fu">cor</span>(A)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cA</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>          [,<span class="dv">1</span>]      [,<span class="dv">2</span>]      [,<span class="dv">3</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,] <span class="fl">1.0000000</span> <span class="fl">0.4435328</span> <span class="fl">1.0000000</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,] <span class="fl">0.4435328</span> <span class="fl">1.0000000</span> <span class="fl">0.4435328</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,] <span class="fl">1.0000000</span> <span class="fl">0.4435328</span> <span class="fl">1.0000000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>det(X)</code> — Gives the determinant of a matrix.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">det</span>(A)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="sc">-</span><span class="dv">84</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>dim(X)</code> — Gives the number of rows and columns as a list</p>
+<p><code>nrow(X)</code> — Gives the number of rows (or observations)</p>
+<p><code>ncol(X)</code> — Gives the number of columns (or variables)</p>
+<p><code>sum(diag(X))</code> — Gives the trace of a matrix, which is the sum of its diagonal elements</p>
+<p><code>eigen(X)</code> — Returns eigenvalues and eigenvector of a symmetric square matrix as a list. See <code>?eigen</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> AtA<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">t</span>(A)<span class="sc">%*%</span>A   <span class="co"># symmetric cross-product</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> eig.res <span class="ot">&lt;-</span> <span class="fu">eigen</span>(AtA<span class="fl">.1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> eig.res<span class="sc">$</span>values</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">366.398830</span>  <span class="fl">13.557583</span>   <span class="fl">1.043587</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> eig.res<span class="sc">$</span>vectors</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>           [,<span class="dv">1</span>]       [,<span class="dv">2</span>]         [,<span class="dv">3</span>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,] <span class="sc">-</span><span class="fl">0.1856217</span>  <span class="fl">0.1714712</span>  <span class="fl">0.967544419</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,] <span class="sc">-</span><span class="fl">0.6722214</span> <span class="sc">-</span><span class="fl">0.7403468</span>  <span class="fl">0.002241993</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,] <span class="sc">-</span><span class="fl">0.7167028</span>  <span class="fl">0.6499879</span> <span class="sc">-</span><span class="fl">0.252691056</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lambda <span class="ot">&lt;-</span> <span class="fu">diag</span>(eig.res<span class="sc">$</span>values)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> lambda</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>         [,<span class="dv">1</span>]     [,<span class="dv">2</span>]      [,<span class="dv">3</span>]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,] <span class="fl">347.1548</span>  <span class="fl">0.00000</span> <span class="fl">0.0000000</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="fl">0.0000</span> <span class="fl">20.87140</span> <span class="fl">0.0000000</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]   <span class="fl">0.0000</span>  <span class="fl">0.00000</span> <span class="fl">0.9738318</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> E <span class="ot">&lt;-</span> eig.res<span class="sc">$</span>vectors</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> AtA<span class="fl">.2</span> <span class="ot">&lt;-</span> E<span class="sc">%*%</span>lambda<span class="sc">%*%</span><span class="fu">t</span>(E)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> AtA<span class="fl">.2</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>     [,<span class="dv">1</span>] [,<span class="dv">2</span>] [,<span class="dv">3</span>]</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,]   <span class="dv">14</span>   <span class="dv">42</span>   <span class="dv">50</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,]   <span class="dv">42</span>  <span class="dv">161</span>  <span class="dv">156</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,]   <span class="dv">50</span>  <span class="dv">156</span>  <span class="dv">194</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

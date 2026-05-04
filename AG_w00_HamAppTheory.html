@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-01-26">
+
+<title>Week00: Basic Math Review - Hamilton’s Applied Theory – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">Wk00-Basic Math Review</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#greek-letters-skipped" id="toc-greek-letters-skipped" class="nav-link active" data-scroll-target="#greek-letters-skipped"><span class="header-section-number">1</span> GREEK LETTERS (SKIPPED)</a></li>
+  <li><a href="#standard-symbols-and-definition-skipped" id="toc-standard-symbols-and-definition-skipped" class="nav-link" data-scroll-target="#standard-symbols-and-definition-skipped"><span class="header-section-number">2</span> STANDARD SYMBOLS AND DEFINITION (SKIPPED)</a></li>
+  <li><a href="#notation-for-random-variables-skipped" id="toc-notation-for-random-variables-skipped" class="nav-link" data-scroll-target="#notation-for-random-variables-skipped"><span class="header-section-number">3</span> NOTATION FOR RANDOM VARIABLES (SKIPPED)</a>
+  <ul class="collapse">
+  <li><a href="#ranked-data-skipped" id="toc-ranked-data-skipped" class="nav-link" data-scroll-target="#ranked-data-skipped"><span class="header-section-number">3.1</span> RANKED DATA (SKIPPED)</a></li>
+  </ul></li>
+  <li><a href="#basic-summation-sum-rules-skipped" id="toc-basic-summation-sum-rules-skipped" class="nav-link" data-scroll-target="#basic-summation-sum-rules-skipped"><span class="header-section-number">4</span> BASIC SUMMATION <span class="math inline">\(\sum\)</span>-RULES: (SKIPPED)</a></li>
+  <li><a href="#finding-the-minimum-of-a-quadratic-function-discussed" id="toc-finding-the-minimum-of-a-quadratic-function-discussed" class="nav-link" data-scroll-target="#finding-the-minimum-of-a-quadratic-function-discussed"><span class="header-section-number">5</span> FINDING THE MINIMUM OF A QUADRATIC FUNCTION (DISCUSSED)</a></li>
+  <li><a href="#the-exponential-and-logarithmic-functions-skipped" id="toc-the-exponential-and-logarithmic-functions-skipped" class="nav-link" data-scroll-target="#the-exponential-and-logarithmic-functions-skipped"><span class="header-section-number">6</span> THE EXPONENTIAL AND LOGARITHMIC FUNCTIONS (SKIPPED)</a></li>
+  <li><a href="#appendix-1-population-and-sampling-distributions-ham-pp-289-293-skipped" id="toc-appendix-1-population-and-sampling-distributions-ham-pp-289-293-skipped" class="nav-link" data-scroll-target="#appendix-1-population-and-sampling-distributions-ham-pp-289-293-skipped"><span class="header-section-number">7</span> APPENDIX 1: POPULATION AND SAMPLING DISTRIBUTIONS (HAM PP 289-293) (SKIPPED)</a></li>
+  <li><a href="#example-explanation-of-integration-using-the-exponential-distribution-discussed" id="toc-example-explanation-of-integration-using-the-exponential-distribution-discussed" class="nav-link" data-scroll-target="#example-explanation-of-integration-using-the-exponential-distribution-discussed"><span class="header-section-number">8</span> EXAMPLE: EXPLANATION OF INTEGRATION USING THE EXPONENTIAL DISTRIBUTION (DISCUSSED)</a>
+  <ul class="collapse">
+  <li><a href="#covariance-skipped" id="toc-covariance-skipped" class="nav-link" data-scroll-target="#covariance-skipped"><span class="header-section-number">8.1</span> COVARIANCE (SKIPPED)</a></li>
+  </ul></li>
+  <li><a href="#normal-distribution-and-its-relatives-discussed" id="toc-normal-distribution-and-its-relatives-discussed" class="nav-link" data-scroll-target="#normal-distribution-and-its-relatives-discussed"><span class="header-section-number">9</span> NORMAL DISTRIBUTION AND ITS RELATIVES (DISCUSSED)</a></li>
+  <li><a href="#bivariate-normal-distribution-skipped" id="toc-bivariate-normal-distribution-skipped" class="nav-link" data-scroll-target="#bivariate-normal-distribution-skipped"><span class="header-section-number">10</span> BIVARIATE NORMAL DISTRIBUTION (SKIPPED)</a></li>
+  <li><a href="#bias-and-mean-square-error-skipped" id="toc-bias-and-mean-square-error-skipped" class="nav-link" data-scroll-target="#bias-and-mean-square-error-skipped"><span class="header-section-number">11</span> BIAS AND MEAN SQUARE ERROR (SKIPPED)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">Wk00-Basic Math Review</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Week00: Basic Math Review - Hamilton’s Applied Theory</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 26, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="greek-letters-skipped" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="greek-letters-skipped"><span class="header-section-number">1</span> GREEK LETTERS (SKIPPED)</h2>
+<p>Greek letters are frequently used to denote either specific population properties, to name specific statistical test or as mathematical operator.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 32%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Greek Letter</th>
+<th>Phonetic</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\alpha\)</span></td>
+<td>alpha</td>
+<td>error of first type</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta\)</span></td>
+<td>beta</td>
+<td>error of second type / regression parameters</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\varepsilon\)</span></td>
+<td>epsilon</td>
+<td>regression population error term</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mu\)</span></td>
+<td>mu</td>
+<td>expected population mean</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\pi\)</span></td>
+<td>pi</td>
+<td>population probability in binomial distribution</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\rho\)</span></td>
+<td>rho</td>
+<td>population correlation coefficient</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma\)</span></td>
+<td>sigma</td>
+<td>population standard deviation</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\chi\)</span></td>
+<td>chi</td>
+<td><span class="math inline">\(\chi^2\)</span>-test, <span class="math inline">\(\chi^2\)</span>-distribution with <span class="math inline">\(df\)</span> degrees of freedom</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\theta\)</span></td>
+<td>theta</td>
+<td>generic parameter of a distribution</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda\)</span></td>
+<td>lambda</td>
+<td>parameter of the Poisson and exponential distributions</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\Pi\)</span></td>
+<td>capital pi</td>
+<td>multiplication symbol</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\Sigma\)</span></td>
+<td>capital sigma</td>
+<td>summation symbol</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="standard-symbols-and-definition-skipped" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="standard-symbols-and-definition-skipped"><span class="header-section-number">2</span> STANDARD SYMBOLS AND DEFINITION (SKIPPED)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 55%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\frac{\mathit{Numerator}}{\mathit{Denominator}}\)</span></td>
+<td>ratio between the numerator and the denominator</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\times\)</span> or <span class="math inline">\(\cdot\)</span>, and <span class="math inline">\(\div\)</span> or <span class="math inline">\(/,\ +,\ -\)</span></td>
+<td>multiplication and division take precedence over addition and subtraction</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X &lt; Y\)</span></td>
+<td><span class="math inline">\(X\)</span> is less than <span class="math inline">\(Y\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X \leq Y\)</span></td>
+<td><span class="math inline">\(X\)</span> is less or equal than <span class="math inline">\(Y\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X \pm Y\)</span></td>
+<td><span class="math inline">\(X\)</span> plus minus <span class="math inline">\(Y\)</span>, i.e., the two values <span class="math inline">\(X + Y\)</span> and <span class="math inline">\(X - Y\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\|X\|\)</span></td>
+<td><span class="math inline">\(X = \begin{cases} X &amp; \text{for } X \geq 0 \\ -X &amp; \text{for } X &lt; 0 \end{cases}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\frac{1}{X} = X^{-1}\)</span></td>
+<td>Reciprocal of <span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X^n\)</span></td>
+<td><span class="math inline">\(X\)</span> to the power of <span class="math inline">\(n\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sqrt{X} = X^{\frac{1}{2}}\)</span></td>
+<td>square root of <span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i \in \{1, 2, \ldots, n\}\)</span></td>
+<td><span class="math inline">\(i\)</span> is an element in the set <span class="math inline">\(\{1, 2, \ldots, n\}\)</span>. It takes the values <span class="math inline">\(1, 2, \ldots\)</span> to <span class="math inline">\(n\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="notation-for-random-variables-skipped" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="notation-for-random-variables-skipped"><span class="header-section-number">3</span> NOTATION FOR RANDOM VARIABLES (SKIPPED)</h2>
+<p>A random variable is denoted by a capital letter <span class="math inline">\(X\)</span> while a lower-case letter <span class="math inline">\(x\)</span> is used to denote its observed value.</p>
+<p>A random variable can comprise of more than values <span class="math inline">\(X_i\)</span> relates to a specific observation. The index <span class="math inline">\(i\)</span> ranges from <span class="math inline">\(1, 2, \ldots, n\)</span>. The number of observations in a variable is <span class="math inline">\(n\)</span>. Therefore, <span class="math inline">\(X = \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_n \end{pmatrix}\)</span>.</p>
+<p>For example, if <span class="math inline">\(X\)</span> has <span class="math inline">\(n = 4\)</span> observation then it can take 4 random observations, i.e.,</p>
+<p><span class="math display">\[x = \begin{pmatrix} x_1 = 3 \\ x_2 = 5 \\ x_3 = 5 \\ x_4 = 4 \end{pmatrix}\]</span></p>
+<section id="ranked-data-skipped" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="ranked-data-skipped"><span class="header-section-number">3.1</span> RANKED DATA (SKIPPED)</h3>
+<ul>
+<li>Statisticians frequently work with an ascending sorted sequence of observations which is denoted by square brackets <span class="math inline">\(X_{[ranked]} = \begin{pmatrix} X_{[1]} \\ X_{[2]} \\ \vdots \\ X_{[n]} \end{pmatrix}\)</span>. For example, <span class="math inline">\(x_{[ranked]} = \begin{pmatrix} x_{[1]} = 3 \\ x_{[2]} = 4 \\ x_{[3]} = 5 \\ x_{[4]} = 5 \end{pmatrix}\)</span>.</li>
+</ul>
+<p>Should two observations have the same rank, such as <span class="math inline">\(x_i = 5\)</span> and <span class="math inline">\(x_j = 5\)</span>, then the ranks <span class="math inline">\([r]\)</span> and <span class="math inline">\([r + 1]\)</span> will be assigned arbitrarily. See the example below:</p>
+<ul>
+<li>Ordering vectors in R:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Idx <span class="ot">&lt;-</span> <span class="fu">order</span>(x)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> xSort <span class="ot">&lt;-</span> x[Idx]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> <span class="fu">cbind</span>(x, Idx, xSort)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     x Idx xSort</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,] <span class="dv">4</span>   <span class="dv">3</span>     <span class="dv">2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>,] <span class="dv">5</span>   <span class="dv">4</span>     <span class="dv">3</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>,] <span class="dv">2</span>   <span class="dv">1</span>     <span class="dv">4</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>,] <span class="dv">3</span>   <span class="dv">5</span>     <span class="dv">4</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>,] <span class="dv">4</span>   <span class="dv">2</span>     <span class="dv">5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="basic-summation-sum-rules-skipped" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="basic-summation-sum-rules-skipped"><span class="header-section-number">4</span> BASIC SUMMATION <span class="math inline">\(\sum\)</span>-RULES: (SKIPPED)</h2>
+<ul>
+<li><p><span class="math display">\[\sum_{i=1}^{n} x_i = x_1 + x_2 + \cdots + x_n\]</span></p>
+<p>The lower index <span class="math inline">\(i = 1\)</span> express the starting value of the summation sequence and the upper index <span class="math inline">\(n\)</span> the value where the summation index <span class="math inline">\(i\)</span> stops.</p></li>
+<li><p>More specifically <span class="math display">\[\sum_{i=2}^{5} x_i = x_2 + x_3 + x_4 + x_5\]</span></p></li>
+<li><p>For a sum over a constant <span class="math inline">\(c\)</span> we get <span class="math display">\[\sum_{i=1}^{n} c = n \cdot c\]</span></p></li>
+<li><p>for a mixture of a constant and a variable <span class="math display">\[\sum_{i=1}^{n} c \cdot x_i = c \cdot \sum_{i=1}^{n} x_i\]</span></p></li>
+<li><p>for an additive mixture of variables <span class="math display">\[\sum_{i=1}^{n} (x_i + y_i) = \sum_{i=1}^{n} x_i + \sum_{i=1}^{n} y_i\]</span></p></li>
+<li><p>Inequalities (so do not confuse either side of the expression; they lead to different results):</p></li>
+</ul>
+<p><span class="math display">\[\sum_{i=1}^{n} x_i \cdot y_i \neq \sum_{i=1}^{n} x_i \cdot \sum_{i=1}^{n} y_i\]</span></p>
+<p><span class="math display">\[\left(\sum_{i=1}^{n} x_i\right)^2 \neq \sum_{i=1}^{n} x_i^2\]</span></p>
+<ul>
+<li><p>Special rule for ranks: <span class="math display">\[\sum_{i=1}^{n} i = \frac{n}{2} \cdot (n+1)\]</span></p></li>
+<li><p>Doubly index variables <span class="math inline">\(x_{ij}\)</span> in a cross-tabulation (or matrix) with <span class="math inline">\(I\)</span> rows and <span class="math inline">\(J\)</span> columns:</p></li>
+</ul>
+<p>Let:</p>
+<p><span class="math display">\[\begin{pmatrix}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1j} &amp; \cdots &amp; x_{1J} \\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2j} &amp; \cdots &amp; x_{2J} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_{i1} &amp; x_{i2} &amp; \cdots &amp; x_{ij} &amp; \cdots &amp; x_{iJ} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_{I1} &amp; x_{I2} &amp; \cdots &amp; x_{Ij} &amp; \cdots &amp; x_{IJ}
+\end{pmatrix}\]</span></p>
+<p>Then the <span class="math inline">\(i\)</span>-th row sum is <span class="math inline">\(x_{i+} = \sum_{j=1}^{J} x_{ij}\)</span> and the <span class="math inline">\(j\)</span>-th column sum is <span class="math inline">\(x_{+j} = \sum_{i=1}^{I} x_{ij}\)</span> and</p>
+<p>the total sum becomes <span class="math display">\[x_{++} = \sum_{i=1}^{I} x_{i+} = \sum_{j=1}^{J} x_{+j} = \sum_{i=1}^{I} \sum_{j=1}^{J} x_{ij} \text{ or } \sum_{j=1}^{J} \sum_{i=1}^{I} x_{ij}\]</span></p>
+<ul>
+<li>The R functions:
+<ul>
+<li><code>sum()</code> calculated the sum over the elements of a vector</li>
+<li><code>rowSums()</code> calculates along the rows of a matrix a vector of row sums.</li>
+<li><code>colSums()</code> calculates along the columns of a matrix a vector of column sums.</li>
+</ul></li>
+<li>Example: The variance estimator can either be calculated by <span class="math display">\[s^2 = \frac{1}{n-1} \cdot \sum_{i=1}^{n} (x_i - \overline{x})^2\]</span> or by <span class="math display">\[s^2 = \frac{1}{n-1} \cdot \sum_{i=1}^{n} x_i^2 - \frac{n}{n-1} \cdot \overline{x}^2\]</span>. To derive this equivalence of both expressions, remember the definition of the mean <span class="math inline">\(\overline{x} = 1/n \cdot \sum_{i=1}^{n} x_i\)</span>:</li>
+</ul>
+<p><span class="math display">\[\begin{aligned}
+s^2 &amp;= \frac{1}{n-1} \cdot \sum_{i=1}^{n} (x_i - \overline{x})^2 = \frac{1}{n-1} \cdot \sum_{i=1}^{n} (x_i^2 - 2 x_i \cdot \overline{x} + \overline{x}^2) \\
+&amp;= \frac{1}{n-1} \cdot \left(\sum_{i=1}^{n} x_i^2 - \sum_{i=1}^{n} 2 \cdot x_i \cdot \overline{x} + \sum_{i=1}^{n} \overline{x}^2\right) = \frac{1}{n-1} \cdot \left(\sum_{i=1}^{n} x_i^2 - 2 \cdot \overline{x} \cdot \underbrace{\sum_{i=1}^{n} x_i}_{=n \cdot \overline{x}} + n \cdot \overline{x}^2\right) \\
+&amp;= \frac{1}{n-1} \cdot \left(\sum_{i=1}^{n} x_i^2 \underbrace{- 2 \cdot n \cdot \overline{x}^2 + n \cdot \overline{x}^2}_{=-n \cdot \overline{x}^2}\right) = \frac{1}{n-1} \cdot \sum_{i=1}^{n} x_i^2 - \frac{n}{n-1} \cdot \overline{x}^2
+\end{aligned}\]</span></p>
+<hr>
+</section>
+<section id="finding-the-minimum-of-a-quadratic-function-discussed" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="finding-the-minimum-of-a-quadratic-function-discussed"><span class="header-section-number">5</span> FINDING THE MINIMUM OF A QUADRATIC FUNCTION (DISCUSSED)</h2>
+<ul>
+<li><p>In statistic, we encounter frequently the need to find an optimal value of a function. If we want to minimize square deviations around an unknown value, the optimal value would be the minimum.</p></li>
+<li><p>The minimum is found at that point where the slope of the function is zero. The slope of a function is measured by the first derivative.</p></li>
+<li><p>Basic rules of derivatives:</p></li>
+</ul>
+<p><span class="math display">\[\frac{\partial}{\partial x} f(a) = 0 \quad \text{The function } f(a) \text{ is constant with regards to } x\]</span></p>
+<p><span class="math display">\[\frac{\partial}{\partial x} a \cdot x^n = a \cdot n \cdot x^{n-1}\]</span></p>
+<p>Example: <span class="math inline">\(\frac{\partial}{\partial x} 3 \cdot x^2 = 6 \cdot x\)</span></p>
+<p><span class="math display">\[\frac{\partial}{\partial x} [f(x) + g(x)] = \frac{\partial}{\partial x} f(x) + \frac{\partial}{\partial x} g(x)\]</span></p>
+<p>Example: <span class="math inline">\(\frac{\partial}{\partial x} (3 \cdot x^2 + 5 \cdot x^{-1}) = 6 \cdot x - 1 \cdot 5 \cdot x^{-2}\)</span></p>
+<ul>
+<li>Which value of <span class="math inline">\(\theta\)</span> (theta) minimizes the quadratic expression <span class="math inline">\(\min_{\theta} \sum_{i=1}^{n} (x_i - \theta)^2\)</span>?</li>
+</ul>
+<p><span class="math display">\[f(\theta) = \sum_{i=1}^{n} (x_i - \theta)^2 = \sum_{i=1}^{n} x_i^2 - 2 \cdot \theta \cdot \sum_{i=1}^{n} x_i + n \cdot \theta^2\]</span></p>
+<p>Take the first derivative with regard to <span class="math inline">\(\theta\)</span>, which is the slope of <span class="math inline">\(f(\theta)\)</span> at <span class="math inline">\(\theta\)</span>:</p>
+<p><span class="math display">\[\frac{\partial}{\partial \theta} \left( \underbrace{\sum_{i=1}^{n} x_i^2}_{\text{dropped, does not depend on } \theta} - 2 \cdot \theta \cdot \sum_{i=1}^{n} x_i + n \cdot \theta^2 \right) = -2 \cdot \sum_{i=1}^{n} x_i + 2 \cdot n \cdot \theta\]</span></p>
+<p>At its maximum or minimum the first derivative (that is, the slope) is zero for a given <span class="math inline">\(\theta\)</span>.</p>
+<p>We thus get:</p>
+<p><span class="math display">\[-2 \cdot \sum_{i=1}^{n} x_i + 2 \cdot n \cdot \theta = 0 \Leftrightarrow \theta = \frac{\sum_{i=1}^{n} x_i}{n}\]</span></p>
+<p><span class="math inline">\(\Rightarrow\)</span> This is the well-know arithmetic mean!!!</p>
+<ul>
+<li>Example: The data values are <span class="math inline">\(x_i \in \{2, 5, 4, 6, 8\}\)</span>. Thus the function to be minimized with respect to <span class="math inline">\(\theta\)</span> is</li>
+</ul>
+<p><span class="math display">\[f(\theta) = (2 - \theta)^2 + (5 - \theta)^2 + (4 - \theta)^2 + (6 - \theta)^2 + (8 - \theta)^2\]</span></p>
+<p>The solution is found at <span class="math inline">\(\theta = 5 \Leftrightarrow \overline{x}\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w00_HamAppTheory/page-09.png" class="img-fluid figure-img"></p>
+<figcaption>Page 9</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="the-exponential-and-logarithmic-functions-skipped" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="the-exponential-and-logarithmic-functions-skipped"><span class="header-section-number">6</span> THE EXPONENTIAL AND LOGARITHMIC FUNCTIONS (SKIPPED)</h2>
+<ul>
+<li>Both functions are inversely related: <span class="math inline">\(x = \exp(\log(x))\)</span> and <span class="math inline">\(x = \log(\exp(x))\)</span>.</li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li><p>The <span class="math inline">\(\log\)</span>-function is usually the natural logarithm to the basis of the Euler constant <span class="math inline">\(e = 2.718\)</span></p></li>
+<li><p>The support of the logarithmic function is limited from below by zero, that is, <span class="math inline">\(x \in ]0, \infty]\)</span> with <span class="math inline">\(\log(0) = -\infty\)</span>.</p></li>
+<li><p>Both functions distort constant distance units of the variable <span class="math inline">\(x\)</span>.</p></li>
+</ul>
+<p>E.g., <span class="math inline">\(\Delta x_1 = 4 - 2 = 2\)</span> and <span class="math inline">\(\Delta x_2 = 8 - 6 = 2\)</span></p>
+<p>but <span class="math inline">\(\log(4) - \log(2) = 1.086\)</span> and <span class="math inline">\(\log(8) - \log(6) = 0.288\)</span>, respectively.</p>
+<p>This means, logarithmic distances at the upper end of the scale become compressed.</p>
+<ul>
+<li>Basic rules:
+<ul>
+<li>Logarithmic function: <span class="math inline">\(\log(x \cdot y) = \log(x) + \log(y)\)</span>, <span class="math inline">\(\log(x/y) = \log(x) - \log(y)\)</span> and <span class="math inline">\(\log(x^y) = y \cdot \log(x)\)</span></li>
+<li>Exponential function: <span class="math inline">\(\exp(x + y) = \exp(x) \cdot \exp(y)\)</span>, <span class="math inline">\(\exp(x - y) = \exp(x) / \exp(y)\)</span> and <span class="math inline">\([\exp(x)]^y = \exp(x \cdot y)\)</span></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w00_HamAppTheory/page-10.png" class="img-fluid figure-img"></p>
+<figcaption>Page 10</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="appendix-1-population-and-sampling-distributions-ham-pp-289-293-skipped" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="appendix-1-population-and-sampling-distributions-ham-pp-289-293-skipped"><span class="header-section-number">7</span> APPENDIX 1: POPULATION AND SAMPLING DISTRIBUTIONS (HAM PP 289-293) (SKIPPED)</h2>
+<ul>
+<li><p>In <em>theoretical</em> statistics we make statements about the population based on the distribution <span class="math inline">\(f(y)\)</span> of a <em>continuous</em> random variable <span class="math inline">\(Y\)</span> or <span class="math inline">\(\Pr(Y = y)\)</span> for a <em>discrete</em> random variable <span class="math inline">\(Y\)</span>, which takes the specific value <span class="math inline">\(y\)</span>, respectively.</p></li>
+<li><p>In applied statistics we are dealing with sampled data from the population and aim at estimating properties of the underlying population from which the random sample has been drawn</p></li>
+<li><p>The sample is a narrow keyhole allowing us to look at parts of the unknown population.</p></li>
+<li><p><strong>Conventions</strong>:</p>
+<ul>
+<li>Parameters characterizing the population are usually denoted by Greek characters, e.g., the expectation <span class="math inline">\(\mu_X\)</span> of the random variable <span class="math inline">\(X\)</span>. Their estimates are either expressed by Latin characters, e.g., the mean <span class="math inline">\(\overline{X}\)</span>, or by a hat symbol that denotes an estimate, e.g., <span class="math inline">\(\hat{\mu}_X\)</span>.</li>
+<li>A random variable from the population is usually denoted by a capital letter, e.g., <span class="math inline">\(X\)</span>, whereas its observed realization in the sample is denoted by small letters, e.g., <span class="math inline">\(x_1, x_2, \ldots, x_n\)</span></li>
+</ul></li>
+<li><p><strong>Population expectation (i.e., central tendency, center of gravity)</strong></p>
+<ul>
+<li><p>The mean in the population distribution is called <em>expectation</em> and denoted by <span class="math inline">\(\mu_X = E[X]\)</span></p></li>
+<li><p>For discrete variables the expectation function is defined by</p></li>
+</ul></li>
+</ul>
+<p><span class="math display">\[E[Y] = \sum_{i=1}^{I} y_i \cdot \Pr(Y = y_i)\]</span></p>
+<p>where <span class="math inline">\(I\)</span> is the total number of representations, which can be an infinite number as for the Poisson distribution <span class="math inline">\(y_i \in \{0, 1, 2, \ldots, \infty\}\)</span> or a finite set as in the sum of two throws of a dices <span class="math inline">\(y_i \in \{2, 3, \ldots, 12\}\)</span></p>
+<ul>
+<li>For continuous random variables the expectation function is defined in terms of the density function <span class="math inline">\(f(x)\)</span></li>
+</ul>
+<p><span class="math display">\[E[X] = \int_{-\infty}^{\infty} x \cdot f(x) \, dx\]</span></p>
+<p>For infeasible values of <span class="math inline">\(x\)</span> the density will become <span class="math inline">\(f(x) = 0\)</span> because these values are improbable.</p>
+<ul>
+<li>Remember: the density function <span class="math inline">\(f(x)\)</span> at <span class="math inline">\(x\)</span> cannot be interpreted as probability. We only can express the probability for a range of value:</li>
+</ul>
+<p><span class="math display">\[X \in [a, b] \Rightarrow \Pr(a \leq X \leq b) = \int_a^b f(x) \cdot dx\]</span></p>
+<ul>
+<li>Some rules for the expectation:</li>
+</ul>
+<p><span class="math display">\[E[a] = a \quad \text{for a deterministic (constant) value } a\]</span></p>
+<p><span class="math display">\[E[a \cdot X] = a \cdot E[X]\]</span></p>
+<p><span class="math display">\[E[X \pm Y] = E[X] \pm E[Y]\]</span></p>
+<p><span class="math display">\[E[a + b \cdot X] = a + b \cdot E[X]\]</span></p>
+<p><span class="math display">\[E[a \cdot X + b \cdot Y] = E[a \cdot X] + E[b \cdot Y] = a \cdot E[X] + b \cdot E[Y]\]</span></p>
+<ul>
+<li><p>An unbiased sample estimator of the expectation <span class="math inline">\(E[Y]\)</span> is the mean <span class="math display">\[\overline{Y}_n = \frac{1}{n} \cdot \sum_{i=1}^{n} y_i\]</span></p></li>
+<li><p>Variance</p>
+<ul>
+<li>The variance is a measure of squared spread around the center, i.e., expectation, of a random variable</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[\begin{aligned}
+\text{Var}[X] &amp;= \int_{-\infty}^{\infty} (x - E[X])^2 \cdot f(x) \, dx \\
+&amp;= E[(X - E[X])^2] \\
+&amp;= E[X^2] - (E[X])^2
+\end{aligned}\]</span></p>
+<ul>
+<li>The unbiased sample variance estimator <span class="math inline">\(s_X^2\)</span> for the population variance <span class="math inline">\(\sigma^2\)</span> is:</li>
+</ul>
+<p><span class="math display">\[s_X^2 = \frac{1}{n-1} \cdot \sum_{i=1}^{n} (x_i - \overline{X}_n)^2\]</span></p>
+<ul>
+<li>Basic properties:</li>
+</ul>
+<p><span class="math display">\[\text{Var}[a] = 0 \quad \text{because } a \text{ is a constant (i.e., not random)}\]</span></p>
+<p><span class="math display">\[\text{Var}[b \cdot X] = b^2 \cdot \text{Var}[X]\]</span></p>
+<p><span class="math display">\[\text{Var}[X + Y] = \text{Var}[X] + \text{Var}[Y] + 2 \cdot \text{Cov}[X, Y]\]</span></p>
+<p><span class="math display">\[\text{Var}[X - Y] = \text{Var}[X] + \text{Var}[Y] - 2 \cdot \text{Cov}[X, Y]\]</span></p>
+<p><span class="math display">\[\text{Var}[a + b \cdot X] = \text{Var}[a] + \text{Var}[b \cdot X] = b^2 \cdot \text{Var}[X]\]</span></p>
+<p><span class="math display">\[\text{Var}[a \cdot X + b \cdot Y] = a^2 \cdot \text{Var}[X] + b^2 \cdot \text{Var}[Y] + 2 \cdot a \cdot b \cdot \text{Cov}[X, Y]\]</span></p>
+<hr>
+</section>
+<section id="example-explanation-of-integration-using-the-exponential-distribution-discussed" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="example-explanation-of-integration-using-the-exponential-distribution-discussed"><span class="header-section-number">8</span> EXAMPLE: EXPLANATION OF INTEGRATION USING THE EXPONENTIAL DISTRIBUTION (DISCUSSED)</h2>
+<ul>
+<li><p>Integration is key mathematical operation in statistics which is used to find the expectation, variance and higher order moments of continues random variables.</p></li>
+<li><p>Background information on the exponential distribution</p>
+<ul>
+<li>Example: the <strong>waiting times</strong> <span class="math inline">\(x\)</span> between two independent random events (earthquakes, customers lining up in-front of a cashier etc.) may be exponential distributed.</li>
+<li>The exponential distribution only has the one parameter <span class="math inline">\(\lambda\)</span>, with <span class="math inline">\(E[X] = 1/\lambda\)</span> being the average waiting time.</li>
+<li>You can look at some exponential distributions using <code>dexp()</code> function.</li>
+<li>The exponential distribution is related to the <em>Poisson</em> distribution:
+<ul>
+<li>It provides a stochastic model for the number of independent random events <span class="math inline">\(y\)</span> within a fixed time-interval.</li>
+<li>The expected number of random events within a fixed time-interval is <span class="math inline">\(E[Y] = \lambda\)</span>.</li>
+<li>If the expected number of events is large, then the average waiting time between the events will be small.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Thus, we have an inverse relationship between both expectations for the exponential and the Poisson distribution.</p>
+<ul>
+<li>The density function of the exponential distribution is</li>
+</ul>
+<p><span class="math display">\[f(x|\lambda) = \begin{cases} \lambda \cdot \exp(-\lambda \cdot x) &amp; \text{for } x \geq 0 \\ 0 &amp; \text{otherwise} \end{cases}\]</span></p>
+<ul>
+<li>Its cumulative distribution function is</li>
+</ul>
+<p><span class="math display">\[F(x|\lambda) = \int_0^x \lambda \cdot \exp(-\lambda \cdot x) \cdot dx = \begin{cases} 1 - \exp(-\lambda \cdot x) &amp; \text{for } x \geq 0 \\ 0 &amp; \text{otherwise} \end{cases}\]</span></p>
+<ul>
+<li>Proof:
+<ul>
+<li>Let <span class="math inline">\(v = -\lambda \cdot x\)</span>. Then <span class="math inline">\(\frac{dv}{dx} = -\lambda \Rightarrow dx = -\frac{1}{\lambda} \cdot dv\)</span></li>
+<li>Then</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[F(x|\lambda) = \int_0^x \lambda \cdot \exp(-\lambda \cdot x) \cdot dx = \lambda \cdot \int_0^x \exp(-\lambda \cdot x) \cdot dx\]</span></p>
+<p>and after a change in variable, i.e., integration by substitution, it becomes</p>
+<p><span class="math display">\[F(x|\lambda) = \lambda \cdot \int_0^x -\frac{1}{\lambda} \cdot \exp(v) \cdot dv = -\int_0^x \exp(v) \cdot dv = -\exp(v)|_0^x = 1 - \exp(-\lambda \cdot x)\]</span></p>
+<ul>
+<li><p>Its moments are known analytical:</p>
+<ul>
+<li>The expectation is <span class="math display">\[E[X] = \int_0^{\infty} x \cdot \lambda \cdot \exp(-\lambda \cdot x) \cdot dx = \frac{1}{\lambda}\]</span> and</li>
+<li>The variance is <span class="math display">\[\text{Var}[X] = \int_0^{\infty} \left(x - \underbrace{1/\lambda}_{=E[X]}\right)^2 \cdot \lambda \cdot \exp(-\lambda \cdot x) \cdot dx = \frac{1}{\lambda^2}\]</span></li>
+</ul></li>
+<li><p>The parameter <span class="math inline">\(\lambda\)</span> can be estimated from sample observations by <span class="math inline">\(\hat{\lambda} = 1/\overline{x}\)</span>.</p></li>
+<li><p>Evaluation of the moments by numerical integration (see script `RIEMANNSUM.R):</p>
+<ul>
+<li><p>The Riemann sum approximates a continuous integral by <span class="math display">\[\int_a^b f(x) \, dx \approx \sum_{i=1}^{n} f(t_i) \cdot dx_i\]</span> by discrete evaluations with <span class="math inline">\(a = x_0 &lt; x_1 &lt; x_2 &lt; \cdots &lt; x_{n-1} &lt; x_n = b\)</span>, with the bin width <span class="math inline">\(dx_i = x_i - x_{i-1}\)</span> and <span class="math inline">\(t_i \in [x_{i-1}, x_i]\)</span>, which usually is set to the halfway point <span class="math inline">\(t_i = \frac{x_{i-1} + x_i}{2}\)</span></p></li>
+<li><p>The parameters <span class="math inline">\(dx_i\)</span> and <span class="math inline">\(n\)</span> determine the resolution and therefore the accuracy of the Riemann sum integral approximation.</p></li>
+<li><p>Advance integration algorithms make the differences <span class="math inline">\(dx_i = x_i - x_{i-1}\)</span> adaptive relative to the variability of <span class="math inline">\(f(x)\)</span>:</p>
+<ul>
+<li>If the underlying function <span class="math inline">\(f(x)\)</span> varies heavily, then the differences <span class="math inline">\(dx_i\)</span> should be small (much finer).</li>
+<li>On the other hand, if the underlying function is fairly smooth the differences <span class="math inline">\(dx_i\)</span> could larger.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>The underlying idea is similar to an adaptive kernel density estimator.</p>
+<ul>
+<li>Evaluation of the exponential density, expectation, and variance for <span class="math inline">\(\lambda = 1\)</span> in the range <span class="math inline">\(x \in [0, 10]\)</span>:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w00_HamAppTheory/page-17.png" class="img-fluid figure-img"></p>
+<figcaption>Page 17</figcaption>
+</figure>
+</div>
+<ul>
+<li>Notes:
+<ul>
+<li><p>The integral <span class="math inline">\(\int_{-\infty}^{\infty} f(x) \cdot dx = 1\)</span> over any density functions <span class="math inline">\(f(x)\)</span> always is one.</p></li>
+<li><p>Theoretically all integrals in the example should be equal to one, because <span class="math inline">\(\int_{-\infty}^{\infty} f(x) \cdot dx = 1\)</span>, <span class="math inline">\(E(X) = 1/\lambda\)</span> and <span class="math inline">\(Var(X) = 1/\lambda^2\)</span> for an exponential distribution with <span class="math inline">\(\lambda = 1\)</span>.</p></li>
+<li><p>Even if we increase the number of bins, these integrals will not approach 1 because we are truncating the infinitive integration range by the upper value <span class="math inline">\(b = 10 &lt; \infty\)</span>.</p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w00_HamAppTheory/page-18.png" class="img-fluid figure-img"></p>
+<figcaption>Page 18</figcaption>
+</figure>
+</div>
+<hr>
+<section id="covariance-skipped" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="covariance-skipped"><span class="header-section-number">8.1</span> COVARIANCE (SKIPPED)</h3>
+<ul>
+<li><p>The covariance is a basic measure of the linear relationship between pairs of random variables.</p></li>
+<li><p>The covariance is the numerator of the correlation coefficient. That is <span class="math inline">\(\rho = \frac{\text{Cov}[X,Y]}{\sqrt{\text{Var}[X] \cdot \text{Var}[Y]}}\)</span></p></li>
+<li><p>The covariance of a variable with itself is called the variance:</p></li>
+</ul>
+<p><span class="math display">\[\text{Cov}[X, X] = \text{Var}[X]\]</span></p>
+<ul>
+<li><p><span class="math display">\[\begin{aligned}
+\text{Cov}[X, Y] &amp;= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x - E[X])(y - E[Y]) \cdot f(x, y) \, dx \, dy \\
+&amp;= E[(X - E[X])(Y - E[Y])] \\
+&amp;= E[XY] - E[X] \cdot E[Y]
+\end{aligned}\]</span></p></li>
+<li><p>An unbiased estimator for the population covariance is</p></li>
+</ul>
+<p><span class="math display">\[s_{XY} = \frac{\sum_{i=1}^{n} \left[ (x_i - \overline{X}) \cdot (y_i - \overline{Y}) \right]}{n-1}\]</span></p>
+<ul>
+<li>Some rules:</li>
+</ul>
+<p><span class="math display">\[\text{Cov}[a, Y] = 0\]</span></p>
+<p><span class="math display">\[\text{Cov}[b \cdot X, Y] = b \cdot \text{Cov}[X, Y]\]</span></p>
+<p><span class="math display">\[\text{Cov}[X + W, Y] = \text{Cov}[X, Y] + \text{Cov}[W, Y]\]</span></p>
+<ul>
+<li>The covariance is unaffected by the addition of a constant to either random variable:</li>
+</ul>
+<p><span class="math display">\[
+\mathrm{Cov}[a + X, Y]
+= \underbrace{\mathrm{Cov}[a, Y]}_{=0}
++ \mathrm{Cov}[X, Y]
+= \mathrm{Cov}[X, Y]
+\]</span></p>
+<ul>
+<li>The covariance between sums of variables reduces to sums of covariances between their components</li>
+</ul>
+<p><span class="math display">\[\begin{aligned}
+\text{Cov}[X + W, Y + Z] &amp;= \text{Cov}[X + W, Y] + \text{Cov}[X + W, Z] \\
+&amp;= \text{Cov}[X, Y] + \text{Cov}[W, Y] + \text{Cov}[X, Z] + \text{Cov}[W, Z]
+\end{aligned}\]</span></p>
+<p><span class="math display">\[\text{Cov}[X, Y - X] = \text{Cov}[X, Y] - \text{Cov}[X, X] = \text{Cov}[X, Y] - \text{Var}[X]\]</span></p>
+<ul>
+<li>The Ordinary Least Squares slope estimator in terms of covariances becomes
+<ul>
+<li>The slope regression coefficient for a regression of <span class="math inline">\(Y\)</span> onto <span class="math inline">\(X\)</span> becomes</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[\beta_{1,Y|X} = \frac{\text{Cov}[X, Y]}{\text{Var}[X]}\]</span></p>
+<ul>
+<li>Vice versa, for a regression of <span class="math inline">\(X\)</span> onto <span class="math inline">\(Y\)</span> one gets</li>
+</ul>
+<p><span class="math display">\[\beta_{1,X|Y} = \frac{\text{Cov}[X, Y]}{\text{Var}[Y]}\]</span></p>
+<ul>
+<li>The regression intercept for a regression of <span class="math inline">\(Y\)</span> onto <span class="math inline">\(X\)</span> becomes</li>
+</ul>
+<p><span class="math display">\[\beta_{0,Y|X} = E[Y] - \beta_{1,Y|X} \cdot E[X]\]</span></p>
+<p>because the expectations <span class="math inline">\(E[Y]\)</span> and <span class="math inline">\(E[X]\)</span> lie on the regression line.</p>
+<hr>
+</section>
+</section>
+<section id="normal-distribution-and-its-relatives-discussed" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="normal-distribution-and-its-relatives-discussed"><span class="header-section-number">9</span> NORMAL DISTRIBUTION AND ITS RELATIVES (DISCUSSED)</h2>
+<ul>
+<li><p>Definition: Let <span class="math inline">\(z\)</span> and the sets <span class="math inline">\(z_1, z_2, \ldots, z_n\)</span> with <span class="math inline">\(n\)</span> elements and <span class="math inline">\(\tilde{z}_1, \tilde{z}_2, \ldots, \tilde{z}_m\)</span> with <span class="math inline">\(m\)</span> elements be <em>standard normal</em> distributed random variables <span class="math inline">\(x \sim \mathcal{N}(0,1)\)</span>, which are all <em>mutually independent</em>.</p></li>
+<li><p>The <span class="math inline">\(\chi^2\)</span>-distribution: The random variables</p></li>
+</ul>
+<p><span class="math display">\[s_n^2 = \sum_{i=1}^{n} z_i^2 \quad \text{and} \quad \tilde{s}_m^2 = \sum_{i=1}^{m} \tilde{z}_i^2\]</span></p>
+<p>of the sums of squared independent standard normal distributed variables are <span class="math inline">\(\chi^2\)</span>-distributed</p>
+<p><span class="math display">\[s_n^2 \sim \chi_{df=n}^2 \quad \text{and} \quad \tilde{s}_m^2 \sim \chi_{df=m}^2\]</span></p>
+<p>with <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> degrees of freedom, respectively.</p>
+<p>The expected value of a <span class="math inline">\(\chi^2\)</span>-distributed variable is equal to its degrees of freedom.</p>
+<ul>
+<li><p>The <span class="math inline">\(t\)</span>-distribution: Let <span class="math inline">\(t_n = \frac{z}{\sqrt{s_n^2/n}}\)</span> and <span class="math inline">\(\tilde{t}_m = \frac{z}{\sqrt{\tilde{s}_m^2/m}}\)</span> with <span class="math inline">\(z\)</span> being independent standard normal distributed. Then <span class="math inline">\(t_n\)</span> and <span class="math inline">\(\tilde{t}_m\)</span> are <span class="math inline">\(t\)</span>-distributed with <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> degrees of freedom, respectively.</p></li>
+<li><p>The <span class="math inline">\(F\)</span>-distribution: Let <span class="math inline">\(F_n^m = \frac{s_n^2/n}{\tilde{s}_m^2/m}\)</span>. Then <span class="math inline">\(F_n^m\)</span> is <span class="math inline">\(F\)</span>-distributed with <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> degrees of freedom.</p></li>
+<li><p>See R-script <code>SimulateFtCh.r</code>.</p></li>
+</ul>
+<hr>
+</section>
+<section id="bivariate-normal-distribution-skipped" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="bivariate-normal-distribution-skipped"><span class="header-section-number">10</span> BIVARIATE NORMAL DISTRIBUTION (SKIPPED)</h2>
+<ul>
+<li><p>The bivariate normal distribution between two continuous random variables <span class="math inline">\(X_1 \in [-\infty, \infty]\)</span> and <span class="math inline">\(X_2 \in [-\infty, \infty]\)</span> is characterized by five parameters:</p></li>
+<li><p><span class="math inline">\(\mu_{X_1}\)</span> and <span class="math inline">\(\mu_{X_2}\)</span> for the central tendency on each axis <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</p></li>
+<li><p><span class="math inline">\(\sigma_{X_1}\)</span> and <span class="math inline">\(\sigma_{X_2}\)</span> for the spread along each axis <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</p></li>
+<li><p><span class="math inline">\(\sigma_{X_1,X_2}\)</span> for the covariance between both <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</p></li>
+<li><p>3-D examples of a bivariate normal distribution are:</p></li>
+<li><p>The <em>conditional density</em> is given by <span class="math inline">\(f(x_1|x_2) = \frac{f(x_1, x_2)}{f(x_2)}\)</span> is shown by the <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> gridlines.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w00_HamAppTheory/page-22.png" class="img-fluid figure-img"></p>
+<figcaption>Page 22</figcaption>
+</figure>
+</div>
+<ul>
+<li>The conditional distribution is again normal distributed with the expectation</li>
+</ul>
+<p><span class="math display">\[\mu_{X_1|X_2=x_2} = \mu_{X_1} + \frac{\sigma_{X_1,X_2}}{\sigma_{X_2}^2} \cdot (x_2 - \mu_{X_2})\]</span></p>
+<p>and the variance</p>
+<p><span class="math display">\[\sigma_{X_1|X_2=x_2}^2 = (1 - \rho_{X_1,X_2}^2) \cdot \sigma_{X_1}^2\]</span></p>
+<ul>
+<li><p>Contour plot example with equal density isolines and marginal densities (see <code>BivariateNormalDistrib.r</code>):</p></li>
+<li><p>The marginal distributions are again normal distributed with the parameters <span class="math inline">\(\mu_{X_1}\)</span> and <span class="math inline">\(\sigma_{X_1}^2\)</span>:</p></li>
+</ul>
+<p>e.g.&nbsp;<span class="math inline">\(\mathcal{N}(\mu_{X_1}, \sigma_{X_1}^2) = f(X_1 = x_1) = \int_{-\infty}^{\infty} f(x_1, x_2) \, dx_2\)</span>.</p>
+<p>These marginal distributions are schematically shown by the blue curves at the margins</p>
+<ul>
+<li>The total probability under the density is</li>
+</ul>
+<p><span class="math display">\[\int_{-\infty}^{\infty} \underbrace{\left( \int_{-\infty}^{\infty} f(x_1, x_2) \cdot dx_2 \right)}_{=f(x_1)} \cdot dx_1 = 1\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w00_HamAppTheory/page-23.png" class="img-fluid figure-img"></p>
+<figcaption>Page 23</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="bias-and-mean-square-error-skipped" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="bias-and-mean-square-error-skipped"><span class="header-section-number">11</span> BIAS AND MEAN SQUARE ERROR (SKIPPED)</h2>
+<ul>
+<li><p>The theoretical sampling distribution of a statistic <span class="math inline">\(\hat{\theta}\)</span> is evaluated over all possible random samples of a given size <span class="math inline">\(n\)</span>.</p></li>
+<li><p>A statistic is <em>unbiased</em> if <span class="math inline">\(E[\hat{\theta}] = \theta\)</span>, that is, <span class="math inline">\(E[\hat{\theta}] - \theta = 0\)</span>. It is biased if <span class="math inline">\(E[\hat{\theta}] \neq \theta\)</span>, that is, the estimator’s <span class="math inline">\(\hat{\theta}\)</span> expected value differs from the true population parameter <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>The variance <span class="math inline">\(\text{Var}[\hat{\theta}] = E[(\hat{\theta} - E[\hat{\theta}])^2]\)</span> expresses the precision of a sample statistics. The square root of this variance is called <em>standard error</em> of a sample statistics.</p></li>
+<li><p>The* <em>mean square error</em> is defined by</p></li>
+</ul>
+<p><span class="math display">\[\begin{aligned}
+MSE &amp;= E[(\hat{\theta} - \theta)^2] \\
+&amp;= E[(\hat{\theta} - E[\hat{\theta}] + E[\hat{\theta}] - \theta)^2] \\
+&amp;= E[(\hat{\theta} - E[\hat{\theta}])^2 + 2 \cdot (\hat{\theta} - E[\hat{\theta}]) \cdot (E[\hat{\theta}] - \theta) + (E[\hat{\theta}] - \theta)^2] \\
+&amp;= \text{Var}[\hat{\theta}] + bias^2
+\end{aligned}\]</span></p>
+<p>with the term <span class="math inline">\(E[2 \cdot (\hat{\theta} - E[\hat{\theta}]) \cdot (E[\hat{\theta}] - \theta)] = 0\)</span> is equal to zero because</p>
+<p><span class="math display">\[\begin{aligned}
+E[(\hat{\theta} - E[\hat{\theta}]) \cdot (E[\hat{\theta}] - \theta)] &amp;= E[\hat{\theta} \cdot E[\hat{\theta}] - \hat{\theta} \cdot \theta - E[\hat{\theta}] \cdot E[\hat{\theta}] + E[\hat{\theta}] \cdot \theta] \\
+&amp;= E[\hat{\theta}] \cdot E[\hat{\theta}] - E[\hat{\theta}] \cdot \theta - E[\hat{\theta}] \cdot E[\hat{\theta}] + E[\hat{\theta}] \cdot \theta \\
+&amp;= 0
+\end{aligned}\]</span></p>
+<p>Only <span class="math inline">\(\hat{\theta}\)</span> is a random variable, whereas <span class="math inline">\(E[\hat{\theta}]\)</span> and <span class="math inline">\(\theta\)</span> are constants.</p>
+<p>Therefore, <span class="math inline">\(E[E[\hat{\theta}]] = E[\hat{\theta}]\)</span> and <span class="math inline">\(E[\theta] = \theta\)</span>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

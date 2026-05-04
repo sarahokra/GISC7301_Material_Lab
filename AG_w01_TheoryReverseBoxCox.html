@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-01-26">
+
+<title>Week01: A Note on Switching between Transformed and Untransformed Regression Systems – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w01_TheoryReverseBoxCox.html">Wk01-Switching between Transformed and Untransformed Regression Systems</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective"><span class="header-section-number">1</span> Objective</a></li>
+  <li><a href="#motivating-example" id="toc-motivating-example" class="nav-link" data-scroll-target="#motivating-example"><span class="header-section-number">2</span> Motivating Example</a></li>
+  <li><a href="#the-box-cox-transformation" id="toc-the-box-cox-transformation" class="nav-link" data-scroll-target="#the-box-cox-transformation"><span class="header-section-number">3</span> The Box-Cox Transformation</a></li>
+  <li><a href="#review-properties-of-median-and-expectation" id="toc-review-properties-of-median-and-expectation" class="nav-link" data-scroll-target="#review-properties-of-median-and-expectation"><span class="header-section-number">4</span> Review: Properties of Median and Expectation</a></li>
+  <li><a href="#calibration-of-a-regression-model-in-a-transformed-system" id="toc-calibration-of-a-regression-model-in-a-transformed-system" class="nav-link" data-scroll-target="#calibration-of-a-regression-model-in-a-transformed-system"><span class="header-section-number">5</span> Calibration of a Regression Model in a Transformed System</a></li>
+  <li><a href="#properties-of-transformed-density-functions" id="toc-properties-of-transformed-density-functions" class="nav-link" data-scroll-target="#properties-of-transformed-density-functions"><span class="header-section-number">6</span> Properties of Transformed Density Functions</a></li>
+  <li><a href="#special-case-the-log-normal-distribution-with-λ0" id="toc-special-case-the-log-normal-distribution-with-λ0" class="nav-link" data-scroll-target="#special-case-the-log-normal-distribution-with-λ0"><span class="header-section-number">7</span> Special Case: The log-normal Distribution with λ=0</a></li>
+  <li><a href="#the-power-normal-distribution-for-arbitrary-transformation-values-λ" id="toc-the-power-normal-distribution-for-arbitrary-transformation-values-λ" class="nav-link" data-scroll-target="#the-power-normal-distribution-for-arbitrary-transformation-values-λ"><span class="header-section-number">8</span> The Power Normal Distribution for Arbitrary Transformation Values λ</a></li>
+  <li><a href="#literature-overview" id="toc-literature-overview" class="nav-link" data-scroll-target="#literature-overview"><span class="header-section-number">9</span> Literature Overview</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w01_TheoryReverseBoxCox.html">Wk01-Switching between Transformed and Untransformed Regression Systems</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Week01: A Note on Switching between Transformed and Untransformed Regression Systems</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 26, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="objective" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objective"><span class="header-section-number">1</span> Objective</h2>
+<p>The objective of this note is to discuss properties of predictions <span class="math inline">\(\hat{y}_i\)</span> in its original measurement units when the intermediate predicted values <span class="math inline">\(\hat{y}_i^{(\lambda)} = E(y_i^{(\lambda)} | \mathbf{x}_i)\)</span> are based on a regression model in which <span class="math inline">\(y_i\)</span> was transformed by a Box-Cox transformation <span class="math inline">\(y_i^{(\lambda)} \leftarrow g(y_i;\lambda)\)</span>. The underlying problem is that the distributional properties of <span class="math inline">\(y_i^{(\lambda)}\)</span> in transformed system are different from those in the untransformed system. Therefore, a direct remapping leads to predictions of <em>conditional medians</em> <span class="math inline">\(median(y_i | \mathbf{x}_i) \leftarrow g^{-1}(\hat{y}_i^{(\lambda)})\)</span> in the original system rather than to a prediction of the <em>conditional expectations</em> <span class="math inline">\(E(y_i | \mathbf{x}_i)\)</span>.</p>
+<hr>
+</section>
+<section id="motivating-example" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="motivating-example"><span class="header-section-number">2</span> Motivating Example</h2>
+<p>The R-script <strong>BoxCoxBivariateRegression.r</strong> provides an application of the <strong>boxcox()</strong> function<sup>2</sup> from the <strong>MASS</strong> library which uses a grid search algorithm of the profile log-likelihood function (see Aitkin et al., 2009) to obtain an estimate for the best <span class="math inline">\(\hat{\lambda}\)</span> (see Figure 1) such that the regression residuals <span class="math inline">\(e_i^{(\lambda)} = y_i^{(\lambda)} - \hat{y}_i^{(\lambda)}\)</span> in the transformed system are approximately normal distributed. Therefore, the associated function call to evaluated the distribution of the residuals must explicitly account for the underlying regression model: <strong>findMaxLambda(lm(y~bcPower(x,lambdaX), data=myData))</strong>. Note that the independent variable has also been transformed so that its variation around its mean is approximately symmetric. The function call to identify its best transformation parameter <span class="math inline">\(\hat{\lambda}\)</span> is <strong>findMaxLambda(lm(x~1,data=myData))</strong>.</p>
+<p>Figure 2 displays the non-linear relationship between both variables in the original measurement system before the application of the Box-Cox transformation. Clearly, in the original system both variables are positively skewed and the residual variances increase as the independent variable increases. In the transformed system (see Figure 3) the relationship between both variables becomes almost linear as can be seen by the straight lowess smoother line, both variables are symmetrically distributed and the residual variation is now homoscedastic. Finally, in Figure 4 the prediction <span class="math inline">\(\hat{y}_i^{(\lambda)}\)</span> was mapped back into the original units. The conditional median (green line) is lower than the conditional expectation (red line) because for any value of the independent variable, the conditional distribution of the dependent variable is positively skewed. For the bulk of the data points in the lower left-hand quadrant, lowess smoother in Figure 2 traces the conditional median in Figure 4.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_TheoryReverseBoxCox/figure-01.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Concentrated log-likelihood function of the Box-Cox transformation for the dependent variable income to achieve symmetrically distributed regression residuals.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_TheoryReverseBoxCox/figure-02.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Linear regression line and lowess-smoother in original units with positively skewed dependent and independent variables.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_TheoryReverseBoxCox/figure-03.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: Relationship between both variables in the transformed system. The green line denotes the predicted values <span class="math inline">\(\hat{y}^{(\lambda)}\)</span>.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_TheoryReverseBoxCox/figure-04.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: Conditional median and expectation prediction lines after the reverse Box-Cox transformation back into the original units.</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="the-box-cox-transformation" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="the-box-cox-transformation"><span class="header-section-number">3</span> The Box-Cox Transformation</h2>
+<p>It is required that all observations of <span class="math inline">\(y_i\)</span> are strictly positive, that is, <span class="math inline">\(y_i &gt; 0\)</span> <span class="math inline">\(\forall i\)</span>. The Box-Cox transformation is defined as</p>
+<p><span class="math display">\[
+y_i^{(\lambda)} = g(y_i;\lambda) =
+\begin{cases}
+\frac{(y_i^{\lambda} - 1)}{\lambda} &amp; \lambda \neq 0 \\
+\ln y_i &amp; \lambda = 0
+\end{cases}
+.
+\]</span></p>
+<p>Note that in the limit <span class="math inline">\(\lambda \to 0\)</span> the Box-Cox transformation becomes <span class="math inline">\(\lim_{\lambda \to 0} \frac{y^{\lambda} - 1}{\lambda} = \ln(y)\)</span> because, following the limit calculus rule of l’Hôpital<sup>3</sup>, <span class="math inline">\(\lim_{\lambda \to 0} \frac{y^{\lambda} - 1}{\lambda} = \lim_{\lambda \to 0} \frac{\partial(y^{\lambda} - 1)/\partial \lambda}{\partial \lambda / \partial \lambda} = \lim_{\lambda \to 0} \frac{\ln(y) \cdot y^{\lambda}}{1} = \ln(y)\)</span>.</p>
+<p>The inverse transformation reversing the transformed values <span class="math inline">\(y_i^{(\lambda)}\)</span> back into their original units <span class="math inline">\(y_i\)</span> is given by</p>
+<p><span class="math display">\[
+y_i = g^{-1}(y_i^{(\lambda)}) =
+\begin{cases}
+(\lambda \cdot y_i^{(\lambda)} + 1)^{1/\lambda} &amp; \lambda \neq 0 \\
+\exp(y_i^{(0)}) &amp; \lambda = 0
+\end{cases}
+.
+\]</span></p>
+<p>The objective of the Box-Cox transformation is to convert the distribution of the regression residuals <span class="math inline">\(e_i^{(\lambda)} = y_i^{(\lambda)} - \hat{y}_i^{(\lambda)}\)</span></p>
+<ol type="a">
+<li><p>to a <em>symmetric</em> and <em>homoscedastic</em> distribution and preferably even</p></li>
+<li><p>to a <em>normal distribution</em> with <span class="math inline">\(e_i^{(\lambda)} \sim N(0, \sigma_{(\lambda)}^2)\)</span>.</p></li>
+</ol>
+<p>This allows the robust estimation of the regression parameters <span class="math inline">\(\{\hat{\beta}_0^{(\lambda)}, \hat{\beta}_1^{(\lambda)}, \ldots, \hat{\beta}_{K-1}^{(\lambda)}\}\)</span> in the transformed system. The predicted values of the endogenous variable in the transformed system are <span class="math inline">\(\hat{y}_i^{(\lambda)}\)</span>. These are conditional expectations <span class="math inline">\(\hat{y}_i^{(\lambda)} = E[y_i^{(\lambda)} | x_{i1}, \ldots, x_{i,K-1}] = \hat{\beta}_0^{(\lambda)} + \hat{\beta}_1^{(\lambda)} \cdot x_{i1} + \cdots + \hat{\beta}_{K-1}^{(\lambda)} \cdot x_{i,K-1}\)</span> given the set of exogenous observations <span class="math inline">\(\{1, x_{i1}, x_{i2}, \ldots, x_{i,K-1}\}\)</span>, which may or may not be transformed themselves.</p>
+<hr>
+</section>
+<section id="review-properties-of-median-and-expectation" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="review-properties-of-median-and-expectation"><span class="header-section-number">4</span> Review: Properties of Median and Expectation</h2>
+<p>Highly skewed distributions or distributions with outliers in one tail have a levering effect on the arithmetic mean making it potentially an invalid estimate for the central tendency of a distribution. In contrast, the median (and also the trimmed mean) is more robust because <em>extreme</em> observations or <em>long</em> tails do not “pull” the median away from the central tendency of the underlying distribution.</p>
+<ul>
+<li><p>Recall that the mean minimizes the <em>sum of squared</em> deviations <span class="math inline">\(\min_{\nu} \sum_{i=1}^{n} (y_i - \nu)^2\)</span>, that is, this expression becomes minimal for <span class="math inline">\(\nu = \bar{y}\)</span>. Consequently, squaring the deviation of extreme observations exaggerates their large divergences even further. In order to mitigate these quadratic impacts and still minimize the sum of squared deviations, the mean needs to move towards the extreme observations rather than reflecting the central tendency of the underlying distribution.</p></li>
+<li><p>In contrast, the median minimizes the <em>sum of absolute</em> differences <span class="math inline">\(\min_{\nu} \sum_{i=1}^{n} |y_i - \nu|\)</span>, that is, this expression become minimal for <span class="math inline">\(\nu = y_{median}\)</span>. Therefore, the impact of extreme deviations remains comparable to that of typical deviations rather than becoming exaggerated as it is the case for the arithmetic mean.</p></li>
+</ul>
+<p>For highly skewed distributions the median has a <em>smaller mean-square-error</em> and is therefore a more precise measure of centrality. Only if the data are approximately normal distributed then the mean is a more efficient measure of central tendency than the median.</p>
+<hr>
+</section>
+<section id="calibration-of-a-regression-model-in-a-transformed-system" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="calibration-of-a-regression-model-in-a-transformed-system"><span class="header-section-number">5</span> Calibration of a Regression Model in a Transformed System</h2>
+<p>Any time one or more of the conditions below affect the dependent or independent variables, a data transformation toward symmetry or preferably normality may be advisable:</p>
+<ul>
+<li><p>An untransformed regression system may be influenced by extreme observations and/or heavy tails of any of its variables. Their <em>impact</em> enters the model calibration with a <em>quadratic weight</em> and thus gives extreme observations a large leverage.</p></li>
+<li><p>The residuals may show a pattern of heteroscedasticity, which may be induced by asymmetric distributions of the underlying variables in the regression model.</p></li>
+<li><p>The <em>relationships</em> among the untransformed variables may be <em>non-linear</em> and thus ordinary least squares will not perform well to capture the relationships among the endogenous variable and the set of exogenous variables.</p></li>
+<li><p>The distribution of the regression residuals, which were obtained by a linear regression model, exhibits a high degree of skewness.</p></li>
+</ul>
+<p>In any of these cases <em>modeling</em> a linear regression system in the <em>transformed domain</em> with all variables and regression residuals being symmetrically distributed alleviates above problems and will lead to more <em>robust estimates</em>.</p>
+<p>In order to further the interpretation of the model it is advisable to reverse the transformation into the original data units after the model has been calibrated in the transformed domain. The independent variables and predicted values of the dependent variable are mapped back into their natural scales. The key question becomes <em>how</em> do we map the predicted values, which were obtained in the transformed regression system, back into the untransformed domain? There are two alternative approaches:</p>
+<ul>
+<li><p>If we want to maintain the robust qualities of the transformed system then we need to express the original relationship in terms of conditional <em>medians</em>.</p></li>
+<li><p>On the other hand, if we want to account for the original skewness and outliers then the conditional <em>expectations</em> should be used.</p></li>
+</ul>
+<p>The subsequent sections formally develop both reverse transformations. First it is shown that for any non-linear transformation <span class="math inline">\(g^{-1}(\cdot)\)</span> of a symmetrized variable <span class="math inline">\(y_i^{(\lambda)}\)</span> back into its original scale <span class="math inline">\(y_i\)</span> the expectations differ <span class="math inline">\(E[g^{-1}(y_i^{(\lambda)})] \neq g^{-1}(E[y_i^{(\lambda)}])\)</span>, where <span class="math inline">\(g^{-1}(E[y_i^{(\lambda)}])\)</span> is in fact the expected median of <span class="math inline">\(y_i\)</span>. Then the special case with <span class="math inline">\(\lambda = 0\)</span> will be discussed. This leads to the log-normal distribution for which the exact expectation <span class="math inline">\(E[g^{-1}(y_i^{(\lambda)})]\)</span> can be given in analytical terms. Finally, for the general case of a power normal distribution with <span class="math inline">\(\lambda \neq 0\)</span> the expectation <span class="math inline">\(E[g^{-1}(y_i^{(\lambda)})]\)</span> is approximated using a Taylor series expansion.</p>
+<hr>
+</section>
+<section id="properties-of-transformed-density-functions" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="properties-of-transformed-density-functions"><span class="header-section-number">6</span> Properties of Transformed Density Functions</h2>
+<p>Recall that a density function <span class="math inline">\(f(x)\)</span> of a continuous random variable <span class="math inline">\(X\)</span> cannot be interpreted as probability <em>per se</em>, only the integral <span class="math inline">\(\int_{x-h}^{x+h} f(x) \cdot dx\)</span> of the density function measures the probability <span class="math inline">\(Pr(x - h \leq X \leq x + h)\)</span> that <span class="math inline">\(X\)</span> is within an interval <span class="math inline">\([x-h, x+h]\)</span>.</p>
+<p>The figure below, taken from Kennedy (1998, p.&nbsp;36), demonstrates for a non-linear transformation <span class="math inline">\(Y = g(X)\)</span> how the density function <span class="math inline">\(f(x)\)</span> of the original random variable <span class="math inline">\(X\)</span> changes to the density function <span class="math inline">\(f^*(y)\)</span> of the transformed random variable <span class="math inline">\(Y\)</span> (note a minor misprint: the axis labels <span class="math inline">\(pdf(\hat{\beta})\)</span> and <span class="math inline">\(pdf(g(\hat{\beta}))\)</span> should be switched).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_TheoryReverseBoxCox/figure-05.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2.8 Why the expected value of a nonlinear function is not the nonlinear function of the expected value</figcaption>
+</figure>
+</div>
+<p>Assume that the probability of observing <span class="math inline">\(x\)</span> in a very small neighborhood <span class="math inline">\(dx\)</span> around <span class="math inline">\(x\)</span> is <span class="math inline">\(f(x) \cdot dx\)</span>. The transformation changes this small neighborhood to <span class="math inline">\(|dy|\)</span>, which is the absolute value of the range of <span class="math inline">\(y\)</span> corresponding to <span class="math inline">\(dx\)</span>. The absolute value is used in case the transformation is a decreasing function rather than an increasing function. We obtain therefore the equality:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(x) \cdot dx &amp;= f^*(y) \cdot |dy| \text{ or } f^*(g(x)) \cdot |dg(x)| \\
+\Rightarrow \quad f^*(y) &amp;= f(x) \cdot \frac{dx}{|dy|}
+\end{aligned}
+\tag{1}
+\]</span></p>
+<p>The term <span class="math inline">\(dx/|dy|\)</span> is the <em>Jacobian</em>, which ensures that the probabilities <span class="math inline">\(\int_{g(x_1)}^{g(x_2)} f^*(y) \cdot dy = \int_{x_1}^{x_2} f(x) \cdot dx\)</span> in the transformed and untransformed system are equal and that <span class="math inline">\(\int_{-\infty}^{\infty} f^*(y) \cdot dy = 1\)</span>. In order to express the density <span class="math inline">\(f^*(y)\)</span> just in terms of the argument <span class="math inline">\(Y\)</span> we need to make use of the inverse transformation <span class="math inline">\(x = g^{-1}(y)\)</span>. This allows rewriting the density function (1) as</p>
+<p><span class="math display">\[
+f^*(y) = f(g^{-1}(y)) \cdot \frac{d(g^{-1}(y))}{|dy|},
+\tag{2}
+\]</span></p>
+<p>which is expressed solely in terms of the transformed argument <span class="math inline">\(y\)</span>. In order to evaluate the Jacobian, the first derivative of the in inverse function <span class="math inline">\(d(g^{-1}(y))/|dy|\)</span> with respect to <span class="math inline">\(y\)</span> needs to be evaluated for each <span class="math inline">\(y\)</span> within the support of <span class="math inline">\(f^*(y)\)</span>.</p>
+<p>One can derive this rule easily by using the cumulative distribution function and the chain rule of differential calculus and noting that for the distribution function the equality <span class="math inline">\(F(x) = F(g(x))|_{=y}\)</span> will hold for a positively increasing function <span class="math inline">\(g(x)\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{dF(x)}{dx} &amp;= \frac{dF(g(x))}{dx} \\
+\Rightarrow f(x) &amp;= \frac{dF(y)}{dy} \cdot \frac{dg(x)}{dx} = f(y) \cdot \frac{dy}{dx} \\
+\Rightarrow f(y) &amp;= f(x) \cdot \frac{dx}{dy}
+\end{aligned}
+\]</span></p>
+<p>For negatively decreasing functions <span class="math inline">\(g(x)\)</span> the absolute value <span class="math inline">\(|dy|\)</span> must be used.</p>
+<p>The implications for the quantiles and expectation are:</p>
+<ul>
+<li><p><strong>Quantiles of Y:</strong> The quantiles of a distribution function just shift with the transformation so that the equality <span class="math inline">\(Pr(g(X) \leq g(x)) = Pr(X \leq x)\)</span> continues to hold. In particular, for the median <span class="math inline">\(Pr(X \leq X_{median}) = \frac{1}{2}\)</span> we maintain the relationship <span class="math inline">\(Pr(g(X) \leq g(x_{median})) = Pr(X \leq x_{median})\)</span>.</p></li>
+<li><p><strong>Expectation of Y:</strong> In contrast, after the transformation <span class="math inline">\(Y = g(X)\)</span> has been performed the <em>true</em> expectation <span class="math inline">\(\mu_Y = E(Y) = \int_{-\infty}^{\infty} y \cdot f(g^{-1}(y)) \cdot d(g^{-1}(y))/|dy| \cdot dy\)</span> will not be identical to the transformed expectation of <span class="math inline">\(X\)</span> unless the transformation <span class="math inline">\(g(\cdot)\)</span> is a linear function.</p></li>
+</ul>
+<hr>
+</section>
+<section id="special-case-the-log-normal-distribution-with-λ0" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="special-case-the-log-normal-distribution-with-λ0"><span class="header-section-number">7</span> Special Case: The log-normal Distribution with λ=0</h2>
+<p><strong>The density function:</strong> For <span class="math inline">\(\lambda = 0\)</span> the transformed variable <span class="math inline">\(y_i^{(0)} = \ln(x_i)\)</span> with follows a normal distribution <span class="math inline">\(y_i^{(0)} \sim N(\mu_Y, \sigma_Y^2)\)</span>. Then the untransformed <span class="math inline">\(x_i = \exp(y_i^{(0)})\)</span> variable will follow a <em>log-normal distribution</em></p>
+<p><span class="math display">\[
+f_{ln}(x_i; \mu_Y, \sigma_Y) = \frac{1}{x_i \cdot \sigma_Y \cdot \sqrt{2 \cdot \pi}} \cdot \exp\left(-\frac{(\ln(x_i) - \mu_Y)^2}{2 \cdot \sigma_Y^2}\right) \quad \text{for all } x_i &gt; 0.
+\]</span></p>
+<p>The median of log-normal distribution is <span class="math inline">\(x_{median} = \exp(y_{median}) = \exp(\mu_Y)\)</span> because the normal distribution of <span class="math inline">\(Y^{(0)}\)</span> is symmetric. The expectation and variance of log-normal distribution, respectively, are <span class="math inline">\(E(X) = \exp(\mu_Y + \frac{1}{2} \cdot \sigma_Y^2)\)</span> and <span class="math inline">\(Var(X) = (\exp(\sigma_Y^2) - 1) \cdot \exp(2 \cdot \mu_Y + \sigma_Y^2)\)</span>.</p>
+<p><strong>Expected value in the regression model:</strong> For a regression model in the log-transformed system, the predicted conditional expectation <span class="math inline">\(\hat{y}_i^{(0)}\)</span> for each observation depends on the exogenous variables <span class="math inline">\(\hat{y}_i^{(0)} = E[y_i^{(0)} | x_{i1}, \ldots, x_{i,K-1}] = \hat{\beta}_0^{(0)} + \hat{\beta}_1^{(0)} \cdot x_{i1} + \cdots + \hat{\beta}_{K-1}^{(0)} \cdot x_{i,K-1}\)</span>. After reversing the Box-Cox transformation we get the exact predictions <span class="math inline">\(\hat{y}_i = \exp(\hat{y}_i^{(0)} + \frac{1}{2} \cdot \sigma_{e^{(0)}}^2)\)</span> where <span class="math inline">\(\sigma_{e^{(0)}}^2\)</span> is the variance of the regression residuals <span class="math inline">\(e^{(0)} = \hat{y}_i^{(0)} - y_i^{(0)}\)</span> in the transformed system.</p>
+<p><strong>Variance heterogeneity in the regression model:</strong> The variance <span class="math inline">\(Var(\hat{y}_i) = (\exp(\sigma_{e^{(0)}}^2) - 1) \cdot \exp(2 \cdot \hat{y}_i^{(0)} + \sigma_{e^{(0)}}^2)\)</span> also depends on the predicted values <span class="math inline">\(\hat{y}_i^{(0)}\)</span> and, therefore, is no longer constant. Consequently, the variances of the predictions <span class="math inline">\(\hat{y}_i\)</span> become heteroscedastic.</p>
+<hr>
+</section>
+<section id="the-power-normal-distribution-for-arbitrary-transformation-values-λ" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="the-power-normal-distribution-for-arbitrary-transformation-values-λ"><span class="header-section-number">8</span> The Power Normal Distribution for Arbitrary Transformation Values λ</h2>
+<p>For any value for <span class="math inline">\(\lambda \neq 0\)</span> with <span class="math inline">\(y_i^{(\lambda)} \sim N(\mu_{(\lambda)}, \sigma_{(\lambda)})\)</span> we get the <em>power normal density function</em> of the inversely untransformed variable <span class="math inline">\(y_i\)</span> by making use of equation (2), that is,</p>
+<p><span class="math display">\[
+f(y_i; \lambda, \mu_i, \sigma) \sim \frac{1}{K} \cdot \frac{1}{\sigma_{(\lambda)} \cdot \sqrt{2 \cdot \pi}} \cdot |\lambda| \cdot (y_i - 1)^{\lambda - 1} \cdot \exp\left(-\frac{1}{2 \cdot \sigma_{(\lambda)}^2} \cdot \left(\underbrace{(\lambda \cdot y_i^{(\lambda)} + 1)^{1/\lambda}}_{=\tilde{y}_i} - \mu_{(\lambda)}\right)^2\right).
+\]</span></p>
+<p>The adjustment factor <span class="math inline">\(1/K\)</span> is required because the power normal distribution depends on a truncated normal distribution (see Freeman and Modarres, 2006).</p>
+<p>For a transformed Box-Cox variable <span class="math inline">\(Y^{(\lambda)}\)</span> the <em>median</em> <span class="math inline">\(Y_{median}\)</span> in the original units is simply given by <span class="math inline">\(Y_{median} = (\lambda \cdot Y_{median}^{(\lambda)} + 1)^{1/\lambda}\)</span>. However, if we are interested in the <em>expectation</em> and the <em>variance</em> of an inversely transformed Box-Cox variable <span class="math inline">\(Y^{(\lambda)}\)</span> both statistics must be <em>approximated</em> through a <em>Taylor-series expansion</em> <span class="math inline">\(g^{-1}(x) = g^{-1}(a) + \frac{\partial g^{-1}(a)}{\partial a} \cdot (x - a) + \frac{1}{2!} \cdot \frac{\partial^2 g^{-1}(a)}{\partial^2 a} \cdot (x - a)^2 + \frac{1}{3!} \cdot \frac{\partial^3 g^{-1}(a)}{\partial^3 a} \cdot (x - a)^3 + R\)</span> with <span class="math inline">\(R\)</span> being the remainder approximation error. For the inverse Box-Cox transformation, the Taylor-series approximation is developed for <span class="math inline">\(g^{-1}(y_i^{(\lambda)}) = (\lambda \cdot (y_i^{(\lambda)}) + 1)^{1/\lambda}\)</span> around <span class="math inline">\(y_i^{(\lambda)} = \mu_{(\lambda)}\)</span> up to the second degree term:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(\lambda \cdot Y^{(\lambda)} + 1)^{1/\lambda} &amp;\approx (\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda} + (Y^{(\lambda)} - \mu_{(\lambda)}) \cdot \frac{\partial(\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda}}{\partial \mu_{(\lambda)}} + \frac{1}{2} \cdot (Y^{(\lambda)} - \mu_{(\lambda)})^2 \cdot \frac{\partial^2(\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda}}{\partial^2 \mu_{(\lambda)}} \\
+&amp;\approx (\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda} + (Y^{(\lambda)} - \mu_{(\lambda)}) \cdot (\lambda \cdot \mu_{(\lambda)} + 1)^{\frac{1}{\lambda} - 1} + \frac{1}{2} \cdot (Y^{(\lambda)} - \mu_{(\lambda)})^2 \cdot (1 - \lambda) \cdot (\lambda \cdot \mu_{(\lambda)} + 1)^{\frac{1}{\lambda} - 2}
+\end{aligned}
+\]</span></p>
+<p>The moments of <span class="math inline">\((\lambda \cdot Y^{(\lambda)} + 1)^{1/\lambda}\)</span> are difficult to calculate, but the moments on the right side of the Taylor-series approximation can be evaluated. Taking the <em>expectation</em> on both sides of the approximation and noting that the expectation of a constant is equal to the constant <span class="math inline">\(E[(\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda}] = (\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda}\)</span> as well as that the expectation operator is distributive over a summation, that is, <span class="math inline">\(E(Y^{(\lambda)} - \mu_{(\lambda)}) = \underbrace{E(Y^{(\lambda)})}_{=\mu_{(\lambda)}} - \mu_{(\lambda)} = 0\)</span> we yield:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(Y) &amp;\approx \underbrace{(\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda}}_{\text{median term}} + \underbrace{\frac{1}{2} \cdot \sigma_{(\lambda)}^2 \cdot (1 - \lambda) \cdot (\lambda \cdot \mu_{(\lambda)} + 1)^{\frac{1}{\lambda} - 2}}_{\text{expectation adjustment term}} \\
+&amp;\approx \underbrace{(\lambda \cdot \mu_{(\lambda)} + 1)^{1/\lambda}}_{\text{median term}} \cdot \underbrace{\left(1 + \frac{1}{2} \cdot \sigma_{(\lambda)}^2 \cdot \frac{(1 - \lambda)}{(\lambda \cdot \mu_{(\lambda)} + 1)^2}\right)}_{\text{expectation adjustment factor}}.
+\end{aligned}
+\]</span></p>
+<p>The expectation adjustment factor highlights the difference between the median and the expectation. As expected, it is neutral when no transformation is applied, i.e., <span class="math inline">\(\lambda = 1\)</span>.</p>
+<p>For the <em>variance</em> we focus just on the 1 degree term of the Taylor-series approximating because the evaluation of the variance of the second degree term becomes rather elaborated (see Tiwari and Elston, 1999). The variance of the zero degree term is zero because it is not a random variable. Since the variance of <span class="math inline">\(Var(a \cdot X) = a^2 \cdot Var(X) = a^2 \cdot \sigma^2\)</span> we obtain:</p>
+<p><span class="math display">\[
+\begin{aligned}
+Var(Y) &amp;\approx \sigma_{(\lambda)}^2 \cdot \left[(\lambda \cdot \mu_{(\lambda)} + 1)^{\frac{1}{\lambda} - 1}\right]^2 \\
+&amp;\approx \sigma_{(\lambda)}^2 \cdot (\lambda \cdot \mu_{(\lambda)} + 1)^{\frac{2}{\lambda} - 2}
+\end{aligned}
+\]</span></p>
+<p>Substituting the predicted values <span class="math inline">\(\hat{y}_i^{(\lambda)}\)</span> in the transformed system for <span class="math inline">\(\mu_{(\lambda)}\)</span> and the estimated residual variance <span class="math inline">\(\sum_{i=1}^{n} (y_i^{(\lambda)} - \hat{y}_i^{(\lambda)})/(n - K)\)</span> in the transformed system for <span class="math inline">\(\sigma_{(\lambda)}^2\)</span>, respectively, gives the approximations for <span class="math inline">\(E(\hat{y}_i)\)</span> and <span class="math inline">\(Var(\hat{y}_i)\)</span> in the original system.</p>
+<p>Freeman and Modarres (2006) provide exact expectations and variances of the power normal density function for specific values of <span class="math inline">\(\lambda\)</span> through the evaluation of Chebyshev–Hermite polynomial expressions:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 37%">
+<col style="width: 27%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\lambda\)</span></th>
+<th><span class="math inline">\(E(Y)\)</span></th>
+<th><span class="math inline">\(Var(Y)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td><span class="math inline">\(\exp(\mu + \frac{1}{2} \cdot \sigma^2)\)</span></td>
+<td><span class="math inline">\((\exp(\sigma^2) - 1) \cdot \exp(2 \cdot \mu + \sigma^2)\)</span></td>
+</tr>
+<tr class="even">
+<td>1/4</td>
+<td><span class="math inline">\((\frac{1}{4} \cdot \mu + 1)^4 + \frac{3}{8} \cdot \sigma^2 \cdot (\frac{1}{4} \cdot \mu + 1)^2 + \frac{3}{256} \cdot \sigma^4\)</span></td>
+<td><span class="math inline">\(\frac{3}{2048} \cdot \sigma^8 + \frac{3}{32} \cdot \sigma^6 \cdot (\frac{1}{4} \cdot \mu + 1)^2 + \frac{21}{32} \cdot \sigma^4 \cdot (\frac{1}{4} \cdot \mu + 1)^4 + \sigma^2 \cdot (\frac{1}{4} \cdot \mu + 1)^6\)</span></td>
+</tr>
+<tr class="odd">
+<td>1/3</td>
+<td><span class="math inline">\((\frac{1}{3} \cdot \mu + 1)^3 + \frac{1}{3} \cdot \sigma^2 \cdot (\frac{1}{3} \cdot \mu + 1)\)</span></td>
+<td><span class="math inline">\(\frac{5}{243} \cdot \sigma^6 + \frac{4}{9} \cdot \sigma^4 \cdot (\frac{1}{3} \cdot \mu + 1)^2 + \sigma^2 \cdot (\frac{1}{3} \cdot \mu + 1)^4\)</span></td>
+</tr>
+<tr class="even">
+<td>1/2</td>
+<td><span class="math inline">\((\frac{1}{2} \cdot \mu + 1)^2 + \frac{1}{4} \cdot \sigma^2\)</span></td>
+<td><span class="math inline">\(\frac{1}{8} \cdot \sigma^4 + \sigma^2 \cdot (\frac{1}{2} \cdot \mu + 1)^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(\mu + 1\)</span></td>
+<td><span class="math inline">\(\sigma^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> refer to the transformed system. Their formula needs to be evaluated individually for each value of <span class="math inline">\(\lambda\)</span>. The second degree Taylor series approximations for the expectation are identically for <span class="math inline">\(\lambda \in \{0, \frac{1}{3}, \frac{1}{2}, 1\}\)</span> and for <span class="math inline">\(\lambda = \frac{1}{4}\)</span> they just differ by the summand <span class="math inline">\(\frac{3}{256} \cdot \sigma^4\)</span>. However, the first degree Taylor approximation for the variance differs substantially from Freeman and Modarres’s exact moments except for <span class="math inline">\(\lambda \in \{0, 1\}\)</span>.</p>
+<hr>
+</section>
+<section id="literature-overview" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="literature-overview"><span class="header-section-number">9</span> Literature Overview</h2>
+<p><em>The discussion above draws on the statistical derivations in</em></p>
+<p>Aitkin, Francis, Hinde and Darnell (2009). <em>Statistical Modelling in R</em>. Oxford University Press, pp 123-126 and Kennedy, P. (1998). <em>A Guide to Econometrics</em>, 4th edition, MIT Press.</p>
+<p><em>Continue reading Aitken et al.&nbsp;beyond that section for an interesting application with a twist and a distinction between the Box-Cox transformation and link functions in the context of generalized linear models.</em></p>
+<p><em>You may also want to look at these original articles by Box and coauthors:</em></p>
+<p>Box, G. E. P. and Cox, D. R. (1964). An analysis of transformations (with discussion). <em>Journal of the Royal Statistical Society B</em>, <strong>26</strong>, 211–252.</p>
+<p>Box, G.E.P. and Tidwell, P.W. (1962). Transformations of the independent variable. <em>Technometrics</em>, <strong>4</strong>, 541–50</p>
+<p><em>An extension of the Box-Cox transformation for not strictly positive</em> <span class="math inline">\(y_i\)</span> <em>is the Yeo-Johnson family of transformations. See also the function</em> <strong>yjPower()</strong> <em>in the</em> <strong>car</strong> <em>library. For a discussion see</em></p>
+<p>Yeo and Johnson (2000) A new family of power transformations to improve normality or symmetry, <em>Biometrika</em>, <strong>87</strong>:954-959</p>
+<p><em>A recent paper that develops the exact expectation and variance of the reverse Box-Cox transformation</em> <span class="math inline">\(g^{-1}(\cdot)\)</span> <em>by Chebyshev–Hermite polynomials from the perspective of a truncated normal distribution can be found at:</em></p>
+<p>Freeman, J. and Modarres R. (2006). Inverse Box–Cox: The power-normal distribution. <em>Statistics &amp; Probability Letters</em>, <strong>76</strong>, 764–772</p>
+<p><em>The following paper develops the variance of a function of random variables in terms of a second degree multivariate Taylor-Series expansion and compares it to the Delta method which only uses a first degree Taylor expansion:</em></p>
+<p>Tiwari, H. K. and Elston, R. C. (1999). The Approximate Variance of a Function of Random Variables. <em>Biometrical Journal</em>, <strong>41</strong>, 351-357</p>
+<hr>
+<p><sup>1</sup> These notes are only for interested students. They are not test relevant.</p>
+<p><sup>2</sup> Alternatively, the function <strong>powerTransform(lm.mod)</strong> in the <strong>car</strong> library finds that λ-value, which brings the regression residuals the closest to the normal distribution.</p>
+<p><sup>3</sup> The l’Hôpital (sometimes spelled l’Hôspital) rule states that <span class="math inline">\(\lim_{x \to c} \frac{f(x)}{g(x)} = \lim_{x \to c} \frac{\partial f(x)/\partial x}{\partial g(x)/\partial x}\)</span> with <span class="math inline">\(\partial g(c)/\partial c \neq 0\)</span>. The limit of the later term is sometimes easier to evaluate.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

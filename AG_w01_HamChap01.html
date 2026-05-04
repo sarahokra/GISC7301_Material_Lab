@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-01-26">
+
+<title>Week01: Hamilton Chapter 1 - Univariate Variable Distributions – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w01_HamChap01.html">Wk01-Hamilton Ch01: Univariate Variable Distributions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#motivation-for-hamilton-chapter-1-discussed" id="toc-motivation-for-hamilton-chapter-1-discussed" class="nav-link active" data-scroll-target="#motivation-for-hamilton-chapter-1-discussed"><span class="header-section-number">1</span> MOTIVATION FOR HAMILTON CHAPTER 1 (DISCUSSED)</a>
+  <ul class="collapse">
+  <li><a href="#review-central-limit-theorem-review-skipped" id="toc-review-central-limit-theorem-review-skipped" class="nav-link" data-scroll-target="#review-central-limit-theorem-review-skipped"><span class="header-section-number">1.1</span> Review: Central Limit Theorem (review, skipped)</a></li>
+  <li><a href="#review-the-shape-of-distributions-review-skipped" id="toc-review-the-shape-of-distributions-review-skipped" class="nav-link" data-scroll-target="#review-the-shape-of-distributions-review-skipped"><span class="header-section-number">1.2</span> Review: The Shape of Distributions (review, skipped)</a></li>
+  <li><a href="#review-quantiles-and-percentiles-review-skipped" id="toc-review-quantiles-and-percentiles-review-skipped" class="nav-link" data-scroll-target="#review-quantiles-and-percentiles-review-skipped"><span class="header-section-number">1.3</span> Review: Quantiles and Percentiles (review, skipped)</a></li>
+  <li><a href="#review-box-plots-review-skipped" id="toc-review-box-plots-review-skipped" class="nav-link" data-scroll-target="#review-box-plots-review-skipped"><span class="header-section-number">1.4</span> Review: Box-Plots (review, skipped)</a></li>
+  <li><a href="#quantile-normal-plot-discussed" id="toc-quantile-normal-plot-discussed" class="nav-link" data-scroll-target="#quantile-normal-plot-discussed"><span class="header-section-number">1.5</span> QUANTILE-NORMAL PLOT (DISCUSSED)</a></li>
+  <li><a href="#review-properties-of-arithmetic-mean-review-skipped" id="toc-review-properties-of-arithmetic-mean-review-skipped" class="nav-link" data-scroll-target="#review-properties-of-arithmetic-mean-review-skipped"><span class="header-section-number">1.6</span> REVIEW: PROPERTIES OF ARITHMETIC MEAN (review, skipped)</a></li>
+  <li><a href="#review-skewness-review-skipped" id="toc-review-skewness-review-skipped" class="nav-link" data-scroll-target="#review-skewness-review-skipped"><span class="header-section-number">1.7</span> REVIEW: SKEWNESS (review, skipped)</a></li>
+  <li><a href="#box-cox-transformation-discussed" id="toc-box-cox-transformation-discussed" class="nav-link" data-scroll-target="#box-cox-transformation-discussed"><span class="header-section-number">1.8</span> BOX-COX TRANSFORMATION (DISCUSSED)</a></li>
+  <li><a href="#handling-transformations-with-negative-data-values-skipped" id="toc-handling-transformations-with-negative-data-values-skipped" class="nav-link" data-scroll-target="#handling-transformations-with-negative-data-values-skipped"><span class="header-section-number">1.9</span> HANDLING TRANSFORMATIONS WITH NEGATIVE DATA VALUES (skipped)</a></li>
+  <li><a href="#loess-smoother-of-yx-relationships-review-skipped" id="toc-loess-smoother-of-yx-relationships-review-skipped" class="nav-link" data-scroll-target="#loess-smoother-of-yx-relationships-review-skipped"><span class="header-section-number">1.10</span> LOESS SMOOTHER OF Y~X RELATIONSHIPS (review, skipped)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w01_HamChap01.html">Wk01-Hamilton Ch01: Univariate Variable Distributions</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Week01: Hamilton Chapter 1 - Univariate Variable Distributions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 26, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="motivation-for-hamilton-chapter-1-discussed" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> MOTIVATION FOR HAMILTON CHAPTER 1 (DISCUSSED)</h1>
+<ul>
+<li><p><strong>Data analysis fundamental:</strong> Treat your data with respect to learn something about the underlying data generating process.</p>
+<ul>
+<li>Data tell a story about the phenomena under investigation.</li>
+<li>Always handle data and analysis results with a critical attitude and use common sense. Link the results back to your original observations.</li>
+<li>Always ask yourself: Do the data or the generated analysis results make sense?</li>
+</ul></li>
+<li><p><em>Describing the variability</em> and distribution of a variable is the <em>required</em> first step of any data analysis.</p></li>
+<li><p>The <em>shape</em> of an univariate distribution can have <em>substantially impact</em> on the outcome of statistical procedures.</p>
+<p>E.g.: <em>Outliers</em> or <em>heavy tails</em> may detrimentally influence the outcome of model calibrations and parameter estimations.</p></li>
+<li><p><em>Missing</em> to account for the distribution of variables can force a researcher to redo their data analysis later.</p></li>
+<li><p>Most methods assume <em>symmetricly</em> or preferably <em>normally</em> distributed variables.</p></li>
+<li><p>Transformations to symmetry are discussed in Chapter 1.</p>
+<p>Note: statisticians use many more transformations under particular circumstances.</p>
+<p>E.g., we will encounter later the logit-transformation.</p></li>
+</ul>
+<hr>
+<section id="review-central-limit-theorem-review-skipped" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-central-limit-theorem-review-skipped"><span class="header-section-number">1.1</span> Review: Central Limit Theorem (review, skipped)</h2>
+<ul>
+<li><p><strong>Def. Central Limit Theorem:</strong> Let <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> be a <em>random independent</em> sample of size <span class="math inline">\(n\)</span> drawn from an <em>arbitrarily distributed</em> population with expectation <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.</p>
+<p>Then for large enough sample sizes <span class="math inline">\(n\)</span>, the sampling distribution of the arithmetic mean <span class="math inline">\(\bar{X}\)</span> is [a] asymptotically (i.e., as the sample size <span class="math inline">\(n \to \infty\)</span>) normal distributed [b] with</p>
+<p><span class="math display">\[
+\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right).
+\]</span></p>
+<p><strong>Proof</strong> for independent sample observations <span class="math inline">\(X_i\)</span>:</p>
+<p><span class="math display">\[
+Var\left(\frac{1}{n} \cdot \sum_{i=1}^{n} X_i\right) = \frac{1}{n^2} \cdot \sum_{i=1}^{n} Var(X_i) = \frac{1}{n^2} \cdot n \cdot \sigma^2 = \frac{\sigma^2}{n}
+\]</span></p></li>
+<li><p><strong>Implications:</strong></p>
+<ul>
+<li>Thus the <em>standard error</em> <span class="math inline">\(s_{\bar{X}} = \sigma/\sqrt{n}\)</span> of the mean <span class="math inline">\(\bar{X}\)</span> <em>shrinks</em> by <span class="math inline">\(1/\sqrt{n}\)</span> with increasing sample size.</li>
+<li>Another implication of the central limit theorem is that the <em>sum of a set of small random errors</em> or shocks will lead to <em>normal distributed total error</em>.</li>
+<li>In contrast, the product of a set of small random errors will lead to a log-normal distributed total error.</li>
+</ul></li>
+<li><p><strong>Example:</strong> Central limit theorem with the R-script <strong>CENTRALLIMIT.R</strong>:</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/figure-03.png" class="img-fluid figure-img"></p>
+<figcaption>Central Limit Theorem demonstration showing convergence to normality for three different population distributions (uniform, bimodal, exponential) with sample sizes n=4, 16, and 256</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="review-the-shape-of-distributions-review-skipped" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="review-the-shape-of-distributions-review-skipped"><span class="header-section-number">1.2</span> Review: The Shape of Distributions (review, skipped)</h2>
+<ul>
+<li>Distributions can be distinguished with regards the <em>balance</em> of their left and right tails:
+<ul>
+<li><em>Symmetric</em> distributions. Tails are balanced into either direction from a central value.</li>
+<li><em>Negatively</em> skewed distributions (long tail into the negative direction)</li>
+<li><em>Positively</em> skewed distributions (long tail into the positive direction). These distributions frequently emerge for variables with a <em>binding lower origin</em> (like zero income).</li>
+<li>Extreme skewness may hint at <em>outliers</em> that do not match the rest of the observed data.</li>
+</ul></li>
+<li>The number of meaningful clusters of observations is described by the term modality:
+<ul>
+<li>Uni-modality refers to just one peak.</li>
+<li>Bi-modality refers to two outstanding peaks</li>
+<li>Multimodality refers to more than two outstanding peaks.</li>
+</ul></li>
+<li>Multimodality may hint at a heterogeneous underlying data generating process in which the underlying process for observations in the first mode is different for observation in the second mode.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/figure-04.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3.9: Shapes of frequency distributions: (a) Normal, (b) Bimodal, (c) Negatively skewed, (d) Positively skewed</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="review-quantiles-and-percentiles-review-skipped" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="review-quantiles-and-percentiles-review-skipped"><span class="header-section-number">1.3</span> Review: Quantiles and Percentiles (review, skipped)</h2>
+<ul>
+<li><p>Technically, quantiles and percentiles are generated from a <em>sorted list</em> of the original data points <span class="math inline">\(x_{[1]} \leq x_{[2]} \leq x_{[3]} \leq \cdots \leq x_{[n-1]} \leq x_{[n]}\)</span> where each observations has an assigned rank <span class="math inline">\(i \in \{1,2,\ldots,n\}\)</span>, with <span class="math inline">\(i = 1\)</span> for the smallest observation and <span class="math inline">\(i = n\)</span> for the largest observation.</p></li>
+<li><p>For a give data value <span class="math inline">\(\mathbf{x}_{[i]}\)</span> the <em>percentile</em> approximates the proportion of sample observations less or equal to <span class="math inline">\(\mathbf{x}_{[i]}\)</span>, that is, their cumulative distribution:</p></li>
+</ul>
+<p><span class="math display">\[
+\mathbf{p}_{[i]} = \frac{i - \frac{1}{2}}{n} \approx \mathbf{Pr}(X \leq \mathbf{x}_{[i]}) = \int_0^{\mathbf{x}_{[i]}} f(\mathbf{x}) \cdot d\mathbf{x}.
+\]</span></p>
+<p>Note that the <span class="math inline">\(\boldsymbol{\alpha} = \mathbf{0.5}\)</span> of the percentile equation <span class="math inline">\(p(x_{[i]}) = \frac{i - \alpha}{n + (1 - \alpha) - \alpha}\)</span> has been chosen here.</p>
+<ul>
+<li><p>A <em>quantile</em> is the <em>potentially fictious</em> data value of a distribution, which is associated with a particular percentile value.</p></li>
+<li><p><strong>Important quantiles are:</strong></p>
+<ul>
+<li>0.25 quantile also called <span class="math inline">\(Q_1\)</span> quartile (25 % of the observations are smaller or equal to this quantile value)</li>
+<li>0.50 quantile also called the median (50 % of the observations are smaller or larger than the given quantile value)</li>
+<li>0.75 quantile also called <span class="math inline">\(Q_3\)</span> quartile (75 % of the observations are smaller or equal to this quantile value and 25 % of the observations are larger than this value)</li>
+<li>A measure of spread is the inter-quartile range: <span class="math inline">\(IQR = Q_3 - Q_1\)</span></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="review-box-plots-review-skipped" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="review-box-plots-review-skipped"><span class="header-section-number">1.4</span> Review: Box-Plots (review, skipped)</h2>
+<ul>
+<li><strong>Construction of the box-plot</strong>
+<ul>
+<li><p>Draw a <em>box</em> from <span class="math inline">\(Q_1\)</span> to <span class="math inline">\(Q_3\)</span>. Mark the <em>median</em> <span class="math inline">\(\mathbf{Q_2}\)</span> in the center of the box with a line.</p></li>
+<li><p>Definition of <em>adjacent values</em> <span class="math inline">\(x_{low}^{adj} = \min(x_{[i]} \in (Q_1, Q_1 - 1.5 \cdot IQR)\)</span> plus <span class="math inline">\(x_{[i]}\)</span> in dataset<span class="math inline">\()\)</span> and <span class="math inline">\(x_{high}^{adj} = \max(x_{[i]} \in (Q_3, Q_3 + 1.5 \cdot IQR)\)</span> plus <span class="math inline">\(x_{[i]}\)</span> in dataset<span class="math inline">\()\)</span>.</p>
+<p>The term <span class="math inline">\(x \in (a,b)\)</span> means, all <span class="math inline">\(x\)</span>-values in the interval between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.</p>
+<p>Draw the “fences” so they just include the smallest and largest data values <span class="math inline">\(x_{low}^{adj}\)</span> and <span class="math inline">\(x_{high}^{adj}\)</span>, respectively.</p></li>
+<li><p><em>Outliers</em> are in the interval <span class="math inline">\([1.5 \cdot IQR, 3.0 \cdot IQR]\)</span> starting from <span class="math inline">\(Q_1\)</span> below or <span class="math inline">\(Q_3\)</span> above, respectively.</p>
+<p><em>Severe outliers</em> are beyond that range <span class="math inline">\((&gt; 3.0 \cdot IQR)\)</span></p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/figure-06.png" class="img-fluid figure-img"></p>
+<figcaption>Box-plot example showing monthly distributions</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Use of box-plots:</strong>
+<ul>
+<li>Easy visual description of the distribution of a variable and potential outliers</li>
+<li>Comparison of distributions for several variables side-by-side.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="quantile-normal-plot-discussed" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="quantile-normal-plot-discussed"><span class="header-section-number">1.5</span> QUANTILE-NORMAL PLOT (DISCUSSED)</h2>
+<ul>
+<li><p>Calculate the theoretical quantiles of a normally distributed random variable <span class="math inline">\(Y_{[i]}\)</span> (assuming the mean <span class="math inline">\(\mu\)</span> and the variance <span class="math inline">\(\sigma^2\)</span> were estimated from the sample data) based on the given sample percentiles <span class="math inline">\(p_{[i]}\)</span> of the observed variable <span class="math inline">\(x_{[i]}\)</span>.</p></li>
+<li><p><strong>Quantile-Normal Plot:</strong> Plot the theoretical normal distribution quantiles <span class="math inline">\(Y_{[i]}\)</span> on the abscissa (X-axis) against their matching empirical distribution of <span class="math inline">\(x_{[i]}\)</span> on the ordinate (Y-axis).</p></li>
+</ul>
+<p><strong>Interpretation:</strong> - Diagonal with slope 1 =&gt; equal distributions. - Not a straight-line =&gt; different shapes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/page-07-img-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1.9: Quantile-normal plot of household water use (positively skewed)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/page-07-img-2.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1.10: Quantile-normal plots reflect distribution shape - showing examples of Heavy Tails/High and Low Outliers, Light Tails/No Outliers, Positive Skew/High Outliers, Negative Skew/Low Outliers, Granularity, and Two Peaks/Central Gap</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="review-properties-of-arithmetic-mean-review-skipped" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="review-properties-of-arithmetic-mean-review-skipped"><span class="header-section-number">1.6</span> REVIEW: PROPERTIES OF ARITHMETIC MEAN (review, skipped)</h2>
+<ul>
+<li><strong>Implications of the <em>zero-sum</em> property</strong> <span class="math inline">\(\sum_{i=1}^{n} (Y_i - \bar{Y}) = 0\)</span>: Assuming the mean is known, then <span class="math inline">\(n - 1\)</span> observation can vary freely, whereas we can predict the last observation with certainty.</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i=1}^{n} (Y_i - \bar{Y}) &amp;= 0 \\
+\Rightarrow \quad \sum_{i=1}^{n} Y_i &amp;= n \cdot \bar{Y} \\
+\Rightarrow \quad Y_n &amp;= n \cdot \bar{Y} - \sum_{i=1}^{n-1} Y_i
+\end{aligned}
+\]</span></p>
+<p>That implies that we <em>loose one degree of freedom</em>.</p>
+<ul>
+<li><p><strong>Implication of the <em>least squares property</em></strong> <span class="math inline">\(\min_{\theta} \sum_{i=1}^{n} (Y_i - \theta)^2 \Rightarrow \theta = \bar{Y}\)</span>.</p>
+<p>Large deviations have a strong impact on the estimated mean, variance etc. because the large deviations are squared</p>
+<p><span class="math inline">\(\Rightarrow\)</span> Thus, large deviations pull the mean into their direction.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> Standard deviations are drastically inflated.</p></li>
+<li><p>Lacking any other information, the arithmetic mean will become best <em>predictor</em> for the variable under investigation.</p></li>
+<li><p>The deviations from the mean are the <em>unexplained</em> part or the <em>residuals</em> of the observations, i.e., <span class="math inline">\(y_i = \bar{y} + \varepsilon_i\)</span>.</p></li>
+<li><p><strong>Definition of total sum of squares:</strong> <span class="math inline">\(TSS = \sum_{i=1}^{n} (Y_i - \bar{Y})^2\)</span> or <span class="math inline">\(TSS = \sum_{i=1}^{n} Y_i^2 - n \cdot \bar{Y}^2\)</span>.</p></li>
+<li><p><strong>Why is the population variance estimated with <span class="math inline">\((n-1)\)</span> in the denominator, that is, by <span class="math inline">\(s^2 = TSS/(n-1)\)</span>:</strong></p>
+<p><strong>Explanation 1:</strong> If we calculate the mean from the sample then there are only <span class="math inline">\(n - 1\)</span> “degrees of freedom” left because of the <em>zero sum property</em> of the mean.</p>
+<p><strong>Explanation 2:</strong> The mean is calculated by minimizing the TSS.</p>
+<p>Thus the sample mean always fits the observed sample data better than any <em>unobserved but true</em> population expectation <span class="math inline">\(\mu\)</span>.</p>
+<p>For the true expectation <span class="math inline">\(\mu\)</span>, the TSS would be slightly larger. That is why the sample TSS needs to be inflated by dividing it by a slight smaller value than <span class="math inline">\(n\)</span>, that is, <span class="math inline">\(n - 1\)</span>.</p></li>
+<li><p><strong>Standard deviation</strong> measures the variation in <em>original units</em> rather than in squared units.</p></li>
+</ul>
+<hr>
+</section>
+<section id="review-skewness-review-skipped" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="review-skewness-review-skipped"><span class="header-section-number">1.7</span> REVIEW: SKEWNESS (review, skipped)</h2>
+<ul>
+<li><p>Why does the distribution of the water consumption in the Concord dataset deviate from the normal distribution?</p>
+<p>Reason: Fixed lower bound (negative water consumption impossible).</p></li>
+<li><p><em>Skewness</em> and bounded/truncated distributions: For skewed distributions the notion of the center of the distribution (mean) becomes ambiguous and the <em>median</em> may be a better representation of the central tendency in the data.</p></li>
+<li><p>The <em>skewness</em> is defined by <span class="math inline">\(skew(X) = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^3}{n \cdot s_X^3}\)</span></p></li>
+<li><p>The normal distribution has a skewness of 0.</p></li>
+</ul>
+<hr>
+</section>
+<section id="box-cox-transformation-discussed" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="box-cox-transformation-discussed"><span class="header-section-number">1.8</span> BOX-COX TRANSFORMATION (DISCUSSED)</h2>
+<ul>
+<li><p>This lecture focuses on the more general <em>Box-Cox</em> transformation (note 11 on page 28 in Hamilton) rather than the slightly simpler <em>power</em> transformation, which is discussed in Hamilton. For both transformations, the general interpretation of the parameter <span class="math inline">\(\lambda\)</span> does not change.</p></li>
+<li><p><strong>Causes for extreme observations:</strong> [a] skewed distributions, [b] measurement or recoding errors, [c] extreme but feasible events (perhaps not belonging to the population under investigation).</p></li>
+<li><p>The power-transformation presented in book and the Box-Cox transformation only work for <em>variables whose observations are all larger than zero</em>.</p></li>
+<li><p>The Box-Cox transformation is a generalization of the power transformation: <span class="math inline">\(Y = \frac{X^{\lambda} - 1}{\lambda}\)</span> and for <span class="math inline">\(\lambda = 0\)</span> we get <span class="math inline">\(y = \ln(x)\)</span>.</p></li>
+<li><p><span class="math inline">\(\lambda &gt; 1\)</span> reduce negative skewness, whereas <span class="math inline">\(\lambda &lt; 1\)</span> reduce positive skewness.</p>
+<p>Remember: Positive skewness is very common for variables with a natural bound of zero.</p></li>
+<li><p>If the power <span class="math inline">\(\lambda &lt; 0\)</span> then all values are multiplied by a negative number to preserve the natural order of observations because, for example, if <span class="math inline">\(x_1 &lt; x_2\)</span> then <span class="math inline">\(x_1^{-1} &gt; x_2^{-1} \Longleftrightarrow \frac{1}{x_1} &gt; \frac{1}{x_2}\)</span>. However, <span class="math inline">\(-x_1^{-1} &lt; -x_2^{-1}\)</span></p>
+<p>This explains the value <span class="math inline">\(\lambda\)</span> in the denominator of the Box-Cox transformation</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/figure-11.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4.1: The family of power transformations <span class="math inline">\(X^p\)</span> of <span class="math inline">\(X\)</span>. The curve labeled <span class="math inline">\(p\)</span> is the transformation <span class="math inline">\(X^{(p)}\)</span>, that is, <span class="math inline">\((X^p - 1)/p\)</span>; <span class="math inline">\(X^{(0)}\)</span> is <span class="math inline">\(\log_e X\)</span></figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Note:</strong> R’s function <strong>car::powerTransform()</strong> is performing several statistical tests whether a variable either needs to be transformed at all (i.e., neutral <span class="math inline">\(\lambda = 1\)</span>) or whether a <em>log</em>-transformation (i.e., neutral <span class="math inline">\(\lambda = 0\)</span>) is sufficient by using the likelihood ratio test (LR) principle:
+<ul>
+<li>The first LR tests the null hypotheses <span class="math inline">\(H_0: \lambda_{optimal} = 0\)</span>. If we cannot reject the null hypothesis then we should tentatively work with a <em>log</em>-transformation to achieve normality/symmetry.</li>
+<li>The second LR tests the null hypotheses <span class="math inline">\(H_0: \lambda_{optimal} = 1\)</span>. If we cannot reject the null hypothesis then we should tentatively work with an <em>untransformed</em> variable because it is approximately symmetric.</li>
+<li>The Wald confidence interval provides the 95% probability range within which the true population transformation parameter <span class="math inline">\(\lambda\)</span> lies.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="handling-transformations-with-negative-data-values-skipped" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="handling-transformations-with-negative-data-values-skipped"><span class="header-section-number">1.9</span> HANDLING TRANSFORMATIONS WITH NEGATIVE DATA VALUES (skipped)</h2>
+<ul>
+<li><p>After inspection of the variable’s distribution one can overcome the problem of zero or negative data values by</p>
+<ul>
+<li>adding a constant such as <span class="math inline">\(\min(X) + \varepsilon\)</span>, where <span class="math inline">\(\varepsilon\)</span> is a small positive number to the variable to make its range solidly positive.</li>
+<li>However, if <span class="math inline">\(\varepsilon\)</span> is too small, which leads to positive but close to zero values, outliers may be introduced.</li>
+<li>On the other hand, choosing <span class="math inline">\(\varepsilon\)</span> too large, may make the transformation to normality ineffective.</li>
+<li>The function <strong>car::symbox()</strong> calculates the offset or start value: “a start will be automatically generated if there are zero or negative values in x, and a warning will be printed; the auto-generated start is the absolute value of the minimum x plus 1 percent of the range of x.</li>
+</ul></li>
+<li><p>See the <strong>?car::bcPower()</strong> and Fox &amp; Weissberg pp 161-162 for the <strong>bcnPower</strong> transformation family.</p></li>
+<li><p>A more informed way avoiding some of the problems by just adding a constant is to first transform the data by:</p></li>
+</ul>
+<p><span class="math display">\[
+z(X, \gamma) = \frac{(X + \sqrt{X^2 + \gamma^2})}{2} \quad \text{with}
+\]</span></p>
+<ul>
+<li><p>The transformation <span class="math inline">\(z(X, \gamma)\)</span> is monotonic (i.e., if <span class="math inline">\(x_1 &lt; x_2\)</span> then <span class="math inline">\(z(x_1, \gamma) &lt; z(x_2, \gamma)\)</span>)</p></li>
+<li><p>For large positive <span class="math inline">\(X\)</span> relative to <span class="math inline">\(\gamma\)</span> <span class="math inline">\((X \gg \gamma)\)</span> the transformation is approximately linear with <span class="math inline">\(z(X, \gamma) \approx X\)</span>.</p></li>
+<li><p>If <span class="math inline">\(\gamma = 0\)</span> then <span class="math inline">\(z(X, \gamma) = X\)</span> for <span class="math inline">\(X &gt; 0\)</span> and <span class="math inline">\(z(X, \gamma) = 0\)</span> for <span class="math inline">\(X \leq 0\)</span>.</p></li>
+<li><p>Subsequently, once the <span class="math inline">\(\gamma\)</span>-parameter is determined a standard Box-Cox transformation is applied to <span class="math inline">\(z(X, \gamma)\)</span>.</p></li>
+</ul>
+<hr>
+</section>
+<section id="loess-smoother-of-yx-relationships-review-skipped" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="loess-smoother-of-yx-relationships-review-skipped"><span class="header-section-number">1.10</span> LOESS SMOOTHER OF Y~X RELATIONSHIPS (review, skipped)</h2>
+<ul>
+<li><p>The LOESS smoother highlights any non-linearities in the relationship between two variables.</p></li>
+<li><p>Many of R’s scatterplot functions not only show a linear regression fit through the data cloud but also show a locally smoothed loess-curve:</p>
+<ul>
+<li>In essence, a sliding window moves over the value range of the variable X.</li>
+<li>In each window a local regression line is estimated.</li>
+<li>These local window regression lines are “splined” together into the smooth loess curve over the whole value range of X</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/figure-13.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 9.17: MA-plot with curve obtained with loess</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/w01_HamChap01/figure-14.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 9.16: Illustration of how loess estimates a curve. Showing 12 steps of the process</figcaption>
+</figure>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

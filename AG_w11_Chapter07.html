@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-04-12">
+
+<title>Week11: Hamilton Chapter 7 - Logistic Regression Analysis – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w11_Chapter07.html">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#classification-of-different-models-for-categorical-variables" id="toc-classification-of-different-models-for-categorical-variables" class="nav-link active" data-scroll-target="#classification-of-different-models-for-categorical-variables"><span class="header-section-number">1</span> Classification of Different Models for Categorical Variables</a></li>
+  <li><a href="#problems-of-modeling-dichotomous-data-by-linear-regression" id="toc-problems-of-modeling-dichotomous-data-by-linear-regression" class="nav-link" data-scroll-target="#problems-of-modeling-dichotomous-data-by-linear-regression"><span class="header-section-number">2</span> Problems of Modeling Dichotomous Data by Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#problem-1-linear-predictions-outside-the-feasible-range" id="toc-problem-1-linear-predictions-outside-the-feasible-range" class="nav-link" data-scroll-target="#problem-1-linear-predictions-outside-the-feasible-range"><span class="header-section-number">2.1</span> Problem 1: Linear Predictions outside the feasible range</a></li>
+  <li><a href="#solution-to-problem-1-infeasible-range-of-predictions" id="toc-solution-to-problem-1-infeasible-range-of-predictions" class="nav-link" data-scroll-target="#solution-to-problem-1-infeasible-range-of-predictions"><span class="header-section-number">2.2</span> Solution to Problem 1: Infeasible Range of Predictions</a></li>
+  <li><a href="#problem-2-heteroscedasticity-of-disturbances" id="toc-problem-2-heteroscedasticity-of-disturbances" class="nav-link" data-scroll-target="#problem-2-heteroscedasticity-of-disturbances"><span class="header-section-number">2.3</span> Problem 2: Heteroscedasticity of disturbances</a></li>
+  <li><a href="#solution-to-the-heteroscedasticity-problem" id="toc-solution-to-the-heteroscedasticity-problem" class="nav-link" data-scroll-target="#solution-to-the-heteroscedasticity-problem"><span class="header-section-number">2.4</span> Solution to the heteroscedasticity problem</a></li>
+  </ul></li>
+  <li><a href="#estimation-of-logistic-regression" id="toc-estimation-of-logistic-regression" class="nav-link" data-scroll-target="#estimation-of-logistic-regression"><span class="header-section-number">3</span> Estimation of logistic regression</a></li>
+  <li><a href="#excursion-1-alternative-derivations-of-logistic-regressions-not-test-relevant" id="toc-excursion-1-alternative-derivations-of-logistic-regressions-not-test-relevant" class="nav-link" data-scroll-target="#excursion-1-alternative-derivations-of-logistic-regressions-not-test-relevant"><span class="header-section-number">4</span> Excursion 1: Alternative derivations of logistic regressions (not test relevant)</a></li>
+  <li><a href="#excursion-b-iterative-estimation-of-non-linear-systems-not-test-relevant" id="toc-excursion-b-iterative-estimation-of-non-linear-systems-not-test-relevant" class="nav-link" data-scroll-target="#excursion-b-iterative-estimation-of-non-linear-systems-not-test-relevant"><span class="header-section-number">5</span> Excursion B: Iterative estimation of non-linear systems (not test relevant)</a></li>
+  <li><a href="#global-and-partial-tests-via-the-likelihood-ratio-test" id="toc-global-and-partial-tests-via-the-likelihood-ratio-test" class="nav-link" data-scroll-target="#global-and-partial-tests-via-the-likelihood-ratio-test"><span class="header-section-number">6</span> Global and partial tests via the likelihood ratio test</a></li>
+  <li><a href="#parameter-interpretation" id="toc-parameter-interpretation" class="nav-link" data-scroll-target="#parameter-interpretation"><span class="header-section-number">7</span> Parameter Interpretation</a>
+  <ul class="collapse">
+  <li><a href="#a-approach-in-terms-of-the-logit" id="toc-a-approach-in-terms-of-the-logit" class="nav-link" data-scroll-target="#a-approach-in-terms-of-the-logit"><span class="header-section-number">7.1</span> [a] Approach in terms of the logit</a></li>
+  <li><a href="#b-approach-in-terms-of-the-odds" id="toc-b-approach-in-terms-of-the-odds" class="nav-link" data-scroll-target="#b-approach-in-terms-of-the-odds"><span class="header-section-number">7.2</span> [b] Approach in terms of the odds</a></li>
+  <li><a href="#c-approach-in-terms-of-the-probabilities" id="toc-c-approach-in-terms-of-the-probabilities" class="nav-link" data-scroll-target="#c-approach-in-terms-of-the-probabilities"><span class="header-section-number">7.3</span> [c] Approach in terms of the probabilities</a></li>
+  </ul></li>
+  <li><a href="#statistical-problems" id="toc-statistical-problems" class="nav-link" data-scroll-target="#statistical-problems"><span class="header-section-number">8</span> Statistical Problems</a></li>
+  <li><a href="#excursion-the-saturated-model-perspective" id="toc-excursion-the-saturated-model-perspective" class="nav-link" data-scroll-target="#excursion-the-saturated-model-perspective"><span class="header-section-number">9</span> Excursion: The Saturated Model Perspective</a></li>
+  <li><a href="#excursion-residual-analysis-not-test-relevant" id="toc-excursion-residual-analysis-not-test-relevant" class="nav-link" data-scroll-target="#excursion-residual-analysis-not-test-relevant"><span class="header-section-number">10</span> Excursion: Residual Analysis (not test relevant)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w11_Chapter07.html">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Week11: Hamilton Chapter 7 - Logistic Regression Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 12, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="classification-of-different-models-for-categorical-variables" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Classification of Different Models for Categorical Variables</h1>
+<ul>
+<li><p>The dependent variable is categorical (contrast to OLS, which assumes a continuous distribution).</p>
+<p>The independent variables can be any mix of metric variables and categorical variables (factors) as well as their interaction terms.</p></li>
+<li><p>Classification based on</p>
+<p>[a] the number of categories of the response variable and</p>
+<p>[b] whether each observation <span class="math inline">\(i\)</span> constitutes a single records (binary response) with <span class="math inline">\(n_i = 1\)</span> or several observations are grouped together into aggregates (rates based on group counts <span class="math inline">\(n_g\)</span>).</p>
+<p>Here each group member must share the same exogenous group attributes:</p></li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 33%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Two Categories (dichotomous)</th>
+<th>Multiple Categories (polytomous)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Individual Observations</td>
+<td>Binary distribution</td>
+<td>Binary multinomial distribution</td>
+</tr>
+<tr class="even">
+<td>Grouped Observations</td>
+<td>Binomial distribution</td>
+<td>Multinomial distribution</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>There are specialized specifications of ordinal scaled dependent variables available. See the <em>proportional odds model</em> in Fox &amp; Weisberg</p></li>
+<li><p>Basic logistic regression focuses on the simple case with <strong><em>individual</em></strong> observations, and each observation can fall into just one of <strong><em>two mutually exclusive categories</em></strong>.</p>
+<p>The category status is coded binary:</p></li>
+</ul>
+<p><span class="math display">\[Y_i = \begin{cases}
+1 &amp; \text{observation } i \text{ in first category} \\
+0 &amp; \text{observation } i \text{ in second category}
+\end{cases}\]</span></p>
+</section>
+<section id="problems-of-modeling-dichotomous-data-by-linear-regression" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Problems of Modeling Dichotomous Data by Linear Regression</h1>
+<ul>
+<li>Logistic regression aims at predicting the probabilities of belonging to each category</li>
+</ul>
+<section id="problem-1-linear-predictions-outside-the-feasible-range" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="problem-1-linear-predictions-outside-the-feasible-range"><span class="header-section-number">2.1</span> Problem 1: Linear Predictions outside the feasible range</h2>
+<ul>
+<li>The predicted value cannot be interpreted as probability</li>
+</ul>
+<p><span class="math display">\[\hat{\pi}_i = \Pr(Y_i = 1 | x_i) = b_0 + b_1 \cdot x_i \quad \text{for a given exogenous } x_i\]</span></p>
+<p><img src="images/w11_Chapter07/figure-01.png" class="img-fluid"></p>
+<ul>
+<li><p>The predicted linear probability value can fall <em>outside</em> the feasible range of probabilities <span class="math inline">\([0, 1]\)</span>.</p></li>
+<li><p>For example: see HAM Fig 7.4 when years lived in town is greater than 70.</p></li>
+</ul>
+</section>
+<section id="solution-to-problem-1-infeasible-range-of-predictions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="solution-to-problem-1-infeasible-range-of-predictions"><span class="header-section-number">2.2</span> Solution to Problem 1: Infeasible Range of Predictions</h2>
+<ul>
+<li><p>Calculate <strong><em>odds</em></strong> <span class="math inline">\(\mathcal{O}_i = \frac{\pi_i}{1-\pi_i}\)</span> with value range <span class="math inline">\(\mathcal{O}_i \in [0, \infty]\)</span>.</p></li>
+<li><p>Transform odds into <strong><em>logits</em></strong> <span class="math inline">\(\mathcal{L}_i = \ln(\mathcal{O}_i) = \ln\left(\frac{\pi_i}{1-\pi_i}\right)\)</span> with the value range <span class="math inline">\(\mathcal{L}_i \in [-\infty, +\infty]\)</span>.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> the logits can be modeled by a linear function!</p></li>
+</ul>
+<p><img src="images/w11_Chapter07/figure-02.png" class="img-fluid"></p>
+<ul>
+<li><p>Note: This specification only works for probabilities <strong><em>excluding</em></strong> certain events. Those probabilities are either 0 or 1.</p>
+<p>This means, it is impossible to transform revealed outcomes <span class="math inline">\(Y_i = 1\)</span> or <span class="math inline">\(Y_i = 0\)</span> directly into odds or logits.</p></li>
+<li><p>The <em>linear function</em> in the logits becomes (here for the <em>i</em>-th observation):</p></li>
+</ul>
+<p><span class="math display">\[\ln\left(\frac{\pi_i}{1-\pi_i}\right) = \mathcal{L}_i = \beta_0 + \beta_1 \cdot x_{i,1} + \cdots + \beta_{K-1} \cdot x_{i,K-1}\]</span></p>
+<ul>
+<li>The estimated probabilities are given by the <strong><em>inverse</em></strong> of the logit function:</li>
+</ul>
+<p><span class="math display">\[\ln\left(\frac{\pi_i}{1-\pi_i}\right) = \mathcal{L}_i\]</span></p>
+<p><span class="math display">\[\Rightarrow \pi = \frac{1}{1 + \exp(-\mathcal{L}_i)}\]</span></p>
+<p><span class="math display">\[\Leftrightarrow \pi = \frac{\exp(\mathcal{L}_i)}{1 + \exp(\mathcal{L}_i)} \quad \text{(equivalent expression)}\]</span></p>
+<ul>
+<li><p>The inverse logit function gives the logistic curve displayed in HAM Fig 7.3.</p></li>
+<li><p>For bivariate logistic regression this curve is monotonically increasing for a positive “slope” parameter <span class="math inline">\(\beta_1\)</span> and monotonically decreasing for a negative “slope” parameter <span class="math inline">\(\beta_1\)</span> (HAM Fig 7.4)</p></li>
+<li><p>See also the R-script <code>FunctionalProbForms.r</code>.</p></li>
+</ul>
+</section>
+<section id="problem-2-heteroscedasticity-of-disturbances" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="problem-2-heteroscedasticity-of-disturbances"><span class="header-section-number">2.3</span> Problem 2: Heteroscedasticity of disturbances</h2>
+<ul>
+<li>Residuals for each observation <span class="math inline">\(Y_i\)</span> can take only two distinct values:</li>
+</ul>
+<p><span class="math display">\[e_i = \begin{cases}
+1 - \hat{\pi}_i &amp; \text{if } Y_i = 1 \\
+0 - \hat{\pi}_i &amp; \text{if } Y_i = 0
+\end{cases}\]</span></p>
+<ul>
+<li>Following the binary distribution, the variance of the population disturbances is given by:</li>
+</ul>
+<p><span class="math display">\[Var(\varepsilon_i) = (1-\pi_i) \cdot \pi_i\]</span></p>
+<ul>
+<li>The spread of the disturbances depends on the varying true probabilities of the individual observations <span class="math inline">\(i\)</span> and, therefore, their variances become heteroscedastic.</li>
+</ul>
+</section>
+<section id="solution-to-the-heteroscedasticity-problem" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="solution-to-the-heteroscedasticity-problem"><span class="header-section-number">2.4</span> Solution to the heteroscedasticity problem</h2>
+<ul>
+<li><p>Maximum likelihood estimation automatically accounts for the heteroscedasticity.</p></li>
+<li><p>Alternatively, one could us iteratively re-weighted least squares (see Hamilton note 10 on page 238 and page 247).</p>
+<p>However, the weights must be given in terms of logits <span class="math inline">\(\mathcal{L}_i\)</span> for which the variance is at the <span class="math inline">\(k^{th}\)</span> iteration (here <span class="math inline">\(n_i = 1\)</span>):</p></li>
+</ul>
+<p><span class="math display">\[Var\left(\ln\frac{Y_i}{1-Y_i}\right) = \frac{1}{n_i \cdot \hat{\pi}_i \cdot (1-\hat{\pi}_i)}\]</span></p>
+<ul>
+<li>Note: In contrast, the variance of the proportion estimate <span class="math inline">\(Y_i = \frac{\#\ of\ successes}{n_i}\)</span> is</li>
+</ul>
+<p><span class="math display">\[Var(Y_i) = \frac{\hat{\pi}_i \cdot (1-\hat{\pi}_i)}{n_i}\]</span></p>
+</section>
+</section>
+<section id="estimation-of-logistic-regression" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Estimation of logistic regression</h1>
+<ul>
+<li><p>Recall: The maximum likelihood method asks the question “Given the sample data, what set of hypothetical population parameter values <span class="math inline">\(\pi\)</span> have <strong><em>most likely</em></strong> generated the observed data?”</p></li>
+<li><p>Discuss highlighted text block in <strong>HAM</strong> p 223-224:</p></li>
+</ul>
+<p><img src="images/w11_Chapter07/figure-04.png" class="img-fluid"></p>
+<ul>
+<li>The individual case probabilities are either</li>
+</ul>
+<p><span class="math display">\[\hat{\pi}_i^{y_i} \cdot \underbrace{\left(1-\hat{\pi}_i\right)^{1-y_i}}_{=1} = \hat{\pi}_i \quad \text{for } y_i = 1 \quad \text{and}\]</span></p>
+<p><span class="math display">\[\underbrace{\hat{\pi}_i^{y_i}}_{=1} \cdot \left(1-\hat{\pi}_i\right)^{1-y_i} = 1 - \hat{\pi}_i \quad \text{for } y_i = 0\]</span></p>
+<ul>
+<li><p>The specification of <span class="math inline">\(\Pr(Y_i = 1)\)</span> (eq. 7.6) is inserted into equation 7.8.</p></li>
+<li><p>Under the independence assumption, individual probabilities can be linked multiplicatively.</p></li>
+</ul>
+<p><img src="images/w11_Chapter07/figure-05.png" class="img-fluid"></p>
+<ul>
+<li><p>Since these equations are non-linear, they can only be solved <strong><em>iteratively</em></strong> for the unknown parameters <span class="math inline">\(\{\beta_0, \beta_1, \ldots, \beta_{K-1}\}\)</span> to obtain the maximum likelihood.</p></li>
+<li><p>The predicted probabilities, which are estimated by maximum likelihood, satisfy the constraints (<strong>HAM eqs 7.10</strong> and <strong>7.11</strong>):</p></li>
+</ul>
+<p><span class="math display">\[\sum_{i=1}^{n} Y_i = \sum_{i=1}^{n} \hat{\pi}_i\]</span></p>
+<p><span class="math display">\[\sum_{i=1}^{n} x_{ik} \cdot Y_i = \sum_{i=1}^{n} x_{ik} \cdot \hat{\pi}_i\]</span></p>
+<ul>
+<li><p>The first equation guarantees that the <strong><em>number</em></strong> of the observed “successes” matches the <strong><em>sum of the estimated probabilities</em></strong> for “success” in a sample</p>
+<p>Therefore, the estimated probabilities provide unbiased predictions.</p></li>
+<li><p>The second equation constrains the estimated probabilities weighted by <span class="math inline">\(x_{ik}\)</span>. If <span class="math inline">\(x_{ik}\)</span> is an indicator variable, then the sum of estimated probabilities in the associated group are equal to the observed sum of “successes” in that group.</p></li>
+<li><p>Discussion of <strong>HAM</strong> Table 7.1:</p></li>
+</ul>
+<p><img src="images/w11_Chapter07/figure-07.png" class="img-fluid"></p>
+<ul>
+<li>An initial guess for <span class="math inline">\(\beta_1^{0-step} = 0\)</span> (i.e., the observed <span class="math inline">\(x_i\)</span>’s have no effect on <span class="math inline">\(\Pr(Y_i = 1)\)</span>) and for <span class="math inline">\(\beta_0\)</span> it is based on</li>
+</ul>
+<p><span class="math display">\[\frac{\sum_{i=1}^{n} Y_i}{n} = \frac{\sum_{i=1}^{n} \frac{1}{1+e^{-\beta_0}}}{n} = \frac{1}{1+e^{-\beta_0}}\]</span></p>
+<pre><code>which can be solved for $\beta_0$.</code></pre>
+<ul>
+<li>The bivariate logistic regression in <strong>HAM</strong> Table 7.1 uses <span class="math inline">\(\hat{\beta}_0^{0-step}\)</span> and <span class="math inline">\(\hat{\beta}_1^{0-step} = 0\)</span> as starting value for the iteration 0. This gives a <strong><em>log-likelihood</em></strong> of –104.6.</li>
+</ul>
+<p><img src="images/w11_Chapter07/figure-08.png" class="img-fluid"></p>
+<p><img src="images/w11_Chapter07/figure-09.png" class="img-fluid"></p>
+<p>At the third iteration the parameter estimates are <span class="math inline">\(\hat{\beta}_0^{3-step} = 0.46\)</span> and <span class="math inline">\(\hat{\beta}_1^{3-step} = -0.041\)</span> at an improved <strong><em>log-likelihood</em></strong> value of –97.6</p>
+<ul>
+<li>A test equivalent to the global <em>F</em>-test <span class="math inline">\(H_0: \beta_1 = \cdots = \beta_{K-1} = 0\)</span> is given by the likelihood ratio test:</li>
+</ul>
+<p><span class="math display">\[\chi_{df=K-1}^{2} = -2 \cdot \left[-104.60 - (-97.63)\right] = 13.94\]</span></p>
+<pre><code>with $df = K - 1$ for $K = \{\beta_0, \beta_1\}$.</code></pre>
+</section>
+<section id="excursion-1-alternative-derivations-of-logistic-regressions-not-test-relevant" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Excursion 1: Alternative derivations of logistic regressions (not test relevant)</h1>
+<ul>
+<li><p>Assume an underlying <strong><em>cumulative distribution</em></strong> function.</p>
+<p>Link the observation <span class="math inline">\(Y_i\)</span> by <strong><em>an unobserved variable formulation</em></strong> <span class="math inline">\(\boldsymbol{\xi_i}\)</span> to the independent variable.</p>
+<p>A prominent example of this perspective is the economic <em>discrete choice theory</em> (<em>Nobel Prize in Economics</em> to Daniel McFadden in 2002). See https://en.wikipedia.org/wiki/Discrete_choice.</p></li>
+<li><p>Two cumulative distribution functions are:</p>
+<p>[a] the standard normal distribution leads to the <em>probit</em>-model</p>
+<p>[b] the logistic distribution leads to the <em>logit</em>-model</p></li>
+<li><p>The <strong><em>logit</em></strong> model is mathematically easier to implement because its cumulative distribution function is known analytically and therefore it avoids numerical integration as in the case of the probits.</p></li>
+</ul>
+<p><img src="images/w11_Chapter07/figure-10.png" class="img-fluid"></p>
+</section>
+<section id="excursion-b-iterative-estimation-of-non-linear-systems-not-test-relevant" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Excursion B: Iterative estimation of non-linear systems (not test relevant)</h1>
+<p><img src="images/w11_Chapter07/figure-11.png" class="img-fluid"></p>
+<ul>
+<li><p>Recall that the first derivative of the log-likelihood function (i.e., its slope) must be zero at the optimal value of its argument <span class="math inline">\(\beta\)</span>.</p></li>
+<li><p>The <strong><em>Newton-Raphson algorithm</em></strong> iteratively approximates the curved first derivative of the log-likelihood by a linear function</p></li>
+<li><p>The zeros of the linear function are easily calculated.</p></li>
+<li><p>The linear approximation continues at this tentative zero value until the algorithm converges, i.e., the tentative zeros do not change any more.</p></li>
+</ul>
+</section>
+<section id="global-and-partial-tests-via-the-likelihood-ratio-test" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Global and partial tests via the likelihood ratio test</h1>
+<ul>
+<li><p>Different models produce different likelihood values: Prominent models are:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\pi}_i = \frac{\sum_{i=1}^{n} Y_i}{n} \quad \forall\ i \quad \Longrightarrow L_0\)</span></p>
+<p>This is a model with <strong><em>constant probabilities</em></strong> using only the intercept estimate <span class="math inline">\(b_0\)</span>.</p></li>
+<li><p><span class="math inline">\(\hat{\pi}_i = Y_i \quad \forall\ i \quad \Longrightarrow L_S\)</span></p>
+<p>This is the <strong><em>saturated model</em></strong>. It fits the observed data perfectly because it has <strong><em>one estimated parameter ‒ i.e., the observed</em></strong> <span class="math inline">\(\boldsymbol{Y_i}\)</span> <strong><em>‒ per observation</em></strong>, which leads to a predicted probability <span class="math inline">\(\hat{\pi}_i\)</span> that is equal to the revealed outcome <span class="math inline">\(Y_i\)</span>.</p>
+<p>For a binary logistic model the likelihood of the saturated model becomes one:</p></li>
+</ul></li>
+</ul>
+<p><span class="math display">\[L_S = \prod_{i=1}^{n} {\underbrace{\hat{Y}_i}_{=\hat{\pi}_i}}^{Y_i} \cdot {\underbrace{(1-\hat{Y}_i)}_{=1-\hat{\pi}_i}}^{1-Y_i} = 1\]</span></p>
+<ul>
+<li><p>The likelihoods are ordered in a sequence <span class="math inline">\(L_0 \leq L_{K-H} \leq L_K \leq L_S\)</span> ranging from the least fitting model with just the intercept to the fully fitting model having <span class="math inline">\(n\)</span> estimated parameters.</p>
+<p>The intermediate models comprise of <span class="math inline">\(K-H\)</span> and <span class="math inline">\(K\)</span> parameters where <span class="math inline">\(H\)</span> is the number of constrained parameters (i.e., set to the assumed value under the null hypothesis).</p></li>
+<li><p>As with the partial <em>F</em>-test the estimated parameters need to be in a <strong><em>nested sequence</em></strong>.</p></li>
+<li><p>See <strong>Ham Tables 7.1-7.4</strong> for the nested test strategy.</p></li>
+<li><p>Testing is conducted in terms of the log-likelihoods <span class="math inline">\(l_K\)</span> of the models in a nested-modeling strategy</p>
+<ul>
+<li>Let <span class="math inline">\(l_K = \ln(L_K)\)</span> be the log likelihood of the full model with <em>K</em> parameters</li>
+<li>Let <span class="math inline">\(l_{K-H} = \ln(L_{K-H})\)</span> be the log likelihood the restricted model with <em>H</em> less parameters</li>
+</ul></li>
+<li><p>The <strong><em>likelihood ratio</em></strong> test statistic <span class="math inline">\(\chi_H^2 = -2 \cdot (l_{K-H} - l_K)\)</span> can be used.</p>
+<ul>
+<li><p>It follows approximately a <span class="math inline">\(\chi^2\)</span>-distribution with <em>H</em> degrees of freedom. If both models do not differ then the <span class="math inline">\(\chi^2\)</span>-value would be zero. Thus large <span class="math inline">\(\chi^2\)</span>-value indicates significant differences, and we need to apply a one-sided test.</p></li>
+<li><p>In order to perform the likelihood ratio test we need to estimate both the full and the restricted model.</p></li>
+</ul></li>
+<li><p>Several software packages report the <strong><em>deviance</em></strong> rather than likelihoods or log-likelihoods.</p>
+<ul>
+<li>The deviance compares the estimated model against the saturated model:</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[D = -2 \cdot (l_K - l_S)\]</span></p>
+<ul>
+<li>Since <span class="math inline">\(l_S = \log(\underbrace{L_S}_{=1}) = 0\)</span>, the deviance is related to the log-likelihood of the model by</li>
+</ul>
+<p><span class="math display">\[D_K = -2 \cdot \log(L_K)\]</span></p>
+<ul>
+<li><p>The deviance has a similar interpretation than residual sum of squares in OLS. That is, smaller deviances are better.</p></li>
+<li><p>A likelihood ratio test can be performed in terms of differences in deviances:</p></li>
+</ul>
+<p><span class="math display">\[\chi_H^2 = D_{K-H} - D_K\]</span></p>
+<ul>
+<li>Individual <strong><em>Wald</em></strong> <em>t</em>-tests <span class="math inline">\(H_0: \beta_k = 0\)</span> on the parameters can be conducted by the <em>t</em>-statistic:</li>
+</ul>
+<p><span class="math display">\[t = \frac{b_k}{SE_{b_k}}\]</span></p>
+<ul>
+<li><p>Remember: The <em>likelihood ratio</em> test as well as the <em>Wald t</em>-test are only asymptotically valid.</p></li>
+<li><p>The Akaike’s information criterion evaluates the log-likelihood of a model against the number of estimated parameters in the model:</p></li>
+</ul>
+<p><span class="math display">\[AIC = -2 \cdot l_K + 2 \cdot K = D_K + 2 \cdot K\]</span></p>
+<p>Smaller <em>AIC</em> indicates a better fitting model.</p>
+</section>
+<section id="parameter-interpretation" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Parameter Interpretation</h1>
+<ul>
+<li><p>As consequence of the <strong><em>non-linearity</em></strong> in the relationship between the dependent variable <span class="math inline">\(\Pr(Y_i = 1)\)</span> and the independent variables, all interpretations of the single estimated logit regression parameters must be conducted <strong><em>conditionally</em></strong> to the given values of the other variables:</p>
+<p>For instance, the <strong><em>average</em></strong> of the remaining independent variables can be used.</p></li>
+<li><p>See the R-function <code>effects::allEffects()</code>.</p></li>
+</ul>
+<section id="a-approach-in-terms-of-the-logit" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="a-approach-in-terms-of-the-logit"><span class="header-section-number">7.1</span> [a] Approach in terms of the logit</h2>
+<ul>
+<li><p>Recall that the logit-transformation is a monotone function (the larger the logit the larger the underlying probability).</p>
+<p>Thus, the estimated parameters in <span class="math inline">\(\hat{\mathcal{L}}_i = b_0 + b_1 \cdot x_{i,1} + \cdots + b_{K-1} \cdot x_{i,K-1}\)</span> can be interpreted as:</p>
+<p>for <strong><em>positive</em></strong> coefficients <span class="math inline">\(b_k\)</span>, the <strong><em>greater X the larger the expected probability</em></strong>. Analog for negative <span class="math inline">\(b_k\)</span>s.</p></li>
+<li><p>Individual confidence intervals can be calculated for the logit specification:</p></li>
+</ul>
+<p><span class="math display">\[b_k - t_\alpha(SE_{b_k}) \leq \beta_k \leq b_k + t_\alpha(SE_{b_k})\]</span></p>
+<p>with <span class="math inline">\(t_\alpha(SE_{b_k})\)</span> being a function of the standard error of coefficient <span class="math inline">\(b_k\)</span> and the significance level.</p>
+<p><img src="images/w11_Chapter07/figure-13.png" class="img-fluid"></p>
+<ul>
+<li><p>We can reject the null hypothesis <span class="math inline">\(H_0: \beta_k = 0\)</span> if the interval <strong><em>does not cover</em></strong> the value zero.</p></li>
+<li><p>Interpretation of the model in terms of the logits is only the starting point because it does provide only an indirect link to the more meaningful probabilities.</p></li>
+</ul>
+</section>
+<section id="b-approach-in-terms-of-the-odds" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="b-approach-in-terms-of-the-odds"><span class="header-section-number">7.2</span> [b] Approach in terms of the odds</h2>
+<ul>
+<li>The odds-specification can be written as</li>
+</ul>
+<p><span class="math display">\[\frac{\hat{\pi}_i}{1-\hat{\pi}_i} = e^{b_0} \cdot e^{b_1 \cdot x_{i1}} \cdot \ldots \cdot e^{b_{K-1} \cdot x_{i(K-1)}}\]</span></p>
+<p><span class="math display">\[= e^{b_0} \cdot \left(e^{b_1}\right)^{x_{i1}} \cdot \ldots \cdot \left(e^{b_{K-1}}\right)^{x_{i(K-1)}}\]</span></p>
+<p><img src="images/w11_Chapter07/figure-14.png" class="img-fluid"></p>
+<p><img src="images/w11_Chapter07/figure-15.png" class="img-fluid"></p>
+<ul>
+<li><p>Assuming all <strong><em>variables remain at a preset level</em></strong> except for the <span class="math inline">\(k^{th}\)</span> variable, then one unit change in <span class="math inline">\(x_{ik}\)</span> changes the odds of observing <span class="math inline">\(Y_i = 1\)</span> by the factor <span class="math inline">\(e^{b_k}\)</span> (<strong><em>multiplicative link</em></strong>).</p></li>
+<li><p>If the estimated parameter is zero, i.e., <span class="math inline">\(b_k = 0\)</span>, then the odds won’t change because <span class="math inline">\(\left(e^{0}\right)^{x_{ik}} = 1\)</span> (one is the neutral factor in multiplication)</p></li>
+<li><p>The confidence interval in terms of the exponential function becomes</p></li>
+</ul>
+<p><span class="math display">\[\exp\left(b_k - t(SE_{b_k})\right) \leq \exp(\beta_k) \leq \exp\left(b_k + t(SE_{b_k})\right)\]</span></p>
+<p>If it does not include 1 the null hypothesis then <span class="math inline">\(H_0: \exp(\beta_k) = 1\)</span> can be rejected.</p>
+<ul>
+<li><p>The percentage change in the odds for observing <span class="math inline">\(Y_i = 1\)</span> is given by <span class="math inline">\(100 \cdot \left(e^{b_k} - 1\right)\)</span>.</p></li>
+<li><p>For an indicator variable <span class="math inline">\(X\)</span> this has a clear interpretation by the <strong><em>odds-ratios</em></strong>:</p></li>
+</ul>
+<p><span class="math display">\[OR = \frac{\hat{\mathcal{O}}_{X=1}}{\hat{\mathcal{O}}_{X=0}} = e^{b_k}\]</span></p>
+<p>because the effects of the <strong><em>remaining variables</em></strong> cancel out irrespectively of their observed levels:</p>
+<p><span class="math display">\[OR = \frac{e^{b_0} \cdot e^{b_1 \cdot x_{i1}} \cdot \ldots \cdot e^{b_k \cdot 1} \cdot \ldots \cdot e^{b_{K-1} \cdot x_{i(K-1)}}}{e^{b_0} \cdot e^{b_1 \cdot x_{i1}} \cdot \ldots \cdot \underbrace{e^{b_k \cdot 0}}_{=1} \cdot \ldots \cdot e^{b_{K-1} \cdot x_{i(K-1)}}} = e^{b_k}\]</span></p>
+</section>
+<section id="c-approach-in-terms-of-the-probabilities" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="c-approach-in-terms-of-the-probabilities"><span class="header-section-number">7.3</span> [c] Approach in terms of the probabilities</h2>
+<ul>
+<li>The estimated probability for observation <em>i</em> can is expressed by:</li>
+</ul>
+<p><span class="math display">\[\hat{\pi}_i = \frac{1}{1 + \exp(-\mathcal{L}_i)} = \frac{1}{1 + \exp(-\mathbf{x}_i^T \cdot \mathbf{b})}\]</span></p>
+<ul>
+<li><p>The interpretation that one-unit change in <span class="math inline">\(X\)</span> causes <span class="math inline">\(b\)</span> unit changes in the probability (either additively or multiplicatively) is no longer valid.</p>
+<p>It dependents on the relative value of the predicted probabilities <span class="math inline">\(\hat{\pi}_i\)</span> (see <strong>HAM Fig 7.3</strong>):</p></li>
+<li><p>The slope of the logistic curve for a given probability <span class="math inline">\(\hat{\pi}_i\)</span> with respect to one unit change in an independent variable <span class="math inline">\(X\)</span> is given by <span class="math inline">\(b_k \cdot \hat{\pi}_i \cdot (1 - \hat{\pi}_i)\)</span></p></li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 78%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\hat{\pi}_i\)</span></th>
+<th><span class="math inline">\(slope = b_k \cdot \hat{\pi}_i \cdot (1-\hat{\pi}_i)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.01</td>
+<td><span class="math inline">\(b_k \times 0.0099\)</span></td>
+</tr>
+<tr class="even">
+<td>0.05</td>
+<td><span class="math inline">\(b_k \times 0.04575\)</span></td>
+</tr>
+<tr class="odd">
+<td>0.10</td>
+<td><span class="math inline">\(b_k \times 0.09\)</span></td>
+</tr>
+<tr class="even">
+<td>0.50</td>
+<td><span class="math inline">\(b_k \times 0.25\)</span></td>
+</tr>
+<tr class="odd">
+<td>0.90</td>
+<td><span class="math inline">\(b_k \times 0.09\)</span></td>
+</tr>
+<tr class="even">
+<td>0.95</td>
+<td><span class="math inline">\(b_k \times 0.04575\)</span></td>
+</tr>
+<tr class="odd">
+<td>0.99</td>
+<td><span class="math inline">\(b_k \times 0.0099\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>It has it maximum at <span class="math inline">\(\hat{\pi}_i = 0.5\)</span></p></li>
+<li><p>The logistic curve <strong><em>fairly linear</em></strong> in the short intervals of <span class="math inline">\(\pi \in [0 &lt; \pi^{lower}, \pi^{upper} &lt; 1]\)</span>.</p>
+<p>Consequently, <strong><em>weighted</em></strong> linear regression can be used for observed rates, as long as they don’t vary too much.</p></li>
+<li><p>For metric variables only <strong><em>conditional effect plots</em></strong>, where the remaining variables are set at a <strong><em>specific fixed</em></strong> level, can be given (see <strong>HAM</strong> Figs 7.5 and 7.6)</p></li>
+</ul>
+<p><img src="images/w11_Chapter07/figure-16.png" class="img-fluid"></p>
+<p><img src="images/w11_Chapter07/figure-17.png" class="img-fluid"></p>
+<ul>
+<li><p>Note the identity of the logistic curve in Fig 7.4 (model with the only variable <strong>“lived”</strong>) and the logistic curve of the “average” respondent in Fig 7.5.</p></li>
+<li><p>This allows investigating the effects of one variable on the probability for different scenarios (in the example <strong>HAM p 231</strong>: population segment of <em>risk-takers</em> against <em>cautious people</em>).</p></li>
+</ul>
+</section>
+</section>
+<section id="statistical-problems" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Statistical Problems</h1>
+<ul>
+<li><p>Examine multicollinearity: [a] correlation among variables, [b] correlation matrix among estimate coefficients (preferred approach), [c] VIFs.</p></li>
+<li><p>High <strong><em>discrimination</em></strong> does not allow estimating parameters (see example <strong>HAM</strong> Tab 7.5) because the measured level of an independent variable pre-determines the outcome of the dependent variable. I.e., for all <span class="math inline">\(x_k = c\)</span> the observed <span class="math inline">\(Y\)</span> is either 0 or 1.</p></li>
+</ul>
+</section>
+<section id="excursion-the-saturated-model-perspective" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Excursion: The Saturated Model Perspective</h1>
+<ul>
+<li><p>Using the <strong><em>saturated model</em></strong> as baseline switches the testing perspective:</p>
+<ol type="a">
+<li><p>Instead of looking for a model with a good fit starting from a basic model with only the intercept (=&gt; constant predicted probability for all observations), we test against a <strong><em>perfect</em></strong> model that <strong><em>overfits</em></strong> the data by having as many parameters as we have observations.</p></li>
+<li><p>We are looking for a <strong><em>parsimonious</em></strong> model and thus reduce the number of parameters as much as possible but keeping the <span class="math inline">\(\chi^2\)</span>-test statistics <strong><em>barely insignificant</em></strong>.</p>
+<p>That is, the final model with fewer parameters does not differ significantly from a perfectly fitting model with many parameters.</p></li>
+</ol></li>
+</ul>
+</section>
+<section id="excursion-residual-analysis-not-test-relevant" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Excursion: Residual Analysis (not test relevant)</h1>
+<ul>
+<li><p>Detailed information on how to perform residual analysis and diagnostics for generalized linear models can be found in section 8.6 “Diagnostics for Generalized Linear Models” in Fox &amp; Weissberg’s <em>R Companion to Regression Analysis</em></p></li>
+<li><p>Discuss notation of grouped independent variables <strong>HAM</strong> Tab. 7.6:</p>
+<ul>
+<li><span class="math inline">\(Y_j\)</span> is the sum of “successes” in a grouped pattern <span class="math inline">\(j\)</span> of the independent variables.</li>
+<li><span class="math inline">\(n_j\)</span> is the number of cases with a grouped pattern <span class="math inline">\(j\)</span>.</li>
+</ul></li>
+<li><p>Two different kinds of residuals:</p>
+<ul>
+<li>Pearson residuals (analog to the <span class="math inline">\(\chi^2\)</span>-test for independence in contingency tables):</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[r_j = \frac{Y_j - n_j \cdot \hat{\pi}_j}{\sqrt{n_j \cdot \hat{\pi}_j \cdot (1-\hat{\pi}_j)}}\]</span></p>
+<ul>
+<li>Deviance residuals are based on the log-likelihood of individual cases (common grouped patterns <span class="math inline">\(n_j\)</span>):</li>
+</ul>
+<p><span class="math display">\[d_j = \pm \left\{ 2 \cdot \left[ Y_j \cdot \log\left(\frac{Y_j}{n_j \cdot \hat{\pi}_j}\right) + (n_j - Y_j) \cdot \log\left(\frac{n_j - Y_j}{n_j \cdot (1-\hat{\pi}_j)}\right) \right] \right\}^{1/2}\]</span></p>
+<pre><code>where the sign depends on the sign of $Y_j - n_j \cdot \hat{\pi}_j$.
+
+Deviance residuals measure in how far a predicted probability of an individual observation differs from that of its saturated equivalent, which is zero.</code></pre>
+<ul>
+<li>Both statistics follow a <span class="math inline">\(\chi^2\)</span>-distribution. A low <span class="math inline">\(\chi^2\)</span>-value indicates that the model is not much different from a model with a perfect fit for <span class="math inline">\(Y_j\)</span>.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

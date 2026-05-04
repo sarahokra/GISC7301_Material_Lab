@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tiefelsdorf">
+<meta name="dcterms.date" content="2026-03-23">
+
+<title>Week08: Maximum Likelihood Principle (Abridged) – GISC7301 Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./icon埃拉.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GISC7301 Material</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w08_MaximumLikelihoodAbbridged.html">Wk08-Maximum Likelihood Principle (Abridged)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PDF Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w00_HamAppTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk00-Basic Math Review</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_TheoryReverseBoxCox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Switching between Transformed and Untransformed Regression Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w01_HamChap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk01-Hamilton Ch01: Univariate Variable Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w02_Chap02BivarReg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk02-Hamilton Ch02: Bivariate Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w03_HamChapt03A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk03-Hamilton Chapter 3A: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w04_HamChapt03B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk04-Hamilton Chapter 3B: Multiple Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w05_MatrixAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk05-Matrix Algebra and Eigensystems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_CoordinateTransformations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geographic Coordinate Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_GPSCoordinateRetrieval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-GPS Coordinate Retrieval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipalComponentAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Geometric Interpretation of Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w06_PrincipleComponentsOverview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk06-Appendix03: Principal Components Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_Chapter04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Hamilton Chapter 4: Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w07_PoorManFourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk07-Poor Man’s Fourier Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_GLSHetero.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk08-GLS &amp; Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w08_MaximumLikelihoodAbbridged.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Wk08-Maximum Likelihood Principle (Abridged)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w09_SpatialAutocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk09-Residual Spatial Autocorrelation Test with Moran’s I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w11_Chapter07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk11-Hamilton Chapter 7: Logistic Regression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AG_w12_GLMwithExtension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wk12-Overview - The Generalized Linear Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lab</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab01Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab01: Data Transformations, Bivariate Regression Analysis, Numerical Integration &amp; Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab02Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab02: Multiple Regression Analysis, Factors and Interaction Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab03Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab03 A: Matrix Operations and Model Diagnositics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab04Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab04: Heteroscedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab05Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab05: Regression Analysis of a Heterogeneous and Spatially Distributed Dataset</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Lab06Shiu-Ting_Ling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab06: Logistic Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">To be continued...</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#estimation-principles" id="toc-estimation-principles" class="nav-link active" data-scroll-target="#estimation-principles"><span class="header-section-number">1</span> Estimation Principles</a></li>
+  <li><a href="#the-maximum-likelihood-principle" id="toc-the-maximum-likelihood-principle" class="nav-link" data-scroll-target="#the-maximum-likelihood-principle"><span class="header-section-number">2</span> The Maximum Likelihood Principle</a>
+  <ul class="collapse">
+  <li><a href="#example-of-the-maximum-likelihood-principal" id="toc-example-of-the-maximum-likelihood-principal" class="nav-link" data-scroll-target="#example-of-the-maximum-likelihood-principal"><span class="header-section-number">2.1</span> Example of the maximum likelihood principal</a></li>
+  <li><a href="#the-best-estimate-for-pi-skipped" id="toc-the-best-estimate-for-pi-skipped" class="nav-link" data-scroll-target="#the-best-estimate-for-pi-skipped"><span class="header-section-number">2.2</span> The Best Estimate for <span class="math inline">\(\pi\)</span> (skipped)</a></li>
+  <li><a href="#estimation-of-the-parameters-variance-textvarhatpi-skipped" id="toc-estimation-of-the-parameters-variance-textvarhatpi-skipped" class="nav-link" data-scroll-target="#estimation-of-the-parameters-variance-textvarhatpi-skipped"><span class="header-section-number">2.3</span> Estimation of the parameter’s variance <span class="math inline">\(\text{Var}(\hat{\pi})\)</span> (skipped)</a></li>
+  </ul></li>
+  <li><a href="#likelihood-ratio-test-wald-test-and-score-test" id="toc-likelihood-ratio-test-wald-test-and-score-test" class="nav-link" data-scroll-target="#likelihood-ratio-test-wald-test-and-score-test"><span class="header-section-number">3</span> Likelihood Ratio Test, Wald Test, and Score Test</a>
+  <ul class="collapse">
+  <li><a href="#likelihood-ratio-test-lr" id="toc-likelihood-ratio-test-lr" class="nav-link" data-scroll-target="#likelihood-ratio-test-lr"><span class="header-section-number">3.1</span> Likelihood Ratio Test (LR)</a></li>
+  <li><a href="#the-wald-test" id="toc-the-wald-test" class="nav-link" data-scroll-target="#the-wald-test"><span class="header-section-number">3.2</span> The Wald test</a></li>
+  <li><a href="#the-score-test-a.k.a.-lagrange-multiplier-test" id="toc-the-score-test-a.k.a.-lagrange-multiplier-test" class="nav-link" data-scroll-target="#the-score-test-a.k.a.-lagrange-multiplier-test"><span class="header-section-number">3.3</span> The Score test (a.k.a. Lagrange multiplier test)</a></li>
+  <li><a href="#general-discussion" id="toc-general-discussion" class="nav-link" data-scroll-target="#general-discussion"><span class="header-section-number">3.4</span> General Discussion</a></li>
+  </ul></li>
+  <li><a href="#goodness-of-fit-statistics-associated-with-likelihoods" id="toc-goodness-of-fit-statistics-associated-with-likelihoods" class="nav-link" data-scroll-target="#goodness-of-fit-statistics-associated-with-likelihoods"><span class="header-section-number">4</span> Goodness of Fit Statistics Associated with Likelihoods</a>
+  <ul class="collapse">
+  <li><a href="#deviance" id="toc-deviance" class="nav-link" data-scroll-target="#deviance"><span class="header-section-number">4.1</span> Deviance</a></li>
+  <li><a href="#akaike-information-criterion" id="toc-akaike-information-criterion" class="nav-link" data-scroll-target="#akaike-information-criterion"><span class="header-section-number">4.2</span> Akaike Information Criterion</a></li>
+  </ul></li>
+  <li><a href="#appendix-basic-math" id="toc-appendix-basic-math" class="nav-link" data-scroll-target="#appendix-basic-math"><span class="header-section-number">5</span> Appendix: Basic Math</a>
+  <ul class="collapse">
+  <li><a href="#discussion-the-logarithm-and-the-exponential-function-skipped" id="toc-discussion-the-logarithm-and-the-exponential-function-skipped" class="nav-link" data-scroll-target="#discussion-the-logarithm-and-the-exponential-function-skipped"><span class="header-section-number">5.1</span> Discussion the Logarithm and the Exponential Function (Skipped)</a></li>
+  <li><a href="#discussion-of-derivatives-skipped" id="toc-discussion-of-derivatives-skipped" class="nav-link" data-scroll-target="#discussion-of-derivatives-skipped"><span class="header-section-number">5.2</span> Discussion of Derivatives (skipped)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AG_w00_HamAppTheory.html">PDF Material</a></li><li class="breadcrumb-item"><a href="./AG_w08_MaximumLikelihoodAbbridged.html">Wk08-Maximum Likelihood Principle (Abridged)</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Week08: Maximum Likelihood Principle (Abridged)</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tiefelsdorf </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 23, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="estimation-principles" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Estimation Principles</h1>
+<ul>
+<li><p>Besides ordinary least squares estimation principle, there are several alternative estimation principles such as the method of moments, maximum likelihood or Bayesian used in statistics. Each of these estimation methods employs some form of optimization techniques to estimate the unknown parameters from observed (or hypothetical) sample data.</p></li>
+<li><p>Historically, the maximum likelihood and OLS estimators were (and still are) the most prominent estimation methods.</p>
+<p>However, other principles are gaining momentum under specific conditions.</p></li>
+<li><p>The maximum likelihood estimator explicitly requires:</p>
+<ol type="1">
+<li><p>that the functional form of the underlying distribution of each random variable is explicitly known and that the given sample data conform with this distribution (the parameters of the underlying distribution do not need to be fully specified),</p></li>
+<li><p>that the observations are statistically independent and identically distributed (or can be transformed to satisfy the i.i.d. requirement).</p></li>
+</ol></li>
+<li><p>Recall: <strong><em>OLS is more relaxed</em></strong>: it satisfies the Gauss-Markov theorem (unbiasedness and efficiency estimator even if some assumptions are not perfectly satisfied) without relying on strict distributional assumptions.</p></li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-01.png" class="img-fluid"></p>
+</section>
+<section id="the-maximum-likelihood-principle" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The Maximum Likelihood Principle</h1>
+<p>(see FOX Appendix)</p>
+<ul>
+<li>The two assumptions of [a] <strong><em>known</em></strong> distribution function and [b] stochastic <strong><em>independence</em></strong> allow constructing the <strong><em>joint density function</em></strong> for the sample observations in terms of the unknown parameters <span class="math inline">\(\theta\)</span> as a product of their individual distributions:</li>
+</ul>
+<p><span class="math display">\[f(x_1, \ldots, x_n | \theta) = f(x_1 | \theta) \cdot \ldots \cdot f(x_n | \theta)\]</span></p>
+<ul>
+<li><p>Maximum likelihood asks the question:</p>
+<p><strong><em>Given the observed data</em></strong> <span class="math inline">\(\{x_1, \ldots, x_n\}\)</span>, <strong><em>which is the most likely population parameter</em></strong> <span class="math inline">\(\theta\)</span> <strong><em>that has generated the observations?</em></strong></p></li>
+<li><p>This becomes an optimization task of finding the unknown parameter <span class="math inline">\(\theta\)</span> which maximizes the likelihood function of the observed data:</p></li>
+</ul>
+<p><span class="math display">\[\max_{\theta} L(\theta | x_1, \ldots, x_n)\]</span></p>
+<ul>
+<li><p>This optimization is often carried out by transforming the likelihood function <span class="math inline">\(L(\theta)\)</span> into its logarithmic form:</p>
+<ul>
+<li>The reason for this transformation is that the <strong><em>product</em></strong> of the probabilities under the independence assumptions becomes now a <strong><em>summation</em></strong>:</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[L(\theta | x_1, \ldots, x_n) = f(\theta | x_1) \cdot \ldots \cdot f(\theta | x_n)\]</span></p>
+<p><span class="math display">\[\Rightarrow l(\theta | x_1, \ldots, x_n) = \log f(\theta | x_1) + \ldots + \log f(\theta | x_n)\]</span></p>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-02.png" class="img-fluid"></p>
+<ul>
+<li><p>Derivatives of summations are easier to evaluate because one can skip the product rule.</p></li>
+<li><p>The estimated parameters <span class="math inline">\(\theta\)</span> after log-transformation do not change.</p></li>
+<li><p>Taking the first derivative of the log-likelihood function <span class="math inline">\(l(\theta | x_1, \ldots, x_n)\)</span>, setting it equal to zero <span class="math inline">\(\frac{\partial l(\theta)}{\partial \theta} = 0\)</span> allows to solve for the unknown parameter <span class="math inline">\(\theta\)</span> which leads to the best estimate of <span class="math inline">\(\hat{\theta}\)</span> given the observed data.</p></li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-03.png" class="img-fluid"></p>
+<ul>
+<li><p>Properties of the maximum likelihood estimator:</p>
+<ol type="1">
+<li><p>ML estimators are <strong><em>asymptotically unbiased</em></strong></p></li>
+<li><p>ML estimators are asymptotically <strong><em>normally distributed</em></strong></p></li>
+<li><p>The ML estimator is asymptotically <strong><em>consistent</em></strong> (unbiased with smaller or equal variance than any alternative estimator for large sample sizes).</p></li>
+<li><p><strong><em>Comparable</em></strong> test statistics to the <em>t</em>-test, <em>F</em>-test and partial <em>F</em>-test are available for maximum likelihood estimates.</p></li>
+</ol></li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-04.png" class="img-fluid"></p>
+<section id="example-of-the-maximum-likelihood-principal" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="example-of-the-maximum-likelihood-principal"><span class="header-section-number">2.1</span> Example of the maximum likelihood principal</h2>
+<ul>
+<li><p>Flipping a coin n=10 times with the given outcome HHTHHHTTHH. Each throw is conducted independently of the other throws.</p>
+<p>Our intuitive guess would be <span class="math inline">\(\Pr(H) = \frac{\text{# of heads}}{\text{# of trails}} = 0.7\)</span></p></li>
+<li><p>The probability of obtaining this sequence of observations, prior to collecting the data, is a function of the unknown population parameter <span class="math inline">\(\pi\)</span>:</p></li>
+</ul>
+<p><span class="math display">\[\Pr(\text{data} | \text{parameter}) = \Pr(HHTHHHTTHH | \pi)\]</span></p>
+<p><span class="math display">\[= \pi \cdot \pi \cdot (1-\pi) \cdot \pi \cdot \pi \cdot \pi \cdot (1-\pi) \cdot (1-\pi) \cdot \pi \cdot \pi\]</span></p>
+<p><span class="math display">\[= \pi^7 \cdot (1-\pi)^3\]</span></p>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-05.png" class="img-fluid"></p>
+<p>That is, each throw is <strong><em>binary distributed</em></strong> and its outcome is independent of the other throws. Therefore, the <strong><em>product</em></strong> of individual probabilities gives the <strong><em>join-probability</em></strong>.</p>
+<ul>
+<li>Assuming the data are given and the unknown random parameter is <span class="math inline">\(\pi\)</span> then the conditional probability <span class="math inline">\(\Pr(\text{data} | \pi)\)</span> changes into a likelihood function:</li>
+</ul>
+<p><span class="math display">\[L(\text{unknown parameter} | \text{observed data}) = L(\pi | HHTHHHTTHH) = \pi^7 \cdot (1-\pi)^{10-7}\]</span></p>
+<p>Note: A likelihood function is not a proper statistical distribution function for the unknown parameter <span class="math inline">\(\pi\)</span> because it does not integrate to one over the range <span class="math inline">\(\pi \in [0,1]\)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> L <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p<span class="sc">^</span><span class="dv">7</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(<span class="dv">10-7</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">integrate</span>(L,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0007575758</span> with absolute error <span class="sc">&lt;</span> <span class="fl">8.4e-18</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-06.png" class="img-fluid"></p>
+<ul>
+<li>In our imagination we can vary the parameter <span class="math inline">\(\pi\)</span> within its feasible range <span class="math inline">\(\pi \in [0,1]\)</span> and find the <strong><em>maximum value</em></strong> of the likelihood function for the given sample observations at a particular value <span class="math inline">\(\hat{\pi}\)</span>. See the R script <code>likeBinom.R</code>.</li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-07.png" class="img-fluid"></p>
+<ul>
+<li><p>The likelihood that our given data comes from a population with <span class="math inline">\(\pi = \hat{\pi}\)</span> is highest at <span class="math inline">\(\hat{\pi}\)</span>. This is our best guess for the unknown underlying population parameter <span class="math inline">\(\pi\)</span>.</p></li>
+<li><p>See table in Fox’s Appendix and Figure D.15</p></li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-08.png" class="img-fluid"></p>
+<ul>
+<li><p>Discussion: If the true probabilities were <span class="math inline">\(\pi = 0.0\)</span> or <span class="math inline">\(\pi = 1.0\)</span> (the sure events) then the observed sample would have been impossible to observe.</p></li>
+<li><p>The maximum likelihood estimation method also allows to evaluate the <strong><em>covariance matrix among the estimated parameters</em></strong> <span class="math inline">\(\theta\)</span> (see Fox’s appendix pages 92-100)</p></li>
+</ul>
+</section>
+<section id="the-best-estimate-for-pi-skipped" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-best-estimate-for-pi-skipped"><span class="header-section-number">2.2</span> The Best Estimate for <span class="math inline">\(\pi\)</span> (skipped)</h2>
+<ul>
+<li><p><span class="math inline">\(L(\pi | \text{data}) = \pi^x \cdot (1-\pi)^{n-x}\)</span></p>
+<p><span class="math inline">\(\Rightarrow \log L(\pi | \text{data}) = l(\pi) = x \cdot \ln \pi + (n-x) \cdot \ln(1-\pi)\)</span></p></li>
+<li><p>The following rules are applied to find the derivative of <span class="math inline">\(l(\pi)\)</span>:</p>
+<p>[a] <span class="math inline">\(\frac{\partial \ln(\pi)}{\partial \pi} = \frac{1}{\pi}\)</span> and</p>
+<p>[b] the <strong><em>chain rule</em></strong> of derivatives <span class="math inline">\(\frac{\partial \ln(1-\pi)}{\partial \pi} = \frac{1}{1-\pi} \cdot (-1)\)</span></p>
+<p>with <span class="math inline">\(\frac{\partial \ln(1-\pi)}{\partial (1-\pi)} = \frac{1}{1-\pi}\)</span> and <span class="math inline">\(\frac{\partial (1-\pi)}{\partial \pi} = -1\)</span>.</p></li>
+<li><p>Thus the first derivative of the log-likelihood with respect to <span class="math inline">\(\pi\)</span> becomes</p></li>
+</ul>
+<p><span class="math display">\[\frac{\partial l(\pi)}{\partial \pi} = \frac{x}{\pi} + (n-x) \cdot \frac{1}{1-\pi} \cdot (-1)\]</span></p>
+<p>A maximum is obtained by setting the first derivative equal to zero and solving for the unknown parameter:</p>
+<p><span class="math display">\[\frac{x}{\pi} - \frac{n-x}{1-\pi} \equiv 0 \quad \Rightarrow \quad \frac{x}{\pi} = \frac{n-x}{1-\pi} \quad \Rightarrow \quad \frac{1-\pi}{\pi} = \frac{n-x}{x} \quad \Rightarrow \quad \frac{1}{\pi} - 1 = \frac{n}{x} - 1\]</span></p>
+<p>which leads to <span class="math inline">\(\hat{\pi} = \frac{x}{n}\)</span>.</p>
+<ul>
+<li>The maximum likelihood <span class="math inline">\(L\)</span> is given at <span class="math inline">\(L(\hat{\pi} | \text{data}) = \left(\frac{x}{n}\right)^x \cdot \left(1 - \frac{x}{n}\right)^{n-x}\)</span></li>
+</ul>
+</section>
+<section id="estimation-of-the-parameters-variance-textvarhatpi-skipped" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="estimation-of-the-parameters-variance-textvarhatpi-skipped"><span class="header-section-number">2.3</span> Estimation of the parameter’s variance <span class="math inline">\(\text{Var}(\hat{\pi})\)</span> (skipped)</h2>
+<ul>
+<li><p>To obtain <span class="math inline">\(\text{Var}(\theta) = I^{-1}(\theta) = \left[-E\left(\frac{\partial^2 l(\theta)}{\partial \theta \cdot \partial \theta^T}\right)\right]^{-1}\)</span> note that for the <strong><em>binomial distribution</em></strong> the expected value of the sum of the successes is equal to <em>n</em>-times the population probability of a single event, <span class="math inline">\(E[x] = n \cdot \pi\)</span></p></li>
+<li><p><span class="math inline">\(\frac{\partial^2 l(\pi)}{\partial^2 \pi} = \frac{\partial \left(\frac{\partial l(\pi)}{\partial \pi}\right)}{\partial \pi} = \frac{\partial \left[\frac{x}{\pi} - \frac{n-x}{1-\pi}\right]}{\partial \pi} = -\frac{x}{\pi^2} - \frac{n-x}{(1-\pi)^2}\)</span></p>
+<p>Thus we get for the expectation (information matrix)</p></li>
+</ul>
+<p><span class="math display">\[E\left[-\frac{x}{\pi^2} - \frac{n-x}{(1-\pi)^2}\right] = -\frac{n\pi}{\pi^2} - \frac{n - n\pi}{(1-\pi)^2} = -\frac{n}{\pi} - \frac{n}{1-\pi}\]</span></p>
+<p><span class="math display">\[= -n \cdot \left(\frac{(1-\pi) + \pi}{\pi \cdot (1-\pi)}\right) = -\frac{n}{\pi \cdot (1-\pi)}\]</span></p>
+<p>Substituting <span class="math inline">\(\hat{\pi}\)</span>, multiplying the expression by <span class="math inline">\(-1\)</span> and taking the inverse gives the estimated variance:</p>
+<p><span class="math display">\[\text{Var}(\pi) = \frac{\hat{\pi} \cdot (1-\hat{\pi})}{n}\]</span></p>
+</section>
+</section>
+<section id="likelihood-ratio-test-wald-test-and-score-test" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Likelihood Ratio Test, Wald Test, and Score Test</h1>
+<section id="likelihood-ratio-test-lr" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="likelihood-ratio-test-lr"><span class="header-section-number">3.1</span> Likelihood Ratio Test (LR)</h2>
+<ul>
+<li><p>The <strong><em>likelihood ratio test</em></strong> requires that the model is estimated (calibrated) twice:</p>
+<ul>
+<li>first under the <strong><em>null hypothesis</em></strong> and</li>
+<li>then under the <strong><em>alternative hypothesis</em></strong>.</li>
+</ul>
+<p>Under the null hypothesis means that the parameters, which are tested, are <strong><em>set a priori to a given value</em></strong>, which in most cases is <strong><em>zero</em></strong> (that is, not included in the estimation procedure).</p></li>
+<li><p>The test statistic becomes <span class="math inline">\(\chi_H^2 = -2(\ln(L_{K-H}) - \ln(L_K)) = -2 \cdot \ln\left(\frac{L_{K-H}}{L_K}\right)\)</span> where</p>
+<ul>
+<li><span class="math inline">\(\ln(L_K)\)</span> is the log-likelihood of the <strong><em>unrestricted</em></strong> model with K freely varying parameters</li>
+<li>and <span class="math inline">\(\ln(L_{K-H})\)</span> is the log-likelihood of the model <span class="math inline">\(H\)</span> <strong><em>restricted</em></strong> parameters.</li>
+</ul></li>
+<li><p>The number of restrictions (parameters not estimated) is H.</p>
+<p>The relationship <span class="math inline">\(\ln(L_{K-H}) \leq \ln(L_K)\)</span> holds because the restricted likelihood function is associated with a model that fit the data <strong><em>not as well</em></strong> as the full model.</p></li>
+<li><p>The <span class="math inline">\(\chi_H^2\)</span> test statistic is asymptotically <span class="math inline">\(\chi^2\)</span>-distributed with H degrees for freedom under the null hypothesis that the H restricted parameters are irrelevant.</p>
+<p><strong><em>Large</em></strong> values of <span class="math inline">\(\chi_H^2\)</span> indicate that the <strong><em>a priori</em></strong> restricted parameters are <strong><em>relevant</em></strong> and should vary freely (that is different from their assumed values under the null hypothesis). Therefore, they should also be estimated.</p></li>
+<li><p>The underlying idea of the likelihood ratio test is similar to that of the <strong><em>partial F-test</em></strong>.</p></li>
+</ul>
+</section>
+<section id="the-wald-test" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-wald-test"><span class="header-section-number">3.2</span> The Wald test</h2>
+<ul>
+<li><p>Under the <strong><em>Wald test</em></strong> the full model with all parameters is estimated and the included parameters are tested against their values under the null hypothesis.</p></li>
+<li><p>It requires that we evaluate the parameter’s standard errors (derived from the inverse information matrix) at the unrestricted maximum likelihood value.</p></li>
+<li><p>The <strong><em>Wald</em></strong> test is a substitute for the <strong><em>single t-test</em></strong> for the parameters in the model. It helps to decide which parameters to drop from the model.</p></li>
+</ul>
+</section>
+<section id="the-score-test-a.k.a.-lagrange-multiplier-test" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="the-score-test-a.k.a.-lagrange-multiplier-test"><span class="header-section-number">3.3</span> The Score test (a.k.a. Lagrange multiplier test)</h2>
+<ul>
+<li><p>The <strong><em>Score test</em></strong> estimates the restricted model where the parameters under scrutiny are set <em>a priori</em> to a given value (in most cases zero).</p></li>
+<li><p>The score test helps to decide which parameters should be estimated freely and added to a restricted model.</p></li>
+</ul>
+</section>
+<section id="general-discussion" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="general-discussion"><span class="header-section-number">3.4</span> General Discussion</h2>
+<ul>
+<li><p>Critical values of the <span class="math inline">\(\chi^2\)</span> distribution are used with the degrees of freedom equal to</p>
+<ul>
+<li>the number of restricted parameters for the likelihood ratio test, and</li>
+<li>one for the Wald-test and Score-test if just individual parameters are tested.</li>
+</ul></li>
+<li><p>These tests are only valid asymptotically for large samples of statistically independent observations.</p></li>
+<li><p>It can be shown that <span class="math inline">\(S \leq LR \leq W\)</span> when they are applied under identical circumstances.</p>
+<p>Thus, the larger Wald test will reject the null hypothesis more frequently than the other tests.</p></li>
+<li><p>Visualization of the three test principles.</p></li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-10.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="goodness-of-fit-statistics-associated-with-likelihoods" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Goodness of Fit Statistics Associated with Likelihoods</h1>
+<section id="deviance" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="deviance"><span class="header-section-number">4.1</span> Deviance</h2>
+<ul>
+<li><p>The key building block of the <strong><em>deviance</em></strong> is a likelihood ratio comparison of the log-likelihood of <strong><em>current model</em></strong> against the log-likelihood of the best model which <strong><em>fits the observed data perfectly</em></strong>.</p></li>
+<li><p>A perfectly fitting model is also called a saturated model because it uses as many estimated parameters (one for each observation) as there are observations.</p></li>
+<li><p>A simple approach to obtain a saturated model is to substitute the observed dependent variable as predicted variable into the likelihood function, i.e., <span class="math inline">\(\hat{y}_i \leftarrow y_i\)</span>.</p>
+<p>For example: In case of a binary distributed dependent variable <span class="math inline">\(y_i \in \{0,1\}\)</span> with <span class="math inline">\(\hat{\pi}_i = y_i\)</span> the likelihood function becomes</p></li>
+</ul>
+<p><span class="math display">\[L(\text{saturated model}) = \prod_{i=1}^{n} y_i^{y_i} \cdot (1-y_i)^{(1-y_i)} = 1\]</span></p>
+<ul>
+<li>The deviance comparing the fitted model against a saturated model is simply a likelihood ratio statistic:</li>
+</ul>
+<p><span class="math display">\[D(\text{fitted model}) = -2 \cdot \log\left(\frac{L(\text{fitted model})}{L(\text{saturated model})}\right) = -2 \cdot \log(L(\text{fitted model}))\]</span></p>
+<ul>
+<li><p>Therefore, models with a small deviance fits the observed data well, whereas a model with a large deviance fits the data poorly.</p>
+<p>Analog to linear regression one can think of the deviance as the residual-sum-of-squares.</p></li>
+</ul>
+</section>
+<section id="akaike-information-criterion" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="akaike-information-criterion"><span class="header-section-number">4.2</span> Akaike Information Criterion</h2>
+<ul>
+<li>The Akaike Information Criterion (AIC) is a measure of model fit. It is defined as a deviance of a model which is penalized by its number of estimated parameters:</li>
+</ul>
+<p><span class="math display">\[AIC = \underbrace{-2 \cdot \log(L(\text{model with } k \text{ parameters}))}_{= D(\text{model with } k \text{ parameters})} + 2 \cdot (k+1)\]</span></p>
+<ul>
+<li>In general models with a smaller AIC are preferred.</li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-16.png" class="img-fluid"></p>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-17.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="appendix-basic-math" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Appendix: Basic Math</h1>
+<section id="discussion-the-logarithm-and-the-exponential-function-skipped" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="discussion-the-logarithm-and-the-exponential-function-skipped"><span class="header-section-number">5.1</span> Discussion the Logarithm and the Exponential Function (Skipped)</h2>
+<ul>
+<li>See the figure below for the exponential function and the logarithmic function</li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-11.png" class="img-fluid"></p>
+<p>Exponential function: <span class="math inline">\(\exp(x)\)</span> or <span class="math inline">\(e^x\)</span> with <span class="math inline">\(e \approx 2.7183\)</span>.</p>
+<p>Note: <span class="math inline">\(x \in [-\infty, \infty]\)</span> but <span class="math inline">\(\exp(x) &gt; 0\)</span>.</p>
+<p>Natural logarithm: <span class="math inline">\(\ln(x)\)</span>, or <span class="math inline">\(\log_e(x)\)</span>.</p>
+<p>It is the inverse of the exponential function.</p>
+<p>Note: <span class="math inline">\(x &gt; 0\)</span> but <span class="math inline">\(\ln(x) \in [-\infty, \infty]\)</span></p>
+<ul>
+<li>Meaning of inverse: <span class="math inline">\(x = \ln[\exp(x)]\)</span> for <span class="math inline">\(x \in [-\infty, \infty]\)</span> and <span class="math inline">\(x = \exp[\ln(x)]\)</span> for <span class="math inline">\(x &gt; 0\)</span>. These rules are often applied to linearize multiplicative functions.</li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-20.png" class="img-fluid"></p>
+<ul>
+<li>Basic rules of exponential function:</li>
+</ul>
+<p><span class="math display">\[\exp(-a) = \frac{1}{\exp(a)}\]</span></p>
+<p><span class="math display">\[\exp(a+b) = \exp(a) \cdot \exp(b) \quad \text{and} \quad \exp(a-b) = \frac{\exp(a)}{\exp(b)}\]</span></p>
+<p><span class="math display">\[\exp(b \cdot a) = [\exp(a)]^b \quad \text{or} \quad \exp(b \cdot a) = [\exp(b)]^a\]</span></p>
+<ul>
+<li>Basic rules of logarithmic function:</li>
+</ul>
+<p><span class="math display">\[\ln\left(\frac{1}{a}\right) = \ln(a^{-1}) = -\ln(a)\]</span></p>
+<p><span class="math display">\[\ln(a \cdot b) = \ln(a) + \ln(b) \quad \text{and} \quad \ln\left(\frac{a}{b}\right) = \ln(a) - \ln(b)\]</span></p>
+<p><span class="math display">\[\ln(a^b) = b \cdot \ln(a) \quad \text{and} \quad \ln(a^{-b}) = \ln\left(\frac{1}{a^b}\right) = -b \cdot \ln(a)\]</span></p>
+</section>
+<section id="discussion-of-derivatives-skipped" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="discussion-of-derivatives-skipped"><span class="header-section-number">5.2</span> Discussion of Derivatives (skipped)</h2>
+<ul>
+<li>Derivatives of exp() and ln() (see slopes in graphs on page 1):</li>
+</ul>
+<p><span class="math display">\[\frac{\partial \exp(x)}{\partial x} = \exp(x) \quad \text{and} \quad \frac{\partial \ln(x)}{\partial x} = \frac{1}{x}\]</span></p>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-21.png" class="img-fluid"></p>
+<ul>
+<li>General rule for derivatives of polynomial functions:</li>
+</ul>
+<p><span class="math display">\[f(x) = a \cdot x^b \quad \Rightarrow \quad \frac{\partial f(x)}{\partial x} = a \cdot b \cdot x^{b-1} \quad \text{Note: } x^0 = 1\]</span></p>
+<ul>
+<li>Summation rule:</li>
+</ul>
+<p><span class="math display">\[f(x) = g(x) + h(x) \quad \Rightarrow \quad \frac{\partial f(x)}{\partial x} = \frac{\partial g(x)}{\partial x} + \frac{\partial h(x)}{\partial x}\]</span></p>
+<ul>
+<li>Product rule:</li>
+</ul>
+<p><span class="math display">\[f(x) = g(x) \cdot h(x) \quad \Rightarrow \quad \frac{\partial f(x)}{\partial x} = \frac{\partial g(x)}{\partial x} \cdot h(x) + g(x) \cdot \frac{\partial h(x)}{\partial x}\]</span></p>
+<p>Example:</p>
+<p><span class="math display">\[f(x) = x^2 \cdot \ln(x) \quad \text{with } g(x) = x^2 \text{ with } h(x) = \ln(x)\]</span></p>
+<p><span class="math display">\[\frac{\partial f(x)}{\partial x} = 2x \cdot \ln(x) + x^2 \cdot \frac{1}{x} = x \cdot (2 \ln(x) + 1)\]</span></p>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-22.png" class="img-fluid"></p>
+<ul>
+<li>Chain rule of nested functions:</li>
+</ul>
+<p><span class="math display">\[f(x) = g(h(x)) \quad \Rightarrow \quad \frac{\partial f(x)}{\partial x} = \frac{\partial g(h(x))}{\partial h(x)} \cdot \frac{\partial h(x)}{\partial x}\]</span></p>
+<p>Example:</p>
+<p><span class="math display">\[f(x) = \ln(3 + 2 \cdot x^2) \quad \text{with } g(h) = \ln(h) \text{ and } h(x) = 3 + 2 \cdot x^2\]</span></p>
+<p><span class="math display">\[\frac{\partial f(x)}{\partial x} = \frac{1}{3 + 2 \cdot x^2} \cdot 4 \cdot x\]</span></p>
+<ul>
+<li>Higher order derivatives:</li>
+</ul>
+<p><span class="math display">\[\frac{\partial^2 f(x)}{\partial^2 x} = \frac{\partial \left(\frac{\partial f(x)}{\partial x}\right)}{\partial x}\]</span></p>
+<ul>
+<li><p>Local minimum and maximum:</p>
+<p>If <span class="math inline">\(\partial f(x) / \partial x = 0\)</span> then <span class="math inline">\(f(x)\)</span> has either a local minimum <span class="math inline">\(x_{min}\)</span> or a local maximum <span class="math inline">\(x_{max}\)</span>.</p>
+<p>Conditions for local minimum or maximum:</p>
+<ul>
+<li><p>If <span class="math inline">\(\partial^2 f(x) / \partial^2 x &lt; 0\)</span> and <span class="math inline">\(\partial f(x) / \partial x = 0\)</span> then <span class="math inline">\(f(x)\)</span> has a local maximum <span class="math inline">\(x_{max}\)</span>.</p></li>
+<li><p>If <span class="math inline">\(\partial^2 f(x) / \partial^2 x &gt; 0\)</span> and <span class="math inline">\(\partial f(x) / \partial x = 0\)</span> then <span class="math inline">\(f(x)\)</span> has a local minimum <span class="math inline">\(x_{min}\)</span>.</p></li>
+</ul></li>
+</ul>
+<p><img src="images/w08_MaximumLikelihoodAbbridged/figure-23.png" class="img-fluid"></p>
+<ul>
+<li>Example: Polynomial function of third degree (see the R script <code>DerivativesCubicFct.R</code>):</li>
+</ul>
+<p><span class="math display">\[f(x) = 1 \cdot x^3 - 10 \cdot x^2 + 6 \cdot x + 20 \quad \text{(bold line for cubic function)}\]</span></p>
+<p><span class="math display">\[\Rightarrow \frac{\partial f(x)}{\partial x} = 3 \cdot x^2 - 20 \cdot x + 6 \quad \text{(long-dashed line for quadratic function)}\]</span></p>
+<p><span class="math display">\[\Rightarrow \frac{\partial^2 f(x)}{\partial^2 x} = 6 \cdot x - 20 \quad \text{(short-dashed line for linear function)}\]</span></p>
+<p>![](images/w08_Maximum</p>
+<ul>
+<li><p>Note: A quadratic function <span class="math inline">\(a \cdot x^2 + b \cdot x + c = 0\)</span> potentially has two zero values at <span class="math inline">\(x_1 = \frac{-b - \sqrt{b^2 - 4 \cdot a \cdot c}}{2 \cdot a}\)</span> and at <span class="math inline">\(x_2 = \frac{-b + \sqrt{b^2 - 4 \cdot a \cdot c}}{2 \cdot a}\)</span>.</p>
+<p>Caution: If the discriminant <span class="math inline">\((b^2 - 4 \cdot a \cdot c)\)</span> under the square root is negative then the solution will consist of complex conjugates (pairs of imaginary numbers).</p></li>
+<li><p>The first derivative is a quadratic function. Therefore, <span class="math inline">\(3 \cdot x^2 - 20 \cdot x + 6 = 0\)</span> has local maximum or minimum either at</p></li>
+</ul>
+<p><span class="math display">\[x_1 = \frac{20 - \sqrt{(-20)^2 - 4 \cdot (3 \cdot 6)}}{3 \cdot 2} = \frac{10}{3} - \frac{\sqrt{82}}{3}\]</span></p>
+<p><span class="math display">\[x_2 = \frac{20 + \sqrt{(-20)^2 - 4 \cdot (3 \cdot 6)}}{3 \cdot 2} = \frac{10}{3} + \frac{\sqrt{82}}{3}\]</span></p>
+<p>The second derivative is <span class="math inline">\(\frac{\partial^2 f(x)}{\partial^2 x} = 6 \cdot x - 20\)</span>.</p>
+<p>For <span class="math inline">\(x_1\)</span> we get <span class="math inline">\(6 \cdot \left[\frac{10}{3} - \frac{\sqrt{82}}{3}\right] - 20 = -2 \cdot \sqrt{82} &lt; 0\)</span> which therefore is a local maximum</p>
+<p>and for <span class="math inline">\(x_2\)</span> we get <span class="math inline">\(6 \cdot \left[\frac{10}{3} + \frac{\sqrt{82}}{3}\right] - 20 = 2 \cdot \sqrt{82} &gt; 0\)</span> which is a local minimum.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
